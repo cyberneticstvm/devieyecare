@@ -9,70 +9,70 @@
             <div class="col-lg-12">
                 {{ html()->form('POST')->route('appointment.update', encrypt($appointment->id))->class('')->open() }}
                 <div class="row g-3">
-                    <div class="control-group col-md-9">
+                    <div class="control-group col-md-4">
                         <label class="form-label req">Patient Name </label>
                         {{ html()->text('name', $appointment->name)->class('form-control')->placeholder('Patient Name') }}
                         @error('name')
                         <small class="text-danger">{{ $errors->first('name') }}</small>
                         @enderror
                     </div>
-                    <div class="control-group col-md-3">
+                    <div class="control-group col-md-2">
                         <label class="form-label req">Age </label>
                         {{ html()->number('age', $appointment->age, '', '', '')->class('form-control')->placeholder('0') }}
                         @error('age')
                         <small class="text-danger">{{ $errors->first('age') }}</small>
                         @enderror
                     </div>
-                    <div class="control-group col-md-4">
+                    <div class="control-group col-md-2">
                         <label class="form-label req">Gender</label>
                         {{ html()->select($name = 'gender', $value = $gender, $appointment->gender)->class('form-select')->placeholder('Select') }}
                         @error('gender')
                         <small class="text-danger">{{ $errors->first('gender') }}</small>
                         @enderror
                     </div>
-                    <div class="control-group col-md-8">
+                    <div class="control-group col-md-4">
                         <label class="form-label req">Address </label>
                         {{ html()->text('address', $appointment->address)->class('form-control')->placeholder('Address') }}
                         @error('address')
                         <small class="text-danger">{{ $errors->first('address') }}</small>
                         @enderror
                     </div>
-                    <div class="control-group col-md-6">
+                    <div class="control-group col-md-2">
                         <label class="form-label req">Mobile </label>
                         {{ html()->text('mobile', $appointment->mobile)->class('form-control')->maxlength(10)->placeholder('Mobile') }}
                         @error('mobile')
                         <small class="text-danger">{{ $errors->first('mobile') }}</small>
                         @enderror
                     </div>
-                    <div class="control-group col-md-6">
+                    <div class="control-group col-md-3">
                         <label class="form-label req">Branch</label>
                         {{ html()->select($name = 'branch_id', $value = $branches, $appointment->branch_id)->class('form-select')->placeholder('Select') }}
                         @error('branch_id')
                         <small class="text-danger">{{ $errors->first('branch_id') }}</small>
                         @enderror
                     </div>
-                    <div class="control-group col-md-6">
+                    <div class="control-group col-md-3">
                         <label class="form-label req">Doctor</label>
                         {{ html()->select($name = 'doctor_id', $value = $doctors, $appointment->doctor_id)->class('form-select')->placeholder('Select') }}
                         @error('doctor_id')
                         <small class="text-danger">{{ $errors->first('doctor_id') }}</small>
                         @enderror
                     </div>
-                    <div class="control-group col-md-6">
+                    <div class="control-group col-md-2">
                         <label class="form-label req">Appointment Date </label>
                         {{ html()->date('adate', $appointment->adate)->class('form-control') }}
                         @error('adate')
                         <small class="text-danger">{{ $errors->first('adate') }}</small>
                         @enderror
                     </div>
-                    <div class="control-group col-md-6">
+                    <div class="control-group col-md-2">
                         <label class="form-label req">Appointment Time </label>
                         {{ html()->time('atime', $appointment->atime)->class('form-control') }}
                         @error('atime')
                         <small class="text-danger">{{ $errors->first('atime') }}</small>
                         @enderror
                     </div>
-                    <div class="control-group col-md-6">
+                    <div class="control-group col-md-2">
                         <label class="form-label">Old MRN </label>
                         {{ html()->text('old_mrn', $appointment->old_mrn)->class('form-control')->placeholder('Old MRN') }}
                         @error('old_mrn')

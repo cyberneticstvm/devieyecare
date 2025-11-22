@@ -16,6 +16,11 @@ function teamId()
     return 1;
 }
 
+function getRtypeId($rtype)
+{
+    return Extra::where('category', 'rtype')->where('name', $rtype)->first()->id;
+}
+
 function loggedDevice($agent)
 {
     $devices = Extra::where('category', 'device')->orderBy('id')->get()->toArray();

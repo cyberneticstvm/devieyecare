@@ -36,8 +36,9 @@
                         @if(Auth::user()->can('appointment-list'))
                         <li class="nav-item"><a class="nav-link {{ (in_array(Route::currentRouteName(), ['appointment.list', 'appointment.create', 'appointment.edit'])) ? 'active' : '' }}" href="{{ route('appointment.list') }}">Appointments</a></li>
                         @endif
-                        <li class="nav-item"><a class="nav-link {{ (in_array(Route::currentRouteName(), ['registration'])) ? 'active' : '' }}" href="{{ route('index') }}">Registrations</a></li>
-
+                        @if(Auth::user()->can('registration-list'))
+                        <li class="nav-item"><a class="nav-link {{ (in_array(Route::currentRouteName(), ['registration.list', 'registration.create', 'registration.edit'])) ? 'active' : '' }}" href="{{ route('registration.list') }}">Registrations</a></li>
+                        @endif
                         <li class="nav-item"><a class="nav-link {{ (in_array(Route::currentRouteName(), ['search'])) ? 'active' : '' }}" href="{{ route('index') }}">Search</a></li>
 
                         <li class="nav-item"><a class="nav-link {{ (in_array(Route::currentRouteName(), ['vehicle'])) ? 'active' : '' }}" href="{{ route('index') }}">Vehicle</a></li>

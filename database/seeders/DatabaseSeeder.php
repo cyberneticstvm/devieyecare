@@ -50,6 +50,19 @@ class DatabaseSeeder extends Seeder
             'Other',
         ];
 
+        $regtypes = [
+            'New',
+            'Review',
+            'Camp',
+            'Appointment',
+        ];
+
+        $ctypes = [
+            'Consultation',
+            'Certificate',
+            'Surgery',
+        ];
+
         $genders = [
             'Male',
             'Female',
@@ -67,6 +80,14 @@ class DatabaseSeeder extends Seeder
 
         foreach ($devices as $device) {
             Extra::insert(['name' => $device, 'category' => 'device']);
+        }
+
+        foreach ($regtypes as $rtype) {
+            Extra::insert(['name' => $rtype, 'category' => 'rtype']);
+        }
+
+        foreach ($ctypes as $ctype) {
+            Extra::insert(['name' => $ctype, 'category' => 'ctype']);
         }
 
         foreach ($pmodes as $pmode) {

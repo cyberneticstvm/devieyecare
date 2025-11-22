@@ -11,6 +11,8 @@ use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
 
 class AppointmentController extends Controller implements HasMiddleware
@@ -37,7 +39,9 @@ class AppointmentController extends Controller implements HasMiddleware
      */
     public function index()
     {
-        $appointments = Appointment::withTrashed()->whereDate('adate', '>=', Carbon::today())->orderByDesc('adate')->get();
+        $appointments = Appointment::withTrashed()->whereDate('adate', '>=', Carbon::today())->orderByDesc('adate')->when(!in_array(Auth::user()->roles->first()->name, ['Administrator']), function ($q) {
+            return $q->where('branch_id', Session::get('branch')->id);
+        })->get();
         $branches = $this->branches;
         $gender = $this->gender;
         $doctors = $this->doctors;
@@ -67,13 +71,15 @@ class AppointmentController extends Controller implements HasMiddleware
             'doctor_id' => 'required',
             'adate' => 'required',
             'atime' => 'required',
+            'email' => 'nullable',
+            'old_mrn' => 'nullable',
         ]);
         try {
             $inputs['created_by'] = $request->user()->id;
             $inputs['updated_by'] = $request->user()->id;
             Appointment::create($inputs);
         } catch (Exception $e) {
-            return redirect()->back()->with("error", (Str::contains($e->getMessage(), ['1062'])) ? 'Appointment already exists for date, time, branch, and doctor' : $e->getMessage())->withInput($request->all());
+            return redirect()->back()->with("error", (Str::contains($e->getMessage(), ['1062'])) ? 'Appointment already exists for date, time, branch, and doctor' : $e->getMessage())->withInput($inputs);
         }
         return redirect()->route('appointment.list')->with("success", "Appointment created successfully!");
     }
@@ -113,12 +119,14 @@ class AppointmentController extends Controller implements HasMiddleware
             'doctor_id' => 'required',
             'adate' => 'required',
             'atime' => 'required',
+            'email' => 'nullable',
+            'old_mrn' => 'nullable',
         ]);
         try {
             $inputs['updated_by'] = $request->user()->id;
             Appointment::findOrFail(decrypt($id))->update($inputs);
         } catch (Exception $e) {
-            return redirect()->back()->with("error", $e->getMessage())->withInput($request->all());
+            return redirect()->back()->with("error", $e->getMessage())->withInput($inputs);
         }
         return redirect()->route('appointment.list')->with("success", "Appointment updated successfully!");
     }

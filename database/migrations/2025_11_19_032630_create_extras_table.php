@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name', 50);
             $table->string('category', 50);
+            $table->string('other_info')->comment('Like payment applicable for consultation')->nullable();
         });
     }
 
