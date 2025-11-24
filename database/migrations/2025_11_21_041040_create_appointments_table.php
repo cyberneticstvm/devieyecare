@@ -23,6 +23,7 @@ return new class extends Migration
             $table->date('adate')->nullable();
             $table->time('atime')->nullable();
             $table->unsignedBigInteger('old_mrn')->nullable();
+            $table->unsignedBigInteger('registration_id')->nullable();
             $table->foreignId('branch_id')->constrained()->onDelete('cascade');
             $table->foreignId('created_by')->constrained('users', 'id');
             $table->foreignId('updated_by')->constrained('users', 'id');

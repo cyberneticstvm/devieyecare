@@ -11,42 +11,42 @@
                 <div class="row g-3">
                     <div class="control-group col-md-4">
                         <label class="form-label req">Patient Name </label>
-                        {{ html()->text('name', old('name') ?? '')->class('form-control')->placeholder('Patient Name') }}
+                        {{ html()->text('name', $patient?->name ?? old('name'))->class('form-control')->placeholder('Patient Name') }}
                         @error('name')
                         <small class="text-danger">{{ $errors->first('name') }}</small>
                         @enderror
                     </div>
                     <div class="control-group col-md-2">
                         <label class="form-label req">Age </label>
-                        {{ html()->number('age', old('age') ?? '', '', '', '')->class('form-control')->placeholder('0') }}
+                        {{ html()->number('age', $patient?->age ?? old('age'), '', '', '')->class('form-control')->placeholder('0') }}
                         @error('age')
                         <small class="text-danger">{{ $errors->first('age') }}</small>
                         @enderror
                     </div>
                     <div class="control-group col-md-2">
                         <label class="form-label req">Gender</label>
-                        {{ html()->select($name = 'gender', $value = $gender, old('gender') ?? '')->class('form-select')->placeholder('Select') }}
+                        {{ html()->select($name = 'gender', $value = $gender, $patient?->gender ?? old('gender'))->class('form-select')->placeholder('Select') }}
                         @error('gender')
                         <small class="text-danger">{{ $errors->first('gender') }}</small>
                         @enderror
                     </div>
                     <div class="control-group col-md-4">
                         <label class="form-label req">Address </label>
-                        {{ html()->text('address', old('address') ?? '')->class('form-control')->placeholder('Address') }}
+                        {{ html()->text('address', $patient?->address ?? old('address'))->class('form-control')->placeholder('Address') }}
                         @error('address')
                         <small class="text-danger">{{ $errors->first('address') }}</small>
                         @enderror
                     </div>
                     <div class="control-group col-md-2">
                         <label class="form-label req">Mobile </label>
-                        {{ html()->text('mobile', old('mobile') ?? '')->class('form-control')->maxlength(10)->placeholder('Mobile') }}
+                        {{ html()->text('mobile', $patient?->mobile ?? old('mobile'))->class('form-control')->maxlength(10)->placeholder('Mobile') }}
                         @error('mobile')
                         <small class="text-danger">{{ $errors->first('mobile') }}</small>
                         @enderror
                     </div>
                     <div class="control-group col-md-2">
                         <label class="form-label req">Doctor</label>
-                        {{ html()->select($name = 'doctor_id', $value = $doctors, old('doctor_id') ?? '')->class('form-select')->placeholder('Select') }}
+                        {{ html()->select($name = 'doctor_id', $value = $doctors, $patient?->doctor_id ?? old('doctor_id'))->class('form-select')->placeholder('Select') }}
                         @error('doctor_id')
                         <small class="text-danger">{{ $errors->first('doctor_id') }}</small>
                         @enderror

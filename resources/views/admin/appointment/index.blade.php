@@ -26,7 +26,7 @@
                             <td>{{ $key + 1 }}</td>
                             <td>{{ $appointment->adate->format('d.M.Y') }}</td>
                             <td>{{ $appointment->atime->format('H:i a') }}</td>
-                            <td>{{ $appointment->name }}</td>
+                            <td><a href="{{ route('registration.create', ['rtype' => encrypt('Appointment'), 'typeid' => encrypt($appointment->id)]) }}" data-toggle="tooltip" data-placement="top" title="Click here to register the patient">{{ $appointment->name }}</a></td>
                             <td>{{ $appointment->doctor->name }}</td>
                             <td>{{ $appointment->branch->name }}</td>
                             <td>{!! $appointment->cancelled() !!}</td>

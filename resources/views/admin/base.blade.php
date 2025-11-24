@@ -494,6 +494,8 @@
                 });
 
                 $("#branchSelector").modal('show');
+
+                $('[data-toggle="tooltip"]').tooltip()
             });
 
             function badgeClass(status) {

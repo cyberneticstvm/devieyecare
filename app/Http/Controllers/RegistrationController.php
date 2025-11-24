@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Appointment;
 use App\Models\Doctor;
 use App\Models\Extra;
 use App\Models\Registration;
@@ -11,6 +12,7 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 
 class RegistrationController extends Controller implements HasMiddleware
@@ -51,7 +53,15 @@ class RegistrationController extends Controller implements HasMiddleware
         $doctors = $this->doctors;
         $ctypes = $this->ctypes;
         $gender = $this->gender;
-        return view('admin.registration.create', compact('doctors', 'ctypes', 'gender', 'rtype', 'typeid'));
+        $patient = [];
+        if ($typeid > 0 && decrypt($rtype) == 'Appointment'):
+            $patient = Appointment::findOrFail(decrypt($typeid));
+            $rtype = encrypt(getRtypeId('Appointment'));
+        endif;
+        if ($typeid > 0 && decrypt($rtype) == 'Camp'):
+            $rtype = encrypt(getRtypeId('Camp'));
+        endif;
+        return view('admin.registration.create', compact('doctors', 'ctypes', 'gender', 'rtype', 'typeid', 'patient'));
     }
 
     /**
@@ -76,7 +86,16 @@ class RegistrationController extends Controller implements HasMiddleware
             $inputs['branch_id'] = Session::get('branch')->id;
             $inputs['mrn'] = Registration::max('mrn') + 1 ?? 1;
             $inputs['doc_fee'] = 0;
-            Registration::create($inputs);
+            DB::transaction(function () use ($inputs) {
+                $type = Extra::findOrFail($inputs['rtype']);
+                $reg = Registration::create($inputs);
+                if ($inputs['rtype_id'] > 0 && ($type->name == 'Appointment')):
+                    Appointment::find($inputs['rtype_id'])->update(['registration_id' => $reg->id]);
+                endif;
+                if ($inputs['rtype_id'] > 0 && ($type->name == 'Camp')):
+                //
+                endif;
+            });
         } catch (Exception $e) {
             return redirect()->back()->with("error", $e->getMessage())->withInput($inputs);
         }

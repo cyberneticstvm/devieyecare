@@ -39,7 +39,7 @@ class AppointmentController extends Controller implements HasMiddleware
      */
     public function index()
     {
-        $appointments = Appointment::withTrashed()->whereDate('adate', '>=', Carbon::today())->orderByDesc('adate')->when(!in_array(Auth::user()->roles->first()->name, ['Administrator']), function ($q) {
+        $appointments = Appointment::withTrashed()->whereDate('adate', '>=', Carbon::today())->orderByDesc('adate')->whereNull('registration_id')->when(!in_array(Auth::user()->roles->first()->name, ['Administrator']), function ($q) {
             return $q->where('branch_id', Session::get('branch')->id);
         })->get();
         $branches = $this->branches;
