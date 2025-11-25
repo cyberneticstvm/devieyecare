@@ -87,7 +87,7 @@ class RegistrationController extends Controller implements HasMiddleware
             $inputs['updated_by'] = $request->user()->id;
             $inputs['branch_id'] = Session::get('branch')->id;
             $inputs['mrn'] = Registration::max('mrn') + 1 ?? 1;
-            $inputs['doc_fee'] = 0;
+            $inputs['doc_fee'] = getDocFee($request);
             DB::transaction(function () use ($inputs) {
                 $type = Extra::findOrFail($inputs['rtype']);
                 $reg = Registration::create($inputs);
@@ -140,7 +140,7 @@ class RegistrationController extends Controller implements HasMiddleware
         ]);
         try {
             $inputs['updated_by'] = $request->user()->id;
-            $inputs['doc_fee'] = 0;
+            $inputs['doc_fee'] = getDocFee($request);
             Registration::findOrFail(decrypt($id))->update($inputs);
         } catch (Exception $e) {
             return redirect()->back()->with("error", $e->getMessage())->withInput($inputs);

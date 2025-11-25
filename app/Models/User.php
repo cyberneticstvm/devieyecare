@@ -59,4 +59,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(UserDevice::class, 'user_id', 'id');
     }
+
+    public function cancelled()
+    {
+        return $this->deleted_at ? "<span class='badge bg-danger'>Cancelled</span>" : "<span class='badge bg-success'>Active</span>";
+    }
 }

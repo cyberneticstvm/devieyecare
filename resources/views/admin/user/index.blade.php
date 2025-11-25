@@ -14,6 +14,7 @@
                             <th class="py-2 fw-medium small text-uppercase">User Name</th>
                             <th class="py-2 fw-medium small text-uppercase">Email</th>
                             <th class="py-2 fw-medium small text-uppercase">Mobile</th>
+                            <th class="py-2 fw-medium small text-uppercase">Status</th>
                             <th class="py-2 fw-medium small text-uppercase text-center">Action</th>
                         </tr>
                     </thead>
@@ -24,6 +25,7 @@
                             <td>{{ $user->name }}</td>
                             <td>{{ $user->email }}</td>
                             <td>{{ $user->mobile }}</td>
+                            <td>{!! $user->cancelled() !!}</td>
                             <td class="text-center">
                                 <a href="{{ route('user.edit', encrypt($user->id)) }}" class="text-secondary">Edit</a> | <a href="{{ route('user.delete', encrypt($user->id)) }}" class="text-danger dlt">Delete</a>
                             </td>
