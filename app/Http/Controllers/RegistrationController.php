@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Appointment;
+use App\Models\CampDetail;
 use App\Models\Doctor;
 use App\Models\Extra;
 use App\Models\Registration;
@@ -59,6 +60,7 @@ class RegistrationController extends Controller implements HasMiddleware
             $rtype = encrypt(getRtypeId('Appointment'));
         endif;
         if ($typeid > 0 && decrypt($rtype) == 'Camp'):
+            $patient = CampDetail::findOrFail(decrypt($typeid));
             $rtype = encrypt(getRtypeId('Camp'));
         endif;
         return view('admin.registration.create', compact('doctors', 'ctypes', 'gender', 'rtype', 'typeid', 'patient'));
@@ -93,7 +95,7 @@ class RegistrationController extends Controller implements HasMiddleware
                     Appointment::find($inputs['rtype_id'])->update(['registration_id' => $reg->id]);
                 endif;
                 if ($inputs['rtype_id'] > 0 && ($type->name == 'Camp')):
-                //
+                    CampDetail::find($inputs['rtype_id'])->update(['registration_id' => $reg->id]);
                 endif;
             });
         } catch (Exception $e) {

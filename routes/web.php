@@ -3,6 +3,8 @@
 use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BranchController;
+use App\Http\Controllers\CampController;
+use App\Http\Controllers\CampDetailController;
 use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\RegistrationController;
 use App\Http\Controllers\RoleController;
@@ -79,6 +81,24 @@ Route::middleware(['web'])->group(function () {
             Route::get('edit/{id}', 'edit')->name('registration.edit');
             Route::post('edit/{id}', 'update')->name('registration.update');
             Route::get('delete/{id}', 'destroy')->name('registration.delete');
+        });
+
+        Route::prefix('camp')->controller(CampController::class)->group(function () {
+            Route::get('', 'index')->name('camp.list');
+            Route::get('create/', 'create')->name('camp.create');
+            Route::post('create/', 'store')->name('camp.save');
+            Route::get('edit/{id}', 'edit')->name('camp.edit');
+            Route::post('edit/{id}', 'update')->name('camp.update');
+            Route::get('delete/{id}', 'destroy')->name('camp.delete');
+        });
+
+        Route::prefix('camp/patient')->controller(CampDetailController::class)->group(function () {
+            Route::get('{cid}', 'index')->name('camp.patient.list');
+            Route::get('create/', 'create')->name('camp.patient.create');
+            Route::post('create/', 'store')->name('camp.patient.save');
+            Route::get('edit/{id}', 'edit')->name('camp.patient.edit');
+            Route::post('edit/{id}', 'update')->name('camp.patient.update');
+            Route::get('delete/{id}', 'destroy')->name('camp.patient.delete');
         });
     });
 });

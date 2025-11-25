@@ -35,6 +35,14 @@ class PermissionSeeder extends Seeder
             'appointment-create',
             'appointment-edit',
             'appointment-delete',
+            'camp-list',
+            'camp-create',
+            'camp-edit',
+            'camp-delete',
+            'camp-patient-list',
+            'camp-patient-create',
+            'camp-patient-edit',
+            'camp-patient-delete',
         ];
 
         foreach ($permissions as $permission) {
