@@ -40,8 +40,9 @@
                         <li class="nav-item"><a class="nav-link {{ (in_array(Route::currentRouteName(), ['registration.list', 'registration.create', 'registration.edit'])) ? 'active' : '' }}" href="{{ route('registration.list') }}">Registrations</a></li>
                         @endif
                         <li class="nav-item"><a class="nav-link {{ (in_array(Route::currentRouteName(), ['search'])) ? 'active' : '' }}" href="{{ route('index') }}">Search</a></li>
-
-                        <li class="nav-item"><a class="nav-link {{ (in_array(Route::currentRouteName(), ['vehicle'])) ? 'active' : '' }}" href="{{ route('index') }}">Vehicle</a></li>
+                        @if(Auth::user()->can('vehicle-list'))
+                        <li class="nav-item"><a class="nav-link {{ (in_array(Route::currentRouteName(), ['vehicle.list', 'vehicle.create', 'vehicle.edit', 'vehicle.payment.list', 'vehicle.payment.create', 'vehicle.payment.edit'])) ? 'active' : '' }}" href="{{ route('vehicle.list') }}">Vehicle Management</a></li>
+                        @endif
                         @if(Auth::user()->can('camp-list'))
                         <li class="nav-item"><a class="nav-link {{ (in_array(Route::currentRouteName(), ['camp.list', 'camp.create', 'camp.edit', 'camp.patient.list', 'camp.patient.create', 'camp.patient.edit'])) ? 'active' : '' }}" href="{{ route('camp.list') }}">Camp Management</a></li>
                         @endif

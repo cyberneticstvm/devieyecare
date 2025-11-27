@@ -121,6 +121,6 @@ class CampDetailController extends Controller implements HasMiddleware
     {
         $campatient = CampDetail::findOrFail(decrypt($id));
         $campatient->delete();
-        return redirect()->route('camp.patient.list', encrypt($campatient->camp_id))->with("success", "Camp deleted successfully!");
+        return redirect()->route('camp.patient.list', encrypt($campatient->camp_id))->with("success", "Patient deleted successfully!");
     }
 }

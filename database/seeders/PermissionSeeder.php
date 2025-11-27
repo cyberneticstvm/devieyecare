@@ -43,6 +43,14 @@ class PermissionSeeder extends Seeder
             'camp-patient-create',
             'camp-patient-edit',
             'camp-patient-delete',
+            'vehicle-list',
+            'vehicle-create',
+            'vehicle-edit',
+            'vehicle-delete',
+            'vehicle-payment-list',
+            'vehicle-payment-create',
+            'vehicle-payment-edit',
+            'vehicle-payment-delete',
         ];
 
         foreach ($permissions as $permission) {

@@ -9,6 +9,8 @@ use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\RegistrationController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\VehicleController;
+use App\Http\Controllers\VehiclePaymentController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware(['web'])->group(function () {
@@ -99,6 +101,24 @@ Route::middleware(['web'])->group(function () {
             Route::get('edit/{id}', 'edit')->name('camp.patient.edit');
             Route::post('edit/{id}', 'update')->name('camp.patient.update');
             Route::get('delete/{id}', 'destroy')->name('camp.patient.delete');
+        });
+
+        Route::prefix('vehicle')->controller(VehicleController::class)->group(function () {
+            Route::get('', 'index')->name('vehicle.list');
+            Route::get('create/', 'create')->name('vehicle.create');
+            Route::post('create/', 'store')->name('vehicle.save');
+            Route::get('edit/{id}', 'edit')->name('vehicle.edit');
+            Route::post('edit/{id}', 'update')->name('vehicle.update');
+            Route::get('delete/{id}', 'destroy')->name('vehicle.delete');
+        });
+
+        Route::prefix('vehicle/payment')->controller(VehiclePaymentController::class)->group(function () {
+            Route::get('{vid}', 'index')->name('vehicle.payment.list');
+            Route::get('create/', 'create')->name('vehicle.payment.create');
+            Route::post('create/', 'store')->name('vehicle.payment.save');
+            Route::get('edit/{id}', 'edit')->name('vehicle.payment.edit');
+            Route::post('edit/{id}', 'update')->name('vehicle.payment.update');
+            Route::get('delete/{id}', 'destroy')->name('vehicle.payment.delete');
         });
     });
 });
