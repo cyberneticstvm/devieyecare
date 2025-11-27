@@ -63,6 +63,10 @@ class RegistrationController extends Controller implements HasMiddleware
             $patient = CampDetail::findOrFail(decrypt($typeid));
             $rtype = encrypt(getRtypeId('Camp'));
         endif;
+        if ($typeid > 0 && decrypt($rtype) == 'Review'):
+            $patient = Registration::findOrFail(decrypt($typeid));
+            $rtype = encrypt(getRtypeId('Review'));
+        endif;
         return view('admin.registration.create', compact('doctors', 'ctypes', 'gender', 'rtype', 'typeid', 'patient'));
     }
 
