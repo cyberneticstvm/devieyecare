@@ -16,6 +16,7 @@
                             <th class="py-2 fw-medium small text-uppercase">Email</th>
                             <th class="py-2 fw-medium small text-uppercase">Contact</th>
                             <th class="py-2 fw-medium small text-uppercase">Address</th>
+                            <th class="py-2 fw-medium small text-uppercase">Exp.Limit</th>
                             <th class="py-2 fw-medium small text-uppercase">Status</th>
                             <th class="py-2 fw-medium small text-uppercase text-center">Action</th>
                         </tr>
@@ -29,6 +30,7 @@
                             <td>{{ $branch->email }}</td>
                             <td>{{ $branch->contact }}</td>
                             <td>{{ $branch->address }}</td>
+                            <td>{{ $branch->daily_expense_limit }}</td>
                             <td>{!! $branch->cancelled() !!}</td>
                             <td class="text-center">
                                 <a href="{{ route('branch.edit', encrypt($branch->id)) }}" class="text-secondary">Edit</a> | <a href="{{ route('branch.delete', encrypt($branch->id)) }}" class="text-danger dlt">Delete</a>

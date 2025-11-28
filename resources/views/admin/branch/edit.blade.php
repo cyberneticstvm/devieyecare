@@ -65,6 +65,13 @@
                         <small class="text-danger">{{ $errors->first('invoice_starts_with') }}</small>
                         @enderror
                     </div>
+                    <div class="control-group col-md-2">
+                        <label class="form-label">Daily Expense Limit</label>
+                        {{ html()->number('daily_expense_limit', $branch->daily_expense_limit, '', '', 'any')->class('form-control')->placeholder('0.00') }}
+                        @error('daily_expense_limit')
+                        <small class="text-danger">{{ $errors->first('daily_expense_limit') }}</small>
+                        @enderror
+                    </div>
                 </div>
                 <div class="raw mt-3">
                     <div class="col text-end">
