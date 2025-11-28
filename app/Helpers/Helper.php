@@ -93,3 +93,8 @@ function getDocFee($request)
     endif;
     return $fee;
 }
+
+function requiredRoles()
+{
+    return ['Administrator', 'Product Advisor', 'Doctor', 'Pharmacist', 'Optometrist'];
+}

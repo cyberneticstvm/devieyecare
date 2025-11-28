@@ -18,6 +18,7 @@
                             <th class="py-2 fw-medium small text-uppercase">Mobile</th>
                             <th class="py-2 fw-medium small text-uppercase">Doctor</th>
                             <th class="py-2 fw-medium small text-uppercase">Branch</th>
+                            <th class="py-2 fw-medium small text-uppercase">Pharma</th>
                             <th class="py-2 fw-medium small text-uppercase">Download</th>
                             <th class="py-2 fw-medium small text-uppercase">Status</th>
                             <th class="py-2 fw-medium small text-uppercase">Action</th>
@@ -28,12 +29,13 @@
                         <tr>
                             <td>{{ $key + 1 }}</td>
                             <td><a href="{{ route('registration.create', ['rtype' => encrypt('Review'), 'typeid' => encrypt($reg->id)]) }}" data-toggle="tooltip" data-placement="top" title="Click here to review the patient">Review</a></td>
-                            <td>{{ $reg->getMrn() }}</td>
+                            <td><a href="{{ route('order.edit', encrypt($reg->id)) }}" data-toggle="tooltip" data-placement="top" title="Click here to make an Order">{{ $reg->getMrn() }}</a></td>
                             <td>{{ $reg->name }}</td>
                             <td>{{ $reg->address }}</td>
                             <td>{{ $reg->mobile }}</td>
                             <td>{{ $reg->doctor->name }}</td>
                             <td>{{ $reg->branch->name }}</td>
+                            <td><a href="{{ route('registration.create', ['rtype' => encrypt('Review'), 'typeid' => encrypt($reg->id)]) }}" data-toggle="tooltip" data-placement="top" title="Click here to make Pharmacy Order">Prescription</a></td>
                             <td>
                                 <div class="dropdown">
                                     <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -41,9 +43,9 @@
                                     </button>
                                     <ul class="dropdown-menu">
                                         <li><a class="dropdown-item" href="#">OPT</a></li>
-                                        <li><a class="dropdown-item" href="#">Receipt</a></li>
+                                        <li><a class="dropdown-item" href="#">Order Receipt</a></li>
                                         <li><a class="dropdown-item" href="#">Service Fee Receipt</a></li>
-                                        <li><a class="dropdown-item" href="#">Medicine Receipt</a></li>
+                                        <li><a class="dropdown-item" href="#">Pharmacy Receipt</a></li>
                                         <li><a class="dropdown-item" href="#">Certificate</a></li>
                                         <li><a class="dropdown-item" href="#">Envelope</a></li>
                                     </ul>

@@ -50,6 +50,38 @@
                 </div>
             </li>
             <li>
+                <a class="d-flex align-items-center justify-content-between hover-svg" data-bs-toggle="collapse" href="#collapseOrders" role="button" aria-expanded="false" aria-controls="collapseOrders">
+                    <span class="nav-title  fw-medium">Orders</span>
+                    <svg class="opacity-75" width="18" height="18" stroke-width="0.5" viewBox="0 0 21 21" fill="none" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M10.5 4.375V16.625" />
+                        <path d="M4.375 10.5H16.625" />
+                    </svg>
+                </a>
+                <div class="collapse" id="collapseOrders">
+                    <ul class="nav flex-column li_animate">
+                        <li class="nav-item"><a class="nav-link" href="{{ route('index') }}">Store Orders</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{ route('index') }}">Pharmacy Orders</a></li>
+                    </ul>
+                </div>
+            </li>
+            <li>
+                <a class="d-flex align-items-center justify-content-between hover-svg" data-bs-toggle="collapse" href="#collapseProducts" role="button" aria-expanded="false" aria-controls="collapseProducts">
+                    <span class="nav-title  fw-medium">Product</span>
+                    <svg class="opacity-75" width="18" height="18" stroke-width="0.5" viewBox="0 0 21 21" fill="none" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M10.5 4.375V16.625" />
+                        <path d="M4.375 10.5H16.625" />
+                    </svg>
+                </a>
+                <div class="collapse" id="collapseProducts">
+                    <ul class="nav flex-column li_animate">
+                        <li class="nav-item"><a class="nav-link" href="{{ route('index') }}">Product Management</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{ route('index') }}">Purchase</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{ route('index') }}">Transfer</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{ route('index') }}">Stock Status</a></li>
+                    </ul>
+                </div>
+            </li>
+            <li>
                 <a class="d-flex align-items-center justify-content-between hover-svg" data-bs-toggle="collapse" href="#collapseOperations" role="button" aria-expanded="false" aria-controls="collapseOperations">
                     <span class="nav-title  fw-medium">Operations</span>
                     <svg class="opacity-75" width="18" height="18" stroke-width="0.5" viewBox="0 0 21 21" fill="none" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">

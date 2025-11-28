@@ -11,7 +11,9 @@
                 <div class="row g-3">
                     <div class="control-group col-md-3">
                         <label class="form-label req">Role Name </label>
-                        {{ html()->text('name', $role->name)->class('form-control')->placeholder('Role Name') }}
+                        {{ html()->text('name', $role->name)->class('form-control')->when(in_array($role->name, requiredRoles()), function($el){
+                            return $el->attribute('readonly', true);
+                        })->placeholder('Role Name') }}
                         @error('name')
                         <small class="text-danger">{{ $errors->first('name') }}</small>
                         @enderror

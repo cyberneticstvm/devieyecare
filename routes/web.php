@@ -6,6 +6,7 @@ use App\Http\Controllers\BranchController;
 use App\Http\Controllers\CampController;
 use App\Http\Controllers\CampDetailController;
 use App\Http\Controllers\DoctorController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\RegistrationController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
@@ -119,6 +120,13 @@ Route::middleware(['web'])->group(function () {
             Route::get('edit/{id}', 'edit')->name('vehicle.payment.edit');
             Route::post('edit/{id}', 'update')->name('vehicle.payment.update');
             Route::get('delete/{id}', 'destroy')->name('vehicle.payment.delete');
+        });
+
+        Route::prefix('order')->controller(OrderController::class)->group(function () {
+            Route::get('', 'index')->name('order.list');
+            Route::get('edit/{rid}', 'edit')->name('order.edit');
+            Route::post('edit/{rid}', 'update')->name('order.update');
+            Route::get('delete/{id}', 'destroy')->name('order.delete');
         });
     });
 });
