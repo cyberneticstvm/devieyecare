@@ -2,12 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Extra;
-use App\Models\Order;
-use App\Models\Registration;
 use Illuminate\Http\Request;
 
-class OrderController extends Controller
+class ProductController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -46,10 +43,7 @@ class OrderController extends Controller
      */
     public function edit(string $id)
     {
-        $registration = Registration::findOrFail(decrypt($id));
-        $extras = Extra::whereIn('category', ['thickness'])->get();
-        $order = []; //Order::where('registration_id', $registration->id)->first();
-        return view('admin.order.store.edit', compact('registration', 'order', 'extras'));
+        //
     }
 
     /**

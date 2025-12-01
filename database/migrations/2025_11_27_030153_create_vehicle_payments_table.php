@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('vehicle_id')->constrained()->onDelete('cascade');
             $table->decimal('amount', 7, 2)->default(0);
+            $table->foreignId('pmode')->constrained('extras', 'id')->onDelete('cascade');
             $table->date('pdate')->nullable();
             $table->string('notes')->nullable();
             $table->foreignId('created_by')->constrained('users', 'id');

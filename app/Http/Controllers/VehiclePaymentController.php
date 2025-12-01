@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Extra;
 use App\Models\Vehicle;
 use App\Models\VehiclePayment;
 use Exception;
@@ -21,6 +22,12 @@ class VehiclePaymentController extends Controller implements HasMiddleware
             new Middleware(\Spatie\Permission\Middleware\PermissionMiddleware::using('vehicle-payment-delete'), only: ['destroy']),
         ];
     }
+
+    protected $pmodes;
+    public function __construct()
+    {
+        $this->pmodes = Extra::where('category', 'pmode')->pluck('name', 'id');
+    }
     /**
      * Display a listing of the resource.
      */
@@ -28,7 +35,8 @@ class VehiclePaymentController extends Controller implements HasMiddleware
     {
         $payments = VehiclePayment::withTrashed()->where('vehicle_id', decrypt($vid))->orderByDesc('pdate')->get();
         $vehicle = Vehicle::findOrFail(decrypt($vid));
-        return view('admin.vehicle.payment.index', compact('payments', 'vehicle'));
+        $pmodes = $this->pmodes;
+        return view('admin.vehicle.payment.index', compact('payments', 'vehicle', 'pmodes'));
     }
 
     /**
@@ -75,7 +83,8 @@ class VehiclePaymentController extends Controller implements HasMiddleware
     public function edit(string $id)
     {
         $payment = VehiclePayment::findOrFail(decrypt($id));
-        return view('admin.vehicle.payment.edit', compact('payment'));
+        $pmodes = $this->pmodes;
+        return view('admin.vehicle.payment.edit', compact('payment', 'pmodes'));
     }
 
     /**

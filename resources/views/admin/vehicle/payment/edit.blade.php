@@ -23,7 +23,14 @@
                         <small class="text-danger">{{ $errors->first('amount') }}</small>
                         @enderror
                     </div>
-                    <div class="control-group col-md-6">
+                    <div class="control-group col-md-2">
+                        <label class="form-label req">Payment Mode</label>
+                        {{ html()->select($name = 'pmode', $value = $pmodes, $payment->pmode)->class('form-select')->placeholder('Select')->required() }}
+                        @error('pmode')
+                        <small class="text-danger">{{ $errors->first('pmode') }}</small>
+                        @enderror
+                    </div>
+                    <div class="control-group col-md-4">
                         <label class="form-label">Notes </label>
                         {{ html()->text('notes', $payment->notes)->class('form-control')->placeholder('Notes') }}
                         @error('notes')
