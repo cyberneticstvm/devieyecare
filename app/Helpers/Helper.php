@@ -11,11 +11,17 @@
 
 use App\Models\Doctor;
 use App\Models\Extra;
+use App\Models\Hsn;
 use App\Models\Registration;
 
 function teamId()
 {
     return 1;
+}
+
+function hsn($name)
+{
+    return Hsn::where('name', $name)->first();
 }
 
 function getRtypeId($rtype)

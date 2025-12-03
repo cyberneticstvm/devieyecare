@@ -51,6 +51,10 @@ class PermissionSeeder extends Seeder
             'vehicle-payment-create',
             'vehicle-payment-edit',
             'vehicle-payment-delete',
+            'product-list',
+            'product-create',
+            'product-edit',
+            'product-delete',
         ];
 
         foreach ($permissions as $permission) {

@@ -18,6 +18,11 @@ class VehiclePayment extends Model
         return $this->deleted_at ? "<span class='badge bg-danger'>Cancelled</span>" : "<span class='badge bg-success'>Active</span>";
     }
 
+    public function paymode()
+    {
+        return $this->belongsTo(Extra::class, 'pmode', 'id');
+    }
+
     public function vehicle()
     {
         return $this->belongsTo(Vehicle::class, 'vehicle_id', 'id');

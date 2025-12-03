@@ -16,6 +16,7 @@
                             <th class="py-2 fw-medium small text-uppercase">SL No</th>
                             <th class="py-2 fw-medium small text-uppercase">Pay.Date</th>
                             <th class="py-2 fw-medium small text-uppercase">Amount</th>
+                            <th class="py-2 fw-medium small text-uppercase">Pay Mode</th>
                             <th class="py-2 fw-medium small text-uppercase">Notes</th>
                             <th class="py-2 fw-medium small text-uppercase">Status</th>
                             <th class="py-2 fw-medium small text-uppercase">Action</th>
@@ -27,6 +28,7 @@
                             <td>{{ $key + 1 }}</td>
                             <td>{{ $payment->pdate->format('d.M.Y') }}</td>
                             <td>{{ $payment->amount }}</td>
+                            <td>{{ $payment->paymode?->name }}</td>
                             <td>{{ $payment->notes }}</td>
                             <td>{!! $payment->cancelled() !!}</td>
                             <td class="text-center">

@@ -55,6 +55,7 @@ class VehiclePaymentController extends Controller implements HasMiddleware
         $inputs = $request->validate([
             'pdate' => 'required|date',
             'amount' => 'required',
+            'pmode' => 'required',
             'notes' => 'nullable',
             'vehicle_id' => 'required',
         ]);
@@ -95,6 +96,7 @@ class VehiclePaymentController extends Controller implements HasMiddleware
         $inputs = $request->validate([
             'pdate' => 'required|date',
             'amount' => 'required',
+            'pmode' => 'required',
             'notes' => 'nullable',
         ]);
         try {

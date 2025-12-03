@@ -14,7 +14,8 @@ return new class extends Migration
         Schema::create('products', function (Blueprint $table) {
             $table->id();
             $table->foreignId('hsn_id')->constrained()->onDelete('cascade');
-            $table->string('name', 100)->nullable();
+            $table->string('name', 100)->unique();
+            $table->string('code', 25)->unique();
             $table->string('description')->nullable();
             $table->decimal('selling_price', 8, 2)->default(0);
             $table->foreignId('manufacturer_id')->constrained()->onDelete('cascade');
@@ -23,6 +24,7 @@ return new class extends Migration
             $table->foreignId('created_by')->constrained('users', 'id');
             $table->foreignId('updated_by')->constrained('users', 'id');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

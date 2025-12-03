@@ -80,7 +80,7 @@
                                         {{ html()->text('ipd[]', old('ipd') ?? '')->class('form-control')->attribute('id', 'ipd1')->placeholder('IPD') }}
                                     </td>
                                     <td>
-                                        {{ html()->select('product[]', '', old('product') ?? '')->class('select2')->attribute('id', 'pdct1')->placeholder('Select') }}
+                                        {{ html()->select('product[]', $products->where('hsn_id', hsn('Lens')->id)->pluck('name', 'id'), old('product') ?? '')->class('select2')->attribute('id', 'pdct1')->placeholder('Select') }}
                                     </td>
                                     <td>
                                         {{ html()->number('qty[]', old('qty') ?? '')->class('form-control')->attribute('id', 'qty1')->placeholder('0') }}
@@ -91,7 +91,7 @@
                                 </tr>
                                 <tr>
                                     <td>
-                                        {{ html()->text('eye', 'RE')->class('form-control')->maxlength(5)->placeholder('')->attribute('id', 'eye2')->attribute('readonly', true) }}
+                                        {{ html()->text('eye', 'LE')->class('form-control')->maxlength(5)->placeholder('')->attribute('id', 'eye2')->attribute('readonly', true) }}
                                     </td>
                                     <td>
                                         {{ html()->select('sph[]', $extras->where('category', 'sph')->pluck('name', 'name'), old('sph') ?? '')->class('select2')->attribute('id', 'sph2')->placeholder('Select') }}
@@ -115,7 +115,7 @@
                                         {{ html()->text('ipd[]', old('ipd') ?? '')->class('form-control')->attribute('id', 'ipd2')->placeholder('IPD') }}
                                     </td>
                                     <td>
-                                        {{ html()->select('product[]', '', old('product') ?? '')->class('select2')->attribute('id', 'pdct2')->placeholder('Select') }}
+                                        {{ html()->select('product[]', $products->where('hsn_id', hsn('Lens')->id)->pluck('name', 'id'), old('product') ?? '')->class('select2')->attribute('id', 'pdct2')->placeholder('Select') }}
                                     </td>
                                     <td>
                                         {{ html()->number('qty[]', old('qty') ?? '')->class('form-control')->attribute('id', 'qty2')->placeholder('0') }}
@@ -138,7 +138,7 @@
                                         <input type="hidden" name="ipd[]" value="" />
                                     </td>
                                     <td>
-                                        {{ html()->select('product[]', '', old('product') ?? '')->class('select2')->attribute('id', 'pdct3')->placeholder('Select') }}
+                                        {{ html()->select('product[]', $products->where('hsn_id', hsn('Frame')->id)->pluck('name', 'id'), old('product') ?? '')->class('select2')->attribute('id', 'pdct3')->placeholder('Select') }}
                                     </td>
                                     <td>
                                         {{ html()->number('qty[]', old('qty') ?? '')->class('form-control')->attribute('id', 'qty3')->placeholder('0') }}

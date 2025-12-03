@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Extra;
+use App\Models\Hsn;
 use App\Models\Order;
+use App\Models\Product;
 use App\Models\Registration;
 use Illuminate\Http\Request;
 
@@ -12,6 +14,11 @@ class OrderController extends Controller
     /**
      * Display a listing of the resource.
      */
+    protected $products;
+    public function __construct()
+    {
+        $this->products = Product::whereIn('hsn_id', Hsn::whereIn('name', ['Frame', 'Lens'])->pluck('id'))->get();
+    }
     public function index()
     {
         //
@@ -48,8 +55,9 @@ class OrderController extends Controller
     {
         $registration = Registration::findOrFail(decrypt($id));
         $extras = Extra::whereIn('category', ['thickness'])->get();
-        $order = []; //Order::where('registration_id', $registration->id)->first();
-        return view('admin.order.store.edit', compact('registration', 'order', 'extras'));
+        $products = $this->products;
+        $order = Order::where('registration_id', $registration->id)->first();
+        return view('admin.order.store.edit', compact('registration', 'order', 'extras', 'products'));
     }
 
     /**

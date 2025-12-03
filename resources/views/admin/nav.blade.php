@@ -74,7 +74,9 @@
                 </a>
                 <div class="collapse" id="collapseProducts">
                     <ul class="nav flex-column li_animate">
-                        <li class="nav-item"><a class="nav-link" href="{{ route('index') }}">Product Management</a></li>
+                        @if(Auth::user()->can('product-list'))
+                        <li class="nav-item"><a class="nav-link {{ (in_array(Route::currentRouteName(), ['product.list', 'product.create', 'product.edit'])) ? 'active' : '' }}" href="{{ route('product.list') }}">Product Management</a></li>
+                        @endif
                         <li class="nav-item"><a class="nav-link" href="{{ route('index') }}">Purchase</a></li>
                         <li class="nav-item"><a class="nav-link" href="{{ route('index') }}">Transfer</a></li>
                         <li class="nav-item"><a class="nav-link" href="{{ route('index') }}">Stock Status</a></li>

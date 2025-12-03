@@ -7,6 +7,7 @@ use App\Http\Controllers\CampController;
 use App\Http\Controllers\CampDetailController;
 use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\RegistrationController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
@@ -120,6 +121,15 @@ Route::middleware(['web'])->group(function () {
             Route::get('edit/{id}', 'edit')->name('vehicle.payment.edit');
             Route::post('edit/{id}', 'update')->name('vehicle.payment.update');
             Route::get('delete/{id}', 'destroy')->name('vehicle.payment.delete');
+        });
+
+        Route::prefix('product')->controller(ProductController::class)->group(function () {
+            Route::get('', 'index')->name('product.list');
+            Route::get('create/', 'create')->name('product.create');
+            Route::post('create/', 'store')->name('product.save');
+            Route::get('edit/{id}', 'edit')->name('product.edit');
+            Route::post('edit/{id}', 'update')->name('product.update');
+            Route::get('delete/{id}', 'destroy')->name('product.delete');
         });
 
         Route::prefix('order')->controller(OrderController::class)->group(function () {
