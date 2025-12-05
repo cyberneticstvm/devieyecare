@@ -7,6 +7,7 @@ use App\Models\Hsn;
 use App\Models\Order;
 use App\Models\Product;
 use App\Models\Registration;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class OrderController extends Controller
@@ -14,10 +15,20 @@ class OrderController extends Controller
     /**
      * Display a listing of the resource.
      */
-    protected $products;
+    protected $products, $axis, $dia;
     public function __construct()
     {
         $this->products = Product::whereIn('hsn_id', Hsn::whereIn('name', ['Frame', 'Lens'])->pluck('id'))->get();
+        $axis = [];
+        $dia = [];
+        for ($i = 0; $i <= 180; $i++):
+            $axis[$i] = $i;
+        endfor;
+        for ($i = 50; $i <= 75; $i++):
+            $dia[$i] = $i;
+        endfor;
+        $this->axis = $axis;
+        $this->dia = $dia;
     }
     public function index()
     {
@@ -54,10 +65,13 @@ class OrderController extends Controller
     public function edit(string $id)
     {
         $registration = Registration::findOrFail(decrypt($id));
-        $extras = Extra::whereIn('category', ['thickness'])->get();
+        $extras = Extra::whereIn('category', ['thickness', 'sph', 'cyl', 'addition', 'pmode'])->get();
         $products = $this->products;
+        $axis = $this->axis;
+        $dia = $this->dia;
         $order = Order::where('registration_id', $registration->id)->first();
-        return view('admin.order.store.edit', compact('registration', 'order', 'extras', 'products'));
+        $advisors = User::role(requiredRoles()[1])->pluck('name', 'id');
+        return view('admin.order.store.edit', compact('registration', 'order', 'extras', 'products', 'axis', 'dia', 'advisors'));
     }
 
     /**

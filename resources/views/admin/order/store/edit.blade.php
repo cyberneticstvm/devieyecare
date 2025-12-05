@@ -33,6 +33,14 @@
                         <label class="form-label req">Doctor </label>
                         {{ html()->text('doctor', $registration->doctor->name )->class('form-control')->attribute('readonly', true) }}
                     </div>
+                    <div class="control-group col-md-2">
+                        <label class="form-label req">DC Pay Mode </label>
+                        {{ html()->select('doc_fee_pmode', $extras->where('category', 'pmode')->pluck('name', 'id'), old('doc_fee_pmode') ?? $registration->doc_fee_pmode)->class('form-control')->attribute('id', 'doc_fee_pmode')->placeholder('Select') }}
+                    </div>
+                    <div class="control-group col-md-2">
+                        <label class="form-label req">Surgery Advised </label>
+                        {{ html()->select('surgery_advised', array('0' => 'No', '1' => 'Yes'), old('surgery_advised') ?? $registration->surgery_advised)->class('form-control')->attribute('id', 'surgery_advised')->placeholder('Select') }}
+                    </div>
                 </div>
                 <div class="raw mt-5">
                     <div class="col-lg-12">
@@ -50,7 +58,7 @@
                                     <th class="py-2 fw-medium small text-uppercase" style="width: 7%;">IPD</th>
                                     <th class="py-2 fw-medium small text-uppercase">Product</th>
                                     <th class="py-2 fw-medium small text-uppercase" style="width: 5%;">Qty</th>
-                                    <th class="py-2 fw-medium small text-uppercase" style="width: 7%;">Price</th>
+                                    <th class="py-2 fw-medium small text-uppercase" style="width: 10%;">Price</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -62,16 +70,16 @@
                                         {{ html()->select('sph[]', $extras->where('category', 'sph')->pluck('name', 'name'), old('sph') ?? '')->class('select2')->attribute('id', 'sph1')->placeholder('Select') }}
                                     </td>
                                     <td>
-                                        {{ html()->select('cyl[]', $extras->where('category', 'cyl')->pluck('name', 'name'), old('cyl') ?? '')->class('select2')->attribute('id', 'cyl1')->placeholder('Select') }}
+                                        {{ html()->select('cyl[]', $extras->where('category', 'cyl')->pluck('name', 'name'), old('cyl') ?? $extras->where('category', 'cyl')->where('other_info', 'selected')->first()->name)->class('select2')->attribute('id', 'cyl1')->placeholder('Select') }}
                                     </td>
                                     <td>
-                                        {{ html()->select('axis[]', $extras->where('category', 'axis')->pluck('name', 'name'), old('axis') ?? '')->class('select2')->attribute('id', 'axis1')->placeholder('Select') }}
+                                        {{ html()->select('axis[]', $axis, old('axis') ?? '')->class('select2')->attribute('id', 'axis1')->placeholder('Select') }}
                                     </td>
                                     <td>
                                         {{ html()->select('add[]', $extras->where('category', 'addition')->pluck('name', 'name'), old('add') ?? '')->class('select2')->attribute('id', 'add1')->placeholder('Select') }}
                                     </td>
                                     <td>
-                                        {{ html()->select('dia[]', $extras->where('category', 'axis')->pluck('name', 'name'), old('dia') ?? '')->class('select2')->attribute('id', 'dia1')->placeholder('Select') }}
+                                        {{ html()->select('dia[]', $dia, old('dia') ?? '')->class('select2')->attribute('id', 'dia1')->placeholder('Select') }}
                                     </td>
                                     <td>
                                         {{ html()->select('thickness[]', $extras->where('category', 'thickness')->pluck('name', 'id'), old('thickness') ?? '')->class('select2')->attribute('id', 'thick1')->placeholder('Select') }}
@@ -80,13 +88,13 @@
                                         {{ html()->text('ipd[]', old('ipd') ?? '')->class('form-control')->attribute('id', 'ipd1')->placeholder('IPD') }}
                                     </td>
                                     <td>
-                                        {{ html()->select('product[]', $products->where('hsn_id', hsn('Lens')->id)->pluck('name', 'id'), old('product') ?? '')->class('select2')->attribute('id', 'pdct1')->placeholder('Select') }}
+                                        {{ html()->select('product[]', $products->where('hsn_id', hsn('Lens')->id)->pluck('name', 'id'), old('product') ?? '')->class('select2 selectPdct')->attribute('id', 'pdct1')->placeholder('Select') }}
                                     </td>
                                     <td>
-                                        {{ html()->number('qty[]', old('qty') ?? '')->class('form-control')->attribute('id', 'qty1')->placeholder('0') }}
+                                        {{ html()->number('qty[]', old('qty') ?? '')->class('form-control qty text-end')->attribute('id', 'qty1')->placeholder('0') }}
                                     </td>
                                     <td>
-                                        {{ html()->number('price[]', '', old('price') ?? '')->class('form-control')->attribute('id', 'price1')->placeholder('0.00') }}
+                                        {{ html()->number('price[]', '', old('price') ?? '')->class('form-control price text-end')->attribute('id', 'price1')->attribute('readonly', true)->placeholder('0.00') }}
                                     </td>
                                 </tr>
                                 <tr>
@@ -100,13 +108,13 @@
                                         {{ html()->select('cyl[]', $extras->where('category', 'cyl')->pluck('name', 'name'), old('cyl') ?? '')->class('select2')->attribute('id', 'cyl2')->placeholder('Select') }}
                                     </td>
                                     <td>
-                                        {{ html()->select('axis[]', $extras->where('category', 'axis')->pluck('name', 'name'), old('axis') ?? '')->class('select2')->attribute('id', 'axis2')->placeholder('Select') }}
+                                        {{ html()->select('axis[]', $axis, old('axis') ?? '')->class('select2')->attribute('id', 'axis2')->placeholder('Select') }}
                                     </td>
                                     <td>
                                         {{ html()->select('add[]', $extras->where('category', 'addition')->pluck('name', 'name'), old('add') ?? '')->class('select2')->attribute('id', 'add2')->placeholder('Select') }}
                                     </td>
                                     <td>
-                                        {{ html()->select('dia[]', $extras->where('category', 'dia')->pluck('name', 'name'), old('dia') ?? '')->class('select2')->attribute('id', 'dia2')->placeholder('Select') }}
+                                        {{ html()->select('dia[]', $dia, old('dia') ?? '')->class('select2')->attribute('id', 'dia2')->placeholder('Select') }}
                                     </td>
                                     <td>
                                         {{ html()->select('thickness[]', $extras->where('category', 'thickness')->pluck('name', 'id'), old('thickness') ?? '')->class('select2')->attribute('id', 'thick2')->placeholder('Select') }}
@@ -115,13 +123,13 @@
                                         {{ html()->text('ipd[]', old('ipd') ?? '')->class('form-control')->attribute('id', 'ipd2')->placeholder('IPD') }}
                                     </td>
                                     <td>
-                                        {{ html()->select('product[]', $products->where('hsn_id', hsn('Lens')->id)->pluck('name', 'id'), old('product') ?? '')->class('select2')->attribute('id', 'pdct2')->placeholder('Select') }}
+                                        {{ html()->select('product[]', $products->where('hsn_id', hsn('Lens')->id)->pluck('name', 'id'), old('product') ?? '')->class('select2 selectPdct')->attribute('id', 'pdct2')->placeholder('Select') }}
                                     </td>
                                     <td>
-                                        {{ html()->number('qty[]', old('qty') ?? '')->class('form-control')->attribute('id', 'qty2')->placeholder('0') }}
+                                        {{ html()->number('qty[]', old('qty') ?? '')->class('form-control qty text-end')->attribute('id', 'qty2')->placeholder('0') }}
                                     </td>
                                     <td>
-                                        {{ html()->number('price[]', '', old('price') ?? '')->class('form-control')->attribute('id', 'price2')->placeholder('0.00') }}
+                                        {{ html()->number('price[]', '', old('price') ?? '')->class('form-control price text-end')->attribute('id', 'price2')->attribute('readonly', true)->placeholder('0.00') }}
                                     </td>
                                 </tr>
                                 <tr>
@@ -138,16 +146,54 @@
                                         <input type="hidden" name="ipd[]" value="" />
                                     </td>
                                     <td>
-                                        {{ html()->select('product[]', $products->where('hsn_id', hsn('Frame')->id)->pluck('name', 'id'), old('product') ?? '')->class('select2')->attribute('id', 'pdct3')->placeholder('Select') }}
+                                        {{ html()->select('product[]', $products->where('hsn_id', hsn('Frame')->id)->pluck('name', 'id'), old('product') ?? '')->class('select2 selectPdct')->attribute('id', 'pdct3')->placeholder('Select') }}
                                     </td>
                                     <td>
-                                        {{ html()->number('qty[]', old('qty') ?? '')->class('form-control')->attribute('id', 'qty3')->placeholder('0') }}
+                                        {{ html()->number('qty[]', old('qty') ?? '')->class('form-control qty text-end')->attribute('id', 'qty3')->placeholder('0') }}
                                     </td>
                                     <td>
-                                        {{ html()->number('price[]', '', old('price') ?? '')->class('form-control')->attribute('id', 'price3')->placeholder('0.00') }}
+                                        {{ html()->number('price[]', '', old('price') ?? '')->class('form-control price text-end')->attribute('id', 'price3')->attribute('readonly', true)->placeholder('0.00') }}
                                     </td>
                                 </tr>
                             </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td colspan="10" class="fw-bold text-end">Discount</td>
+                                    <td>
+                                        {{ html()->number('discount', old('discount') ?? '')->class('form-control discount text-end')->placeholder('0.00') }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">Expected Del. Date</td>
+                                    <td colspan="2">Post Review Date</td>
+                                    <td>Pdct. Advisor</td>
+                                    <td colspan="3" class="fw-bold text-end">Advance</td>
+                                    <td colspan="2">
+                                        {{ html()->select('pmode', $extras->where('category', 'pmode')->pluck('name', 'id'), old('pmode') ?? '')->class('form-control')->attribute('id', 'pmode')->placeholder('Select Advance Pay Mode') }}
+                                    </td>
+                                    <td>
+                                        {{ html()->number('advance', old('advance') ?? '')->class('form-control advance text-end')->placeholder('0.00') }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        {{ html()->date('due_date', old('due_date') ?? '')->class('form-control') }}
+                                    </td>
+                                    <td colspan="2">
+                                        {{ html()->date('post_review_date', old('due_date') ?? '')->class('form-control') }}
+                                    </td>
+                                    <td colspan="2">
+                                        {{ html()->select('product_advisor', $advisors, old('product_advisor') ?? '')->class('form-control')->attribute('id', 'product_advisor')->placeholder('Select') }}
+                                    </td>
+                                    <td colspan="3">
+                                        {{ html()->text('remarks', old('remarks') ?? '')->class('form-control')->placeholder('Remarks') }}
+                                    </td>
+                                    <td class="fw-bold text-end">Balance</td>
+                                    <td>
+                                        {{ html()->number('balance', old('balance') ?? '')->class('form-control balance text-end')->attribute('readonly', 'true')->placeholder('0.00') }}
+                                    </td>
+                                </tr>
+                            </tfoot>
                         </table>
                     </div>
                 </div>

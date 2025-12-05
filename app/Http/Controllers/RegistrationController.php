@@ -28,12 +28,13 @@ class RegistrationController extends Controller implements HasMiddleware
         ];
     }
 
-    protected $ctypes, $gender, $doctors;
+    protected $ctypes, $gender, $doctors, $pmodes;
     public function __construct()
     {
         $this->ctypes = Extra::where('category', 'ctype')->pluck('name', 'id');
         $this->gender = Extra::where('category', 'gender')->pluck('name', 'name');
         $this->doctors = Doctor::pluck('name', 'id');
+        $this->pmodes = Extra::where('category', 'pmode')->pluck('name', 'id');
     }
     /**
      * Display a listing of the resource.
@@ -67,7 +68,8 @@ class RegistrationController extends Controller implements HasMiddleware
             $patient = Registration::findOrFail(decrypt($typeid));
             $rtype = encrypt(getRtypeId('Review'));
         endif;
-        return view('admin.registration.create', compact('doctors', 'ctypes', 'gender', 'rtype', 'typeid', 'patient'));
+        $pmodes = $this->pmodes;
+        return view('admin.registration.create', compact('doctors', 'ctypes', 'gender', 'rtype', 'typeid', 'patient', 'pmodes'));
     }
 
     /**
@@ -124,8 +126,9 @@ class RegistrationController extends Controller implements HasMiddleware
         $doctors = $this->doctors;
         $ctypes = $this->ctypes;
         $gender = $this->gender;
+        $pmodes = $this->pmodes;
         $registration = Registration::findOrFail(decrypt($id));
-        return view('admin.registration.edit', compact('doctors', 'ctypes', 'gender', 'registration'));
+        return view('admin.registration.edit', compact('doctors', 'ctypes', 'gender', 'registration', 'pmodes'));
     }
 
     /**
@@ -141,6 +144,8 @@ class RegistrationController extends Controller implements HasMiddleware
             'mobile' => 'required|numeric|digits:10',
             'doctor_id' => 'required',
             'ctype' => 'required',
+            'doc_fee_pmode' => 'nullable',
+            'surgery_advised' => 'nullable',
         ]);
         try {
             $inputs['updated_by'] = $request->user()->id;

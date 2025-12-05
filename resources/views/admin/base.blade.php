@@ -8,6 +8,7 @@
     <meta name="description" content="Devi Eye Hospitals">
     <meta name="keywords" content="Devi Eye Hospitals">
     <meta name="author" content="Cybernetics">
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
     <link rel="icon" href="{{ asset('/assets/images/favicon.png') }}" type="image/x-icon">
 
     <!-- Bootstrap CSS -->
@@ -472,6 +473,7 @@
 
         <!--  -->
         <script src="{{ asset('/assets/js/common.js') }}"></script>
+        <script src="{{ asset('/assets/js/devi.js') }}"></script>
         <script>
             $(document).ready(function() {
                 var table = $('.Data_Table').addClass('nowrap').DataTable({

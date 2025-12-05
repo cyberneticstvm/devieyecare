@@ -26,6 +26,8 @@ return new class extends Migration
             $table->foreignId('ctype')->comment("Consultation type such as Certificate / Surgery / Consultation")->constrained('extras', 'id')->onDelete('cascade');
             $table->decimal('doc_fee', 7, 2)->default(0);
             $table->unsignedBigInteger('doc_fee_pmode')->nullable();
+            $table->boolean('surgery_advised')->default(false);
+            $table->date('post_review_date')->nullable();
             $table->foreignId('created_by')->constrained('users', 'id');
             $table->foreignId('updated_by')->constrained('users', 'id');
             $table->timestamps();

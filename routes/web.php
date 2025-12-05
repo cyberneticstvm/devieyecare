@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AjaxController;
 use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BranchController;
@@ -31,6 +32,10 @@ Route::middleware(['web'])->group(function () {
     Route::middleware(['web', 'auth', 'auth.session', 'team', 'branch'])->group(function () {
         Route::prefix('')->controller(AuthController::class)->group(function () {
             Route::get('logout', 'logout')->name('logout');
+        });
+
+        Route::prefix('ajax')->controller(AjaxController::class)->group(function () {
+            Route::get('product', 'getProductById')->name('ajax.get.product.by.id');
         });
 
         Route::prefix('branch')->controller(BranchController::class)->group(function () {

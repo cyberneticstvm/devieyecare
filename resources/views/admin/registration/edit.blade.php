@@ -58,6 +58,14 @@
                         <small class="text-danger">{{ $errors->first('ctype') }}</small>
                         @enderror
                     </div>
+                    <div class="control-group col-md-2">
+                        <label class="form-label req">DC Pay Mode </label>
+                        {{ html()->select('doc_fee_pmode', $pmodes, $registration->doc_fee_pmode)->class('form-control')->attribute('id', 'doc_fee_pmode')->placeholder('Select') }}
+                    </div>
+                    <div class="control-group col-md-2">
+                        <label class="form-label req">Surgery Advised </label>
+                        {{ html()->select('surgery_advised', array('0' => 'No', '1' => 'Yes'), $registration->surgery_advised)->class('form-control')->attribute('id', 'surgery_advised')->placeholder('Select') }}
+                    </div>
                 </div>
                 <div class="raw mt-3">
                     <div class="col text-end">
