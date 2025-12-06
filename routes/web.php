@@ -7,6 +7,7 @@ use App\Http\Controllers\BranchController;
 use App\Http\Controllers\CampController;
 use App\Http\Controllers\CampDetailController;
 use App\Http\Controllers\DoctorController;
+use App\Http\Controllers\HelperController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\RegistrationController;
@@ -36,6 +37,11 @@ Route::middleware(['web'])->group(function () {
 
         Route::prefix('ajax')->controller(AjaxController::class)->group(function () {
             Route::get('product', 'getProductById')->name('ajax.get.product.by.id');
+        });
+
+        Route::prefix('helper')->controller(HelperController::class)->group(function () {
+            Route::get('registration', 'searchRegistration')->name('search.registration');
+            Route::post('registration', 'searchRegistrationShow')->name('search.registration.show');
         });
 
         Route::prefix('branch')->controller(BranchController::class)->group(function () {

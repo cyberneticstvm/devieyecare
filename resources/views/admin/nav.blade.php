@@ -39,7 +39,9 @@
                         @if(Auth::user()->can('registration-list'))
                         <li class="nav-item"><a class="nav-link {{ (in_array(Route::currentRouteName(), ['registration.list', 'registration.create', 'registration.edit'])) ? 'active' : '' }}" href="{{ route('registration.list') }}">Registrations</a></li>
                         @endif
-                        <li class="nav-item"><a class="nav-link {{ (in_array(Route::currentRouteName(), ['search'])) ? 'active' : '' }}" href="{{ route('index') }}">Search</a></li>
+                        @if(Auth::user()->can('search-registration'))
+                        <li class="nav-item"><a class="nav-link {{ (in_array(Route::currentRouteName(), ['search.registration', 'search.registration.show'])) ? 'active' : '' }}" href="{{ route('search.registration') }}">Search</a></li>
+                        @endif
                         @if(Auth::user()->can('vehicle-list'))
                         <li class="nav-item"><a class="nav-link {{ (in_array(Route::currentRouteName(), ['vehicle.list', 'vehicle.create', 'vehicle.edit', 'vehicle.payment.list', 'vehicle.payment.create', 'vehicle.payment.edit'])) ? 'active' : '' }}" href="{{ route('vehicle.list') }}">Vehicle Management</a></li>
                         @endif
