@@ -12,8 +12,8 @@
                         <tr>
                             <th class="py-2 fw-medium small text-uppercase">SL No</th>
                             <th class="py-2 fw-medium small text-uppercase">Head</th>
-                            <th class="py-2 fw-medium small text-uppercase">Amount</th>
                             <th class="py-2 fw-medium small text-uppercase">Description</th>
+                            <th class="py-2 fw-medium small text-uppercase">Amount</th>
                             <th class="py-2 fw-medium small text-uppercase">Status</th>
                             <th class="py-2 fw-medium small text-uppercase">Action</th>
                         </tr>
@@ -23,8 +23,8 @@
                         <tr>
                             <td>{{ $key + 1 }}</td>
                             <td>{{ $ie->head->name }}</td>
-                            <td>{{ $ie->amount }}</td>
                             <td>{{ $ie->description }}</td>
+                            <td class="text-end">{{ $ie->amount }}</td>
                             <td>{!! $ie->cancelled() !!}</td>
                             <td class="text-center">
                                 <a href="{{ route('ie.edit', ['category' => 'Expense', 'id' => encrypt($ie->id)]) }}" class="text-secondary">Edit</a> | <a href="{{ route('ie.delete', ['category' => 'Expense', 'id' => encrypt($ie->id)]) }}" class="text-danger dlt">Delete</a>
@@ -33,6 +33,13 @@
                         @empty
                         @endforelse
                     </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="3" class="fw-bold text-end">Total</td>
+                            <td class="fw-bold text-end">{{ number_format($ies->sum('amount'), 2) }}</td>
+                            <td colspan="2"></td>
+                        </tr>
+                    </tfoot>
                 </table>
             </div>
             <div class="col-lg-4">

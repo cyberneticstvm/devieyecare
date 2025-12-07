@@ -63,6 +63,10 @@ class PermissionSeeder extends Seeder
             'ie-create',
             'ie-edit',
             'ie-delete',
+            'ms-list',
+            'ms-create',
+            'ms-edit',
+            'ms-delete',
         ];
 
         foreach ($permissions as $permission) {

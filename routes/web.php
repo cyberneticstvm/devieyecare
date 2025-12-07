@@ -10,6 +10,7 @@ use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\HeadController;
 use App\Http\Controllers\HelperController;
 use App\Http\Controllers\IncomeExpenseController;
+use App\Http\Controllers\ManufacturerSupplierController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\RegistrationController;
@@ -152,6 +153,15 @@ Route::middleware(['web'])->group(function () {
             Route::get('edit/{category}/{id}', 'edit')->name('ie.edit');
             Route::post('edit/{category}/{id}', 'update')->name('ie.update');
             Route::get('delete/{category}/{id}', 'destroy')->name('ie.delete');
+        });
+
+        Route::prefix('ms')->controller(ManufacturerSupplierController::class)->group(function () {
+            Route::get('{category}', 'index')->name('ms.list');
+            Route::get('create/{category}', 'create')->name('ms.create');
+            Route::post('create/{category}', 'store')->name('ms.save');
+            Route::get('edit/{category}/{id}', 'edit')->name('ms.edit');
+            Route::post('edit/{category}/{id}', 'update')->name('ms.update');
+            Route::get('delete/{category}/{id}', 'destroy')->name('ms.delete');
         });
 
         Route::prefix('product')->controller(ProductController::class)->group(function () {

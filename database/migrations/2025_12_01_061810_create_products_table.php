@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('code', 25)->unique();
             $table->string('description')->nullable();
             $table->decimal('selling_price', 8, 2)->default(0);
-            $table->foreignId('manufacturer_id')->constrained()->onDelete('cascade');
+            $table->foreignId('manufacturer_id')->constrained('manufacturer_suppliers', 'id')->onDelete('cascade');
             $table->integer('default_delivery_days')->default(0);
             $table->boolean('eligible_for_adviser')->default(false);
             $table->foreignId('created_by')->constrained('users', 'id');

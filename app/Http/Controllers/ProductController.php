@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Hsn;
-use App\Models\Manufacturer;
+use App\Models\ManufacturerSupplier;
 use App\Models\Product;
 use Exception;
 use Illuminate\Http\Request;
@@ -27,7 +27,7 @@ class ProductController extends Controller implements HasMiddleware
     {
         $this->products = Product::withTrashed()->orderBy('name')->get();
         $this->hsns = Hsn::orderBy('name')->pluck('name', 'id');
-        $this->manufacturers = Manufacturer::orderBy('name')->pluck('name', 'id');
+        $this->manufacturers = ManufacturerSupplier::where('category', 'Manufacturer')->orderBy('name')->pluck('name', 'id');
     }
     /**
      * Display a listing of the resource.

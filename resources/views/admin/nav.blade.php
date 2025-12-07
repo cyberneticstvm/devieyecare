@@ -126,11 +126,11 @@
                         @if(Auth::user()->can('doctor-list'))
                         <li class="nav-item"><a class="nav-link {{ (in_array(Route::currentRouteName(), ['doctor.list', 'doctor.create', 'doctor.edit'])) ? 'active' : '' }}" href="{{ route('doctor.list') }}">Doctor Management</a></li>
                         @endif
-                        @if(Auth::user()->can('doctor-list'))
-                        <li class="nav-item"><a class="nav-link {{ (in_array(Route::currentRouteName(), ['doctor.list', 'doctor.create', 'doctor.edit'])) ? 'active' : '' }}" href="{{ route('doctor.list') }}">Manufacturer</a></li>
+                        @if(Auth::user()->can('ms-list'))
+                        <li class="nav-item"><a class="nav-link {{ (in_array(Route::currentRouteName(), ['ms.list', 'ms.create', 'ms.edit'])) ? 'active' : '' }}" href="{{ route('ms.list', 'Manufacturer') }}">Manufacturer</a></li>
                         @endif
-                        @if(Auth::user()->can('doctor-list'))
-                        <li class="nav-item"><a class="nav-link {{ (in_array(Route::currentRouteName(), ['doctor.list', 'doctor.create', 'doctor.edit'])) ? 'active' : '' }}" href="{{ route('doctor.list') }}">Supplier</a></li>
+                        @if(Auth::user()->can('ms-list'))
+                        <li class="nav-item"><a class="nav-link {{ (in_array(Route::currentRouteName(), ['ms.list', 'ms.create', 'ms.edit'])) ? 'active' : '' }}" href="{{ route('ms.list', 'Supplier') }}">Supplier</a></li>
                         @endif
                     </ul>
                 </div>
