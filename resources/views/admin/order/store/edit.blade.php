@@ -7,7 +7,8 @@
         <p class="fs-12">Store Order</p>
         <div class="row g-lg-12 g-3">
             <div class="col-lg-12">
-                {{ html()->form('POST')->route('order.update', $registration->id)->class('')->open() }}
+                {{ html()->form('POST')->route('order.update', $registration->id)->attribute('id', 'orderForm')->class('')->open() }}
+                <input type="hidden" name="oid" value="{{ $order ? encrypt($order->id) : encrypt(0) }}" />
                 <div class="row g-3">
                     <div class="control-group col-md-2">
                         <label class="form-label req">Patient Name </label>
@@ -177,7 +178,7 @@
                                 </tr>
                                 <tr>
                                     <td colspan="2">
-                                        {{ html()->date('due_date', old('due_date') ?? '')->class('form-control') }}
+                                        {{ html()->date('due_date', old('due_date') ?? date('Y-m-d'))->class('form-control') }}
                                     </td>
                                     <td colspan="2">
                                         {{ html()->date('post_review_date', old('due_date') ?? '')->class('form-control') }}
@@ -197,10 +198,16 @@
                         </table>
                     </div>
                 </div>
+                <div class="raw mt-3">
+                    <div class="control-group col-md-2">
+                        <label class="form-label">Generate Invoice </label>
+                        {{ html()->checkbox('invoice', false, 1)->class('form-check-input') }}
+                    </div>
+                </div>
                 <div class="raw mt-5">
                     <div class="col text-end">
                         {{ html()->button('Cancel')->class('btn btn-secondary')->attribute('onclick', 'window.history.back()')->attribute('type', 'button') }}
-                        {{ html()->submit('Save')->class('btn btn-submit btn-primary') }}
+                        {{ html()->submit('Save')->attribute('onclick', 'return validateOrderForm()')->class('btn btn-submit btn-primary') }}
                     </div>
                 </div>
                 {{ html()->form()->close() }}

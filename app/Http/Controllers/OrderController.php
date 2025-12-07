@@ -8,7 +8,10 @@ use App\Models\Order;
 use App\Models\Product;
 use App\Models\Registration;
 use App\Models\User;
+use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
 
 class OrderController extends Controller
 {
@@ -71,7 +74,8 @@ class OrderController extends Controller
         $dia = $this->dia;
         $order = Order::where('registration_id', $registration->id)->first();
         $advisors = User::role(requiredRoles()[1])->pluck('name', 'id');
-        return view('admin.order.store.edit', compact('registration', 'order', 'extras', 'products', 'axis', 'dia', 'advisors'));
+        $order = Order::where('registration_id', $registration->id)->latest()->first();
+        return view('admin.order.store.edit', compact('registration', 'order', 'extras', 'products', 'axis', 'dia', 'advisors', 'order'));
     }
 
     /**
@@ -79,7 +83,25 @@ class OrderController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        try {
+            DB::transaction(function () use ($request, $id) {
+                // Existing Order
+                $inv = generateInvoice(decrypt($request->oid), $request->invoice);
+                Registration::where('id', $id)->update([
+                    'doc_fee_pmode' => $request->doc_fee_pmode,
+                    'surgery_advised' => $request->surgery_advised,
+                ]);
+                $order = Order::create([
+                    'registration_id' => $id,
+                    'branch_id' => Session::get('branch')->id,
+                    'invoice_number' => $inv[0],
+                    'invoice_generated_at' => $inv[1],
+                ]);
+            });
+        } catch (Exception $e) {
+            return redirect()->back()->with("error", $e->getMessage())->withInput($request->all());
+        }
+        return redirect()->route('order.list')->with("success", "Order updated successfully!");
     }
 
     /**

@@ -13,6 +13,7 @@ use App\Models\Doctor;
 use App\Models\Extra;
 use App\Models\Hsn;
 use App\Models\IncomeExpense;
+use App\Models\Order;
 use App\Models\Registration;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Session;
@@ -118,4 +119,19 @@ function isExpenseExceeded($amount, $category, $type, $ie = null)
         $used = ($used + $amount) - $ie->amount;
     endif;
     return ($used > $limit) ? true : false;
+}
+
+function generateInvoice($oid, $is_invoice)
+{
+    $ino = null;
+    $idate = null;
+    $order = Order::find($oid); // Existing Order
+    if ($order && $order->invoice_number):
+        $ino = $order->invoice_number;
+        $idate = $order->invoice_generated_at;
+    endif;
+    if ($is_invoice && !$order->invoice_number):
+    // Check pending payment
+    endif;
+    return array($ino, $idate);
 }

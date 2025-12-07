@@ -473,7 +473,6 @@
 
         <!--  -->
         <script src="{{ asset('/assets/js/common.js') }}"></script>
-        <script src="{{ asset('/assets/js/devi.js') }}"></script>
         <script>
             $(document).ready(function() {
                 var table = $('.Data_Table').addClass('nowrap').DataTable({
@@ -507,6 +506,7 @@
             }
         </script>
         @include("admin.message")
+        <script src="{{ asset('/assets/js/devi.js') }}"></script>
 </body>
 
 </html>
