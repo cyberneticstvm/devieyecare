@@ -81,6 +81,11 @@ class DatabaseSeeder extends Seeder
             'Thin',
         ];
 
+        $heads = [
+            'Income',
+            'Expense',
+        ];
+
         $statuses = [
             'RGSTD',
             'CNLT',
@@ -126,6 +131,10 @@ class DatabaseSeeder extends Seeder
 
         foreach ($statuses as $status) {
             Extra::insert(['name' => $status, 'category' => 'order']);
+        }
+
+        foreach ($heads as $head) {
+            Extra::insert(['name' => $head, 'category' => 'head']);
         }
 
         $hsns = [

@@ -67,6 +67,25 @@
                 </div>
             </li>
             <li>
+                <a class="d-flex align-items-center justify-content-between hover-svg" data-bs-toggle="collapse" href="#collapseAccounts" role="button" aria-expanded="false" aria-controls="collapseAccounts">
+                    <span class="nav-title  fw-medium">Accounts</span>
+                    <svg class="opacity-75" width="18" height="18" stroke-width="0.5" viewBox="0 0 21 21" fill="none" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M10.5 4.375V16.625" />
+                        <path d="M4.375 10.5H16.625" />
+                    </svg>
+                </a>
+                <div class="collapse" id="collapseAccounts">
+                    <ul class="nav flex-column li_animate">
+                        @if(Auth::user()->can('head-list'))
+                        <li class="nav-item"><a class="nav-link {{ (in_array(Route::currentRouteName(), ['head.list', 'head.create', 'head.edit'])) ? 'active' : '' }}" href="{{ route('head.list') }}">Heads</a></li>
+                        @endif
+                        @if(Auth::user()->can('ie-list'))
+                        <li class="nav-item"><a class="nav-link {{ (in_array(Route::currentRouteName(), ['ie.list', 'ie.create', 'ie.edit'])) ? 'active' : '' }}" href="{{ route('ie.list', 'Expense') }}">Expense Management</a></li>
+                        @endif
+                    </ul>
+                </div>
+            </li>
+            <li>
                 <a class="d-flex align-items-center justify-content-between hover-svg" data-bs-toggle="collapse" href="#collapseProducts" role="button" aria-expanded="false" aria-controls="collapseProducts">
                     <span class="nav-title  fw-medium">Product</span>
                     <svg class="opacity-75" width="18" height="18" stroke-width="0.5" viewBox="0 0 21 21" fill="none" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
@@ -106,6 +125,12 @@
                         @endif
                         @if(Auth::user()->can('doctor-list'))
                         <li class="nav-item"><a class="nav-link {{ (in_array(Route::currentRouteName(), ['doctor.list', 'doctor.create', 'doctor.edit'])) ? 'active' : '' }}" href="{{ route('doctor.list') }}">Doctor Management</a></li>
+                        @endif
+                        @if(Auth::user()->can('doctor-list'))
+                        <li class="nav-item"><a class="nav-link {{ (in_array(Route::currentRouteName(), ['doctor.list', 'doctor.create', 'doctor.edit'])) ? 'active' : '' }}" href="{{ route('doctor.list') }}">Manufacturer</a></li>
+                        @endif
+                        @if(Auth::user()->can('doctor-list'))
+                        <li class="nav-item"><a class="nav-link {{ (in_array(Route::currentRouteName(), ['doctor.list', 'doctor.create', 'doctor.edit'])) ? 'active' : '' }}" href="{{ route('doctor.list') }}">Supplier</a></li>
                         @endif
                     </ul>
                 </div>

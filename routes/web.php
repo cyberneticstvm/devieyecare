@@ -7,7 +7,9 @@ use App\Http\Controllers\BranchController;
 use App\Http\Controllers\CampController;
 use App\Http\Controllers\CampDetailController;
 use App\Http\Controllers\DoctorController;
+use App\Http\Controllers\HeadController;
 use App\Http\Controllers\HelperController;
+use App\Http\Controllers\IncomeExpenseController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\RegistrationController;
@@ -132,6 +134,24 @@ Route::middleware(['web'])->group(function () {
             Route::get('edit/{id}', 'edit')->name('vehicle.payment.edit');
             Route::post('edit/{id}', 'update')->name('vehicle.payment.update');
             Route::get('delete/{id}', 'destroy')->name('vehicle.payment.delete');
+        });
+
+        Route::prefix('head')->controller(HeadController::class)->group(function () {
+            Route::get('', 'index')->name('head.list');
+            Route::get('create/', 'create')->name('head.create');
+            Route::post('create/', 'store')->name('head.save');
+            Route::get('edit/{id}', 'edit')->name('head.edit');
+            Route::post('edit/{id}', 'update')->name('head.update');
+            Route::get('delete/{id}', 'destroy')->name('head.delete');
+        });
+
+        Route::prefix('ie')->controller(IncomeExpenseController::class)->group(function () {
+            Route::get('{category}', 'index')->name('ie.list');
+            Route::get('create/{category}', 'create')->name('ie.create');
+            Route::post('create/{category}', 'store')->name('ie.save');
+            Route::get('edit/{category}/{id}', 'edit')->name('ie.edit');
+            Route::post('edit/{category}/{id}', 'update')->name('ie.update');
+            Route::get('delete/{category}/{id}', 'destroy')->name('ie.delete');
         });
 
         Route::prefix('product')->controller(ProductController::class)->group(function () {

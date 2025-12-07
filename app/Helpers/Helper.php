@@ -12,7 +12,10 @@
 use App\Models\Doctor;
 use App\Models\Extra;
 use App\Models\Hsn;
+use App\Models\IncomeExpense;
 use App\Models\Registration;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Session;
 
 function teamId()
 {
@@ -103,4 +106,16 @@ function getDocFee($request)
 function requiredRoles()
 {
     return ['Administrator', 'Product Advisor', 'Doctor', 'Pharmacist', 'Optometrist'];
+}
+
+function isExpenseExceeded($amount, $category, $type, $ie = null)
+{
+    $limit = Session::get('branch')->daily_expense_limit;
+    $used = IncomeExpense::whereDate('ie_date', Carbon::today())->where('branch_id', Session::get('branch')->id)->where('category_id', $category)->sum('amount');
+    if ($type == 'store'):
+        $used = $used + $amount;
+    else:
+        $used = ($used + $amount) - $ie->amount;
+    endif;
+    return ($used > $limit) ? true : false;
 }
