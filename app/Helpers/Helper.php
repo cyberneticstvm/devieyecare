@@ -123,15 +123,19 @@ function isExpenseExceeded($amount, $category, $type, $ie = null)
 
 function generateInvoice($oid, $is_invoice)
 {
-    $ino = null;
-    $idate = null;
-    $order = Order::find($oid); // Existing Order
-    if ($order && $order->invoice_number):
-        $ino = $order->invoice_number;
-        $idate = $order->invoice_generated_at;
-    endif;
-    if ($is_invoice && !$order->invoice_number):
-    // Check pending payment
-    endif;
+    try {
+        $ino = null;
+        $idate = null;
+        $order = Order::find($oid); // Existing Order
+        if ($order && $order->invoice_number):
+            $ino = $order->invoice_number;
+            $idate = $order->invoice_generated_at;
+        endif;
+        if ($is_invoice && !$order->invoice_number):
+        // Check pending payment
+        endif;
+    } catch (Exception $e) {
+        //
+    }
     return array($ino, $idate);
 }
