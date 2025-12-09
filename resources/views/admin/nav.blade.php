@@ -63,6 +63,9 @@
                     <ul class="nav flex-column li_animate">
                         <li class="nav-item"><a class="nav-link" href="{{ route('index') }}">Store Orders</a></li>
                         <li class="nav-item"><a class="nav-link" href="{{ route('index') }}">Pharmacy Orders</a></li>
+                        @if(Auth::user()->can('payment-list'))
+                        <li class="nav-item"><a class="nav-link {{ (in_array(Route::currentRouteName(), ['payment.list', 'payment.create', 'payment.edit'])) ? 'active' : '' }}" href="{{ route('payment.list') }}">Payments</a></li>
+                        @endif
                     </ul>
                 </div>
             </li>

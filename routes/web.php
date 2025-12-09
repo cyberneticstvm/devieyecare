@@ -12,6 +12,7 @@ use App\Http\Controllers\HelperController;
 use App\Http\Controllers\IncomeExpenseController;
 use App\Http\Controllers\ManufacturerSupplierController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\RegistrationController;
 use App\Http\Controllers\RoleController;
@@ -171,6 +172,15 @@ Route::middleware(['web'])->group(function () {
             Route::get('edit/{id}', 'edit')->name('product.edit');
             Route::post('edit/{id}', 'update')->name('product.update');
             Route::get('delete/{id}', 'destroy')->name('product.delete');
+        });
+
+        Route::prefix('payment')->controller(PaymentController::class)->group(function () {
+            Route::get('', 'index')->name('payment.list');
+            Route::get('create/', 'create')->name('payment.create');
+            Route::post('create/', 'store')->name('payment.save');
+            Route::get('edit/{id}', 'edit')->name('payment.edit');
+            Route::post('edit/{id}', 'update')->name('payment.update');
+            Route::get('delete/{id}', 'destroy')->name('payment.delete');
         });
 
         Route::prefix('order')->controller(OrderController::class)->group(function () {

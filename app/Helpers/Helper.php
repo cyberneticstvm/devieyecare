@@ -14,6 +14,7 @@ use App\Models\Extra;
 use App\Models\Hsn;
 use App\Models\IncomeExpense;
 use App\Models\Order;
+use App\Models\Payment;
 use App\Models\Registration;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Session;
@@ -138,4 +139,15 @@ function generateInvoice($oid, $is_invoice)
         //
     }
     return array($ino, $idate);
+}
+
+function getStoreDueAmount($regId, $amount)
+{
+    $order = Order::where('registration_id', $regId)->first();
+    $paid = Payment::where('registration_id', $regId)->where('order_type', 'Store')->sum('amount');
+    if ($amount > 0):
+        return (($order->total + $amount) - ($order->discount + $order->advance + $paid));
+    else:
+        return ($order->total - ($order->discount + $order->advance + $paid));
+    endif;
 }

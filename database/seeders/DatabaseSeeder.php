@@ -43,6 +43,13 @@ class DatabaseSeeder extends Seeder
             'Other',
         ];
 
+        $ptypes = [
+            'Advance',
+            'Partial',
+            'Balance',
+            'Other',
+        ];
+
         $devices = [
             'Computer',
             'Android',
@@ -115,6 +122,10 @@ class DatabaseSeeder extends Seeder
 
         foreach ($pmodes as $pmode) {
             Extra::insert(['name' => $pmode, 'category' => 'pmode']);
+        }
+
+        foreach ($ptypes as $ptype) {
+            Extra::insert(['name' => $ptype, 'category' => 'ptype']);
         }
 
         foreach ($genders as $gender) {

@@ -23,7 +23,6 @@ return new class extends Migration
             $table->foreignId('advance_pmode')->constrained('extras', 'id')->onDelete('cascade');
             $table->date('due_date')->comment('Expected delivery date')->nullable();
             $table->foreignId('product_advisor')->constrained('users', 'id')->onDelete('cascade');
-            $table->foreignId('status')->constrained('extras', 'id')->onDelete('cascade');
             $table->string('remarks')->nullable();
             $table->foreignId('created_by')->constrained('users', 'id');
             $table->foreignId('updated_by')->constrained('users', 'id');
