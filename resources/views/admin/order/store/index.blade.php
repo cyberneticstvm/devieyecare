@@ -19,6 +19,7 @@
                             <th class="py-2 fw-medium small text-uppercase">Branch</th>
                             <th class="py-2 fw-medium small text-uppercase">Download</th>
                             <th class="py-2 fw-medium small text-uppercase">Status</th>
+                            <th class="py-2 fw-medium small text-uppercase">Cancelled</th>
                             <th class="py-2 fw-medium small text-uppercase">Action</th>
                         </tr>
                     </thead>
@@ -33,9 +34,10 @@
                             <td>{{ $order->registration->mobile }}</td>
                             <td>{{ $order->branch->name }}</td>
                             <td></td>
+                            <td class="text-primary">{{ $order->ostatus()->latest()->first()->status->name }}</td>
                             <td>{!! $order->cancelled() !!}</td>
                             <td class="text-center">
-                                <a href="{{ route('store.order.edit', encrypt($order->id)) }}" class="text-secondary">Edit</a> | <a href="{{ route('store.order.delete', encrypt($order->id)) }}" class="text-danger dlt">Delete</a>
+                                <a href="{{ route('store.order.edit', ['rid' => encrypt($order->id), 'source' => 'order']) }}" class="text-secondary">Edit</a> | <a href="{{ route('store.order.delete', encrypt($order->id)) }}" class="text-danger dlt">Delete</a>
                             </td>
                         </tr>
                         @empty

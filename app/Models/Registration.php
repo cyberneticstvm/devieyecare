@@ -11,7 +11,7 @@ class Registration extends Model
 
     protected $guarded = [];
 
-    protected $casts = ['rdate' => 'datetime'];
+    protected $casts = ['rdate' => 'datetime', 'post_review_date' => 'datetime'];
 
     public function branch()
     {
@@ -21,6 +21,11 @@ class Registration extends Model
     public function doctor()
     {
         return $this->belongsTo(Doctor::class, 'doctor_id', 'id');
+    }
+
+    public function order()
+    {
+        return $this->hasMany(Order::class, 'registration_id', 'id');
     }
 
     public function cancelled()

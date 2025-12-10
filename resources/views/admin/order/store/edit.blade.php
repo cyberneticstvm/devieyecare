@@ -66,7 +66,7 @@
                                     <th class="py-2 fw-medium small text-uppercase" style="width: 10%;">Price</th>
                                 </tr>
                             </thead>
-                            @if(!$order->exists())
+                            @if(!$order?->exists())
                             <tbody>
                                 <tr>
                                     <td>
@@ -239,13 +239,13 @@
                                 <tr>
                                     <td colspan="10" class="fw-bold text-end">Discount</td>
                                     <td>
-                                        {{ html()->number('discount', $order->discount, '', '', 'any')->class('form-control discount text-end')->placeholder('0.00') }}
+                                        {{ html()->number('discount', $order?->discount, '', '', 'any')->class('form-control discount text-end')->placeholder('0.00') }}
                                     </td>
                                 </tr>
                                 <tr>
                                     <td colspan="10" class="fw-bold text-end">Total</td>
                                     <td>
-                                        {{ html()->number('total', $order->total, '', '', 'any')->class('form-control total text-end')->attribute('readonly', true)->placeholder('0.00') }}
+                                        {{ html()->number('total', $order?->total, '', '', 'any')->class('form-control total text-end')->attribute('readonly', true)->placeholder('0.00') }}
                                     </td>
                                 </tr>
                                 <tr>
@@ -254,28 +254,28 @@
                                     <td>Pdct. Advisor</td>
                                     <td colspan="3" class="fw-bold text-end">Advance</td>
                                     <td colspan="2">
-                                        {{ html()->select('advance_pmode', $extras->where('category', 'pmode')->pluck('name', 'id'), $order->advance_pmode)->class('form-control')->attribute('id', 'advance_pmode')->placeholder('Select Advance Pay Mode') }}
+                                        {{ html()->select('advance_pmode', $extras->where('category', 'pmode')->pluck('name', 'id'), $order?->advance_pmode)->class('form-control')->attribute('id', 'advance_pmode')->placeholder('Select Advance Pay Mode') }}
                                     </td>
                                     <td>
-                                        {{ html()->number('advance', $order->advance, '', '', 'any')->class('form-control advance text-end')->placeholder('0.00') }}
+                                        {{ html()->number('advance', $order?->advance, '', '', 'any')->class('form-control advance text-end')->placeholder('0.00') }}
                                     </td>
                                 </tr>
                                 <tr>
                                     <td colspan="2">
-                                        {{ html()->date('due_date', $order->due_date->format('y-m-d'))->class('form-control') }}
+                                        {{ html()->date('due_date', $order?->due_date?->format('y-m-d'))->class('form-control') }}
                                     </td>
                                     <td colspan="2">
-                                        {{ html()->date('post_review_date', old('due_date') ?? '')->class('form-control') }}
+                                        {{ html()->date('post_review_date', old('due_date') ?? $registration?->post_review_date?->format('Y-m-d'))->class('form-control') }}
                                     </td>
                                     <td colspan="2">
-                                        {{ html()->select('product_advisor', $advisors, $order->product_advisor)->class('form-control')->attribute('id', 'product_advisor')->placeholder('Select') }}
+                                        {{ html()->select('product_advisor', $advisors, $order?->product_advisor)->class('form-control')->attribute('id', 'product_advisor')->placeholder('Select') }}
                                     </td>
                                     <td colspan="3">
-                                        {{ html()->text('remarks', $order->remarks)->class('form-control')->placeholder('Remarks') }}
+                                        {{ html()->text('remarks', $order?->remarks)->class('form-control')->placeholder('Remarks') }}
                                     </td>
                                     <td class="fw-bold text-end">Balance</td>
                                     <td>
-                                        {{ html()->text('balance', number_format(getStoreDueAmount($order->registration_id, 0), 2))->class('form-control balance text-end')->attribute('readonly', 'true')->placeholder('0.00') }}
+                                        {{ html()->text('balance', ($order?->exists()) ? number_format(getStoreDueAmount($order->registration_id, 0), 2) : '0.00')->class('form-control balance text-end')->attribute('readonly', 'true')->placeholder('0.00') }}
                                     </td>
                                 </tr>
                             </tfoot>
@@ -283,7 +283,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-lg-12 text-end text-primary">Payments made through other channels: {{ $order->payments()->sum('amount') }}</div>
+                    <div class="col-lg-12 text-end text-primary">Payments made through other channels: {{ $order?->payments()?->sum('amount') }}</div>
                 </div>
                 <div class="raw mt-3">
                     <div class="col text-end">

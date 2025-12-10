@@ -185,7 +185,7 @@ Route::middleware(['web'])->group(function () {
 
         Route::prefix('order')->controller(OrderController::class)->group(function () {
             Route::get('', 'index')->name('store.order.list');
-            Route::get('edit/{rid}', 'edit')->name('store.order.edit');
+            Route::get('edit/{rid}/{source}', 'edit')->name('store.order.edit');
             Route::post('edit/{rid}', 'update')->name('store.order.update');
             Route::get('delete/{id}', 'destroy')->name('store.order.delete');
         });

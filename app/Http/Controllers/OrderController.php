@@ -84,16 +84,30 @@ class OrderController extends Controller implements HasMiddleware
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(string $id, string $source)
     {
-        $registration = Registration::findOrFail(decrypt($id));
-        $extras = Extra::whereIn('category', ['thickness', 'sph', 'cyl', 'addition', 'pmode'])->get();
-        $products = $this->products;
-        $axis = $this->axis;
-        $dia = $this->dia;
-        $order = Order::where('registration_id', $registration->id)->first();
-        $advisors = User::role(requiredRoles()[1])->pluck('name', 'id');
-        $order = Order::where('registration_id', $registration->id)->latest()->first();
+        try {
+            if ($source == 'order'):
+                $order = Order::findOrFail(decrypt($id));
+                $registration = Registration::findOrFail($order->registration_id);
+            else:
+                $registration = Registration::findOrFail(decrypt($id));
+                $order = Order::withTrashed()->where('registration_id', $registration->id)->latest()->first();
+            endif;
+            if ($order?->deleted_at):
+                throw new Exception('Order has been deleted and cannot be edited');
+            endif;
+            if ($order?->invoice_number):
+                throw new Exception('Order has been delivered and cannot be edited');
+            endif;
+            $extras = Extra::whereIn('category', ['thickness', 'sph', 'cyl', 'addition', 'pmode'])->get();
+            $products = $this->products;
+            $axis = $this->axis;
+            $dia = $this->dia;
+            $advisors = User::role(requiredRoles()[1])->pluck('name', 'id');
+        } catch (Exception $e) {
+            return redirect()->back()->with("error", $e->getMessage());
+        }
         return view('admin.order.store.edit', compact('registration', 'order', 'extras', 'products', 'axis', 'dia', 'advisors', 'order'));
     }
 
@@ -107,6 +121,7 @@ class OrderController extends Controller implements HasMiddleware
                 Registration::where('id', $id)->update([
                     'doc_fee_pmode' => $request->doc_fee_pmode,
                     'surgery_advised' => $request->surgery_advised,
+                    'post_review_date' => $request->post_review_date,
                 ]);
                 $order = Order::updateOrCreate(
                     ['id' => decrypt($request->oid)],
@@ -123,9 +138,9 @@ class OrderController extends Controller implements HasMiddleware
                         'updated_by' => $request->user()->id,
                     ]
                 );
-                $status = getOrderStatus('BKD')->id;
+                $status = getOrderStatus('BKD', 'order')->id;
                 if (!$order->invoice_number && $request->invoice):
-                    $status = getOrderStatus('DLVD')->id;
+                    $status = getOrderStatus('DLVD', 'order')->id;
                     $order->update([
                         'invoice_number' => generateInvoice($order),
                         'invoice_generated_at' => Carbon::now(),
@@ -175,6 +190,7 @@ class OrderController extends Controller implements HasMiddleware
      */
     public function destroy(string $id)
     {
-        //
+        Order::findOrFail(decrypt($id))->delete();
+        return redirect()->route('store.order.list')->with("success", "Order deleted successfully!");
     }
 }

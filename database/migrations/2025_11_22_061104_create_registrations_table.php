@@ -28,6 +28,7 @@ return new class extends Migration
             $table->unsignedBigInteger('doc_fee_pmode')->nullable();
             $table->boolean('surgery_advised')->default(false);
             $table->date('post_review_date')->nullable();
+            $table->foreignId('status')->comment("RGSTD / CNLT")->constrained('extras', 'id')->onDelete('cascade');
             $table->foreignId('created_by')->constrained('users', 'id');
             $table->foreignId('updated_by')->constrained('users', 'id');
             $table->timestamps();

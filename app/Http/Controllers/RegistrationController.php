@@ -94,6 +94,7 @@ class RegistrationController extends Controller implements HasMiddleware
             $inputs['branch_id'] = Session::get('branch')->id;
             $inputs['mrn'] = Registration::max('mrn') + 1 ?? 1;
             $inputs['doc_fee'] = getDocFee($request);
+            $inputs['status'] = getOrderStatus('RGSTD', 'registration')->id;
             DB::transaction(function () use ($inputs) {
                 $type = Extra::findOrFail($inputs['rtype']);
                 $reg = Registration::create($inputs);

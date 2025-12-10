@@ -38,6 +38,11 @@ class Order extends Model
         return $this->hasMany(Payment::class, 'order_id', 'id');
     }
 
+    public function ostatus()
+    {
+        return $this->hasMany(OrderStatus::class, 'order_id', 'id');
+    }
+
     public function cancelled()
     {
         return $this->deleted_at ? "<span class='badge bg-danger'>Cancelled</span>" : "<span class='badge bg-success'>Active</span>";

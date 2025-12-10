@@ -93,9 +93,12 @@ class DatabaseSeeder extends Seeder
             'Expense',
         ];
 
-        $statuses = [
+        $statuses1 = [
             'RGSTD',
             'CNLT',
+        ];
+
+        $statuses2 = [
             'BKD',
             'PNDG',
             'UPRS',
@@ -140,7 +143,11 @@ class DatabaseSeeder extends Seeder
             Extra::insert(['name' => $thick, 'category' => 'thickness']);
         }
 
-        foreach ($statuses as $status) {
+        foreach ($statuses1 as $status) {
+            Extra::insert(['name' => $status, 'category' => 'registration']);
+        }
+
+        foreach ($statuses2 as $status) {
             Extra::insert(['name' => $status, 'category' => 'order']);
         }
 

@@ -51,9 +51,9 @@ function loggedDevice($agent)
     return $device;
 }
 
-function getOrderStatus($status)
+function getOrderStatus($status, $type)
 {
-    return Extra::where('category', 'order')->where('name', $status)->orderBy('id')->firstOrFail();
+    return Extra::where('category', $type)->where('name', $status)->orderBy('id')->firstOrFail();
 }
 
 /*function createLoginLog($agent, $location)
