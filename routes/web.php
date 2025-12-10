@@ -41,6 +41,7 @@ Route::middleware(['web'])->group(function () {
 
         Route::prefix('ajax')->controller(AjaxController::class)->group(function () {
             Route::get('product', 'getProductById')->name('ajax.get.product.by.id');
+            Route::get('chart/regorder', 'getRegOrder')->name('ajax.chart.reg.order');
         });
 
         Route::prefix('helper')->controller(HelperController::class)->group(function () {

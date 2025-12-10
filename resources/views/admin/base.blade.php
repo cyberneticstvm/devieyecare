@@ -506,6 +506,7 @@
             }
         </script>
         @include("admin.message")
+        <script src="{{ asset('/assets/js/chart.js') }}"></script>
         <script src="{{ asset('/assets/js/devi.js') }}"></script>
 </body>
 
