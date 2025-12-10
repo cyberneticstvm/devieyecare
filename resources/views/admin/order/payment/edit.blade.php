@@ -18,7 +18,7 @@
                     </div>
                     <div class="control-group col-md-2">
                         <label class="form-label req">MRN </label>
-                        {{ html()->text('mrn', $payment->mrn)->class('form-control')->placeholder('MRN') }}
+                        {{ html()->text('mrn', $payment->order->registration->mrn)->class('form-control')->placeholder('MRN') }}
                         @error('mrn')
                         <small class="text-danger">{{ $errors->first('mrn') }}</small>
                         @enderror

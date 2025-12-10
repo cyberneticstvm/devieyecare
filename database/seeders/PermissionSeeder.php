@@ -67,6 +67,10 @@ class PermissionSeeder extends Seeder
             'ms-create',
             'ms-edit',
             'ms-delete',
+            'store-order-list',
+            'store-order-create',
+            'store-order-edit',
+            'store-order-delete',
         ];
 
         foreach ($permissions as $permission) {

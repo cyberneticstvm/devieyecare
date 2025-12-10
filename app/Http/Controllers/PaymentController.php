@@ -69,7 +69,7 @@ class PaymentController extends Controller implements HasMiddleware
             'notes' => 'nullable',
         ]);
         try {
-            $order = Order::where('mrn', $request->mrn)->where('branch_id', Session::get('branch')->id)->firstOrFail();
+            $order = Order::where('registration_id', Registration::where('mrn', $request->mrn)->first()->id)->where('branch_id', Session::get('branch')->id)->firstOrFail();
             if ($request->amount > getStoreDueAmount($order->registration_id, 0)):
                 throw new Exception("Entered amount is greater than due amount");
             endif;
@@ -120,12 +120,14 @@ class PaymentController extends Controller implements HasMiddleware
             'notes' => 'nullable',
         ]);
         try {
-            $order = Order::where('mrn', $request->mrn)->where('branch_id', Session::get('branch')->id)->firstOrFail();
+            $order = Order::where('registration_id', Registration::where('mrn', $request->mrn)->first()->id)->where('branch_id', Session::get('branch')->id)->firstOrFail();
             $p = Payment::findOrFail(decrypt($id));
             if ($request->amount > getStoreDueAmount($order->registration_id, $p->amount)):
                 throw new Exception("Entered amount is greater than due amount");
             endif;
             $inputs['updated_by'] = $request->user()->id;
+            $inputs['order_id'] = $order->id;
+            unset($inputs['mrn']);
             $p->update($inputs);
         } catch (Exception $e) {
             return redirect()->back()->with("error", $e->getMessage())->withInput($inputs);

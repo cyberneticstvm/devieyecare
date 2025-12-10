@@ -5,16 +5,32 @@ namespace App\Http\Controllers;
 use App\Models\Extra;
 use App\Models\Hsn;
 use App\Models\Order;
+use App\Models\OrderDetail;
+use App\Models\OrderStatus;
 use App\Models\Product;
 use App\Models\Registration;
 use App\Models\User;
+use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 
-class OrderController extends Controller
+class OrderController extends Controller implements HasMiddleware
 {
+
+    public static function middleware(): array
+    {
+        return [
+            new middleware(\Spatie\Permission\Middleware\PermissionMiddleware::using('store-order-list'), only: ['index']),
+            new Middleware(\Spatie\Permission\Middleware\PermissionMiddleware::using('store-order-create'), only: ['create', 'store']),
+            new Middleware(\Spatie\Permission\Middleware\PermissionMiddleware::using('store-order-edit'), only: ['edit', 'update']),
+            new Middleware(\Spatie\Permission\Middleware\PermissionMiddleware::using('store-order-delete'), only: ['destroy']),
+        ];
+    }
     /**
      * Display a listing of the resource.
      */
@@ -35,7 +51,10 @@ class OrderController extends Controller
     }
     public function index()
     {
-        //
+        $orders = Order::withTrashed()->whereDate('created_at', Carbon::today())->when(!in_array(Auth::user()->roles->first()->name, ['Administrator']), function ($q) {
+            return $q->where('branch_id', Session::get('branch')->id);
+        })->latest()->get();
+        return view('admin.order.store.index', compact('orders'));
     }
 
     /**
@@ -85,23 +104,70 @@ class OrderController extends Controller
     {
         try {
             DB::transaction(function () use ($request, $id) {
-                // Existing Order
-                $inv = generateInvoice(decrypt($request->oid), $request->invoice);
                 Registration::where('id', $id)->update([
                     'doc_fee_pmode' => $request->doc_fee_pmode,
                     'surgery_advised' => $request->surgery_advised,
                 ]);
-                $order = Order::create([
-                    'registration_id' => $id,
-                    'branch_id' => Session::get('branch')->id,
-                    'invoice_number' => $inv[0],
-                    'invoice_generated_at' => $inv[1],
+                $order = Order::updateOrCreate(
+                    ['id' => decrypt($request->oid)],
+                    [
+                        'registration_id' => $id,
+                        'branch_id' => Session::get('branch')->id,
+                        'discount' => $request->discount ?? 0,
+                        'total' => $request->total, // total after discount
+                        'advance' => $request->advance ?? 0,
+                        'advance_pmode' => $request->advance_pmode,
+                        'due_date' => $request->due_date,
+                        'product_advisor' => $request->product_advisor,
+                        'created_by' => $request->user()->id,
+                        'updated_by' => $request->user()->id,
+                    ]
+                );
+                $status = getOrderStatus('BKD')->id;
+                if (!$order->invoice_number && $request->invoice):
+                    $status = getOrderStatus('DLVD')->id;
+                    $order->update([
+                        'invoice_number' => generateInvoice($order),
+                        'invoice_generated_at' => Carbon::now(),
+                        'invoice_generated_by' => $request->user()->id,
+                    ]);
+                endif;
+                OrderStatus::create([
+                    'order_id' => $order->id,
+                    'mrn' => $order->registration->mrn,
+                    'status_id' => $status,
+                    'created_by' => $request->user()->id,
+                    'updated_by' => $request->user()->id,
                 ]);
+                $data = [];
+                foreach ($request->product as $key => $item):
+                    if ($item > 0 && $request->qty[$key] > 0):
+                        $data[] = [
+                            'order_id' => $order->id,
+                            'eye' => $request->eye[$key],
+                            'sph' => $request->sph[$key],
+                            'cyl' => $request->cyl[$key],
+                            'axis' => $request->axis[$key],
+                            'addition' => $request->add[$key],
+                            'dia' => $request->dia[$key],
+                            'thick' => $request->thickness[$key],
+                            'ipd' => $request->ipd[$key],
+                            'product_id' => $item,
+                            'qty' => $request->qty[$key],
+                            'price' => $request->price[$key],
+                            'total' => $request->qty[$key] * $request->price[$key],
+                            'created_at' => $order->created_at,
+                            'updated_at' => $order->updated_at,
+                        ];
+                    endif;
+                endforeach;
+                OrderDetail::where('order_id', $order->id)->delete();
+                OrderDetail::insert($data);
             });
         } catch (Exception $e) {
             return redirect()->back()->with("error", $e->getMessage())->withInput($request->all());
         }
-        return redirect()->route('order.list')->with("success", "Order updated successfully!");
+        return redirect()->route('registration.list')->with("success", "Order updated successfully!");
     }
 
     /**

@@ -13,9 +13,19 @@ class Payment extends Model
 
     protected $casts = ['pdate' => 'datetime'];
 
-    public function registration()
+    public function order()
     {
-        return $this->belongsTo(Registration::class, 'registration_id', 'id');
+        return $this->belongsTo(Order::class, 'order_id', 'id');
+    }
+
+    public function paymode()
+    {
+        return $this->belongsTo(Extra::class, 'pmode', 'id');
+    }
+
+    public function ptype()
+    {
+        return $this->belongsTo(Extra::class, 'payment_type', 'id');
     }
 
     public function cancelled()

@@ -9,6 +9,7 @@
     return $code;
 }*/
 
+use App\Models\Branch;
 use App\Models\Doctor;
 use App\Models\Extra;
 use App\Models\Hsn;
@@ -17,6 +18,7 @@ use App\Models\Order;
 use App\Models\Payment;
 use App\Models\Registration;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 
 function teamId()
@@ -47,6 +49,11 @@ function loggedDevice($agent)
         $device = $devices[0]['name'];
     }
     return $device;
+}
+
+function getOrderStatus($status)
+{
+    return Extra::where('category', 'order')->where('name', $status)->orderBy('id')->firstOrFail();
 }
 
 /*function createLoginLog($agent, $location)
@@ -89,6 +96,22 @@ function hsns()
     return Hsn::orderBy('name')->get();
 }*/
 
+function getCurrentFinancialYear(): string
+{
+    $now = Carbon::now();
+    $financialYearStartMonth = 4; // April
+
+    if ($now->month >= $financialYearStartMonth) {
+        $startYear = $now->year;
+        $endYear = $now->year + 1;
+    } else {
+        $startYear = $now->year - 1;
+        $endYear = $now->year;
+    }
+
+    return $startYear . '-' . substr($endYear, 2, 2); // Format as YYYY/YY
+}
+
 function getDocFee($request)
 {
     $fee = 0;
@@ -122,32 +145,25 @@ function isExpenseExceeded($amount, $category, $type, $ie = null)
     return ($used > $limit) ? true : false;
 }
 
-function generateInvoice($oid, $is_invoice)
+function generateInvoice($order)
 {
-    try {
-        $ino = null;
-        $idate = null;
-        $order = Order::find($oid); // Existing Order
-        if ($order && $order->invoice_number):
-            $ino = $order->invoice_number;
-            $idate = $order->invoice_generated_at;
-        endif;
-        if ($is_invoice && !$order->invoice_number):
-        // Check pending payment
-        endif;
-    } catch (Exception $e) {
-        //
-    }
-    return array($ino, $idate);
+    $ino = null;
+    $due = getStoreDueAmount($order->registration_id, 0);
+    if ($due == 0):
+        $ino = Order::where('branch_id', Session::get('branch')->id)->max('invoice_number') + 1 ?? Branch::find(Session::get('branch')->id)->invoice_starts_with;
+    else:
+        throw new Exception("Cannot generate invoice, due / excess amount is ₹" . $due);
+    endif;
+    return $ino;
 }
 
 function getStoreDueAmount($regId, $amount)
 {
     $order = Order::where('registration_id', $regId)->first();
-    $paid = Payment::where('registration_id', $regId)->where('order_type', 'Store')->sum('amount');
+    $paid = Payment::where('order_id', $order->id)->where('order_type', 'Store')->sum('amount');
     if ($amount > 0):
-        return (($order->total + $amount) - ($order->discount + $order->advance + $paid));
+        return (($order->total + $amount) - ($order->advance + $paid));
     else:
-        return ($order->total - ($order->discount + $order->advance + $paid));
+        return ($order->total - ($order->advance + $paid));
     endif;
 }

@@ -25,14 +25,15 @@
                         @forelse($payments as $key => $pay)
                         <tr>
                             <td>{{ $key + 1 }}</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
+                            <td>{{ $pay->pdate->format('d.M.Y') }}</td>
+                            <td>{{ $pay->amount }}</td>
+                            <td>{!! $pay->order->registration->getMrn() !!}</td>
+                            <td>{{ $pay->order_type }}</td>
+                            <td>{{ $pay->ptype->name }}</td>
+                            <td>{{ $pay->paymode->name }}</td>
                             <td>{!! $pay->cancelled() !!}</td>
                             <td class="text-center">
-                                <a href="{{ route('pay.edit', encrypt($pay->id)) }}" class="text-secondary">Edit</a> | <a href="{{ route('pay.delete', encrypt($pay->id)) }}" class="text-danger dlt">Delete</a>
+                                <a href="{{ route('payment.edit', encrypt($pay->id)) }}" class="text-secondary">Edit</a> | <a href="{{ route('payment.delete', encrypt($pay->id)) }}" class="text-danger dlt">Delete</a>
                             </td>
                         </tr>
                         @empty
