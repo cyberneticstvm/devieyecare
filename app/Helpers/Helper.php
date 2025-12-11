@@ -15,6 +15,7 @@ use App\Models\Extra;
 use App\Models\Hsn;
 use App\Models\IncomeExpense;
 use App\Models\Order;
+use App\Models\OrderStatus;
 use App\Models\Payment;
 use App\Models\Registration;
 use Carbon\Carbon;
@@ -166,4 +167,25 @@ function getStoreDueAmount($regId, $amount)
     else:
         return ($order->total - ($order->advance + $paid));
     endif;
+}
+
+function updateOrderStatus($order, $is_invoice = false)
+{
+    $status = getOrderStatus('BKD', 'order')->id;
+    if (!$order->invoice_number && $is_invoice):
+        $status = getOrderStatus('DLVD', 'order')->id;
+        $order->update([
+            'invoice_number' => generateInvoice($order),
+            'invoice_generated_at' => Carbon::now(),
+            'invoice_generated_by' => Auth::id(),
+        ]);
+    endif;
+    OrderStatus::create([
+        'order_id' => $order->id,
+        'mrn' => $order->registration->mrn,
+        'status_id' => $status,
+        'created_by' => Auth::id(),
+        'updated_by' => Auth::id(),
+    ]);
+    $order->update(['status' => $status]);
 }

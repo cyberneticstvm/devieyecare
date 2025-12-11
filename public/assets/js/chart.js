@@ -42,6 +42,7 @@ $(function(){
     "use strict"
 
     $.getJSON('/ajax/chart/regorder', function (response) {
+        console.log(response);
         var options = {
         chart: {
             height: 350,
@@ -50,16 +51,24 @@ $(function(){
             show: false,
             },
         },
-        colors: ['var(--bs-primary)', 'var(--bs-primary-bg-subtle)'],
-        series: [{
+        colors: ['var(--bs-primary)', 'var(--bs-primary-bg-subtle)', 'var(--bs-success)'],
+        series: [
+            {
             name: 'Registrations',
             type: 'column',
             data: [response.registrations[0].rcount, response.registrations[1].rcount, response.registrations[2].rcount, response.registrations[3].rcount, response.registrations[4].rcount, response.registrations[5].rcount, response.registrations[6].rcount, response.registrations[7].rcount, response.registrations[8].rcount, response.registrations[9].rcount, response.registrations[10].rcount, response.registrations[11].rcount]
-        }, {
+        }, 
+        {
             name: 'Orders',
             type: 'line',
             data: [response.orders[0].ocount, response.orders[1].ocount, response.orders[2].ocount, response.orders[3].ocount, response.orders[4].ocount, response.orders[5].ocount, response.orders[6].ocount, response.orders[7].ocount, response.orders[8].ocount, response.orders[9].ocount, response.orders[10].ocount, response.orders[11].ocount]
-        }],
+        },
+        {
+            name: 'Delivered',
+            type: 'line',
+            data: [response.orders[0].dcount, response.orders[1].dcount, response.orders[2].dcount, response.orders[3].dcount, response.orders[4].dcount, response.orders[5].dcount, response.orders[6].dcount, response.orders[7].dcount, response.orders[8].dcount, response.orders[9].dcount, response.orders[10].dcount, response.orders[11].dcount]
+        }
+    ],
         stroke: {
             width: [0, 4]
         },
@@ -87,7 +96,7 @@ $(function(){
         }, {
             opposite: true,
             title: {
-            text: 'Orders'
+            text: 'Orders & Delivered'
             }
         }]
         }

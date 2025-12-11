@@ -25,6 +25,7 @@ return new class extends Migration
             $table->date('due_date')->comment('Expected delivery date')->nullable();
             $table->foreignId('product_advisor')->constrained('users', 'id')->onDelete('cascade');
             $table->string('remarks')->nullable();
+            $table->foreignId('status')->constrained('extras', 'id')->nullable();
             $table->foreignId('created_by')->constrained('users', 'id');
             $table->foreignId('updated_by')->constrained('users', 'id');
             $table->timestamps();

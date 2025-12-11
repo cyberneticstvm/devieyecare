@@ -49,21 +49,7 @@ class HelperController extends Controller implements HasMiddleware
                 throw new Exception("Cannot update the status of the orders which has delivered / invoice generated!");
             endif;
             $status = getOrderStatus($request->status, 'order')->id;
-            if (!$order->invoice_number && $request->status == 'DLVD'):
-                $status = getOrderStatus($request->status, 'order')->id;
-                $order->update([
-                    'invoice_number' => generateInvoice($order),
-                    'invoice_generated_at' => Carbon::now(),
-                    'invoice_generated_by' => $request->user()->id,
-                ]);
-            endif;
-            OrderStatus::create([
-                'order_id' => $order->id,
-                'mrn' => $order->registration->mrn,
-                'status_id' => $status,
-                'created_by' => $request->user()->id,
-                'updated_by' => $request->user()->id,
-            ]);
+            updateOrderStatus($order, ($request->status == 'DLVD') ? true : false);
         } catch (Exception $e) {
             return redirect()->back()->with("error", $e->getMessage());
         }

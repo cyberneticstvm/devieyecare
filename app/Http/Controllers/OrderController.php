@@ -140,22 +140,7 @@ class OrderController extends Controller implements HasMiddleware
                         'updated_by' => $request->user()->id,
                     ]
                 );
-                $status = getOrderStatus('BKD', 'order')->id;
-                if (!$order->invoice_number && $request->invoice):
-                    $status = getOrderStatus('DLVD', 'order')->id;
-                    $order->update([
-                        'invoice_number' => generateInvoice($order),
-                        'invoice_generated_at' => Carbon::now(),
-                        'invoice_generated_by' => $request->user()->id,
-                    ]);
-                endif;
-                OrderStatus::create([
-                    'order_id' => $order->id,
-                    'mrn' => $order->registration->mrn,
-                    'status_id' => $status,
-                    'created_by' => $request->user()->id,
-                    'updated_by' => $request->user()->id,
-                ]);
+                updateOrderStatus($order, ($request->invoice) ? true : false);
                 $data = [];
                 foreach ($request->product as $key => $item):
                     if ($item > 0 && $request->qty[$key] > 0):
@@ -194,6 +179,7 @@ class OrderController extends Controller implements HasMiddleware
     {
         $order = Order::findOrFail(decrypt($id));
         $order->payments()->delete();
+        $order->ostatus()->delete();
         $order->delete();
         return redirect()->route('store.order.list')->with("success", "Order deleted successfully!");
     }

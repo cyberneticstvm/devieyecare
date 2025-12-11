@@ -7,48 +7,64 @@
         <p class="fs-12">Showing interactive realtime dashboard</p>
     </div>
 </div>
-<div class="col-lg-3 col-md-6">
-    <div class="card rounded-4">
-        <div class="card-body p-lg-4 d-flex justify-content-between">
+<div class="col-12 col-lg-3 col-md-6 col-sm-6">
+    <div class="card rounded-4 overflow-hidden">
+        <div class="card-body p-lg-4 d-flex align-items-center justify-content-between">
             <div>
-                <h6>Registration</h6>
-                <h4>{{ getDataCount()[0] }}</h4>
+                <div class="text-body-secondary small">New Registrations</div>
+                <div class="h3 mb-0">{{ getDataCount()[0] }}</div>
             </div>
-            <span class="badge bg-danger align-self-start">Today</span>
+            <div class="rounded p-3 bg-primary-subtle">
+                <i class="bi bi-people fs-4 text-primary"></i>
+            </div>
         </div>
+        <!--<div class="card-footer px-lg-4 small text-success"><i class="bi bi-arrow-up-right"></i> +4.3% vs last week</div>-->
+        <div class="card-footer px-lg-4 small text-success">Today's Data</div>
     </div>
 </div>
-<div class="col-lg-3 col-md-6">
-    <div class="card rounded-4">
-        <div class="card-body p-lg-4 d-flex justify-content-between">
+<div class="col-12 col-lg-3 col-md-6 col-sm-6">
+    <div class="card rounded-4 overflow-hidden">
+        <div class="card-body p-lg-4 d-flex align-items-center justify-content-between">
             <div>
-                <h6>Review</h6>
-                <h4>{{ getDataCount()[1] }}</h4>
+                <div class="text-body-secondary small">Reviews</div>
+                <div class="h3 mb-0">{{ getDataCount()[1] }}</div>
             </div>
-            <span class="badge bg-warning text-dark align-self-start">Today</span>
+            <div class="rounded p-3 bg-info-subtle">
+                <i class="bi bi-arrow-left-right fs-4 text-info"></i>
+            </div>
         </div>
+        <!--<div class="card-footer px-lg-4 small text-success"><i class="bi bi-arrow-up-right"></i> +6 new this month</div>-->
+        <div class="card-footer px-lg-4 small text-success">Today's Data</div>
     </div>
 </div>
-<div class="col-lg-3 col-md-6">
-    <div class="card rounded-4">
-        <div class="card-body p-lg-4 d-flex justify-content-between">
+<div class="col-12 col-lg-3 col-md-6 col-sm-6">
+    <div class="card rounded-4 overflow-hidden">
+        <div class="card-body p-lg-4 d-flex align-items-center justify-content-between">
             <div>
-                <h6>Order</h6>
-                <h4>{{ getDataCount()[2] }}</h4>
+                <div class="text-body-secondary small">Orders</div>
+                <div class="h3 mb-0">{{ getDataCount()[2] }}</div>
             </div>
-            <span class="badge bg-info text-dark align-self-start">Today</span>
+            <div class="rounded p-3 bg-secondary-subtle">
+                <i class="bi bi-eyeglasses fs-4 text-success"></i>
+            </div>
         </div>
+        <!--<div class="card-footer px-lg-4 small text-danger"><i class="bi bi-arrow-down-right"></i> -1.1% vs last month</div>-->
+        <div class="card-footer px-lg-4 small text-success">Today's Data</div>
     </div>
 </div>
-<div class="col-lg-3 col-md-6">
-    <div class="card rounded-4">
-        <div class="card-body p-lg-4 d-flex justify-content-between">
+<div class="col-12 col-lg-3 col-md-6 col-sm-6">
+    <div class="card rounded-4 overflow-hidden">
+        <div class="card-body p-lg-4 d-flex align-items-center justify-content-between">
             <div>
-                <h6>Pharmacy</h6>
-                <h4>{{ getDataCount()[3] }}</h4>
+                <div class="text-body-secondary small">Pharmacy Bills</div>
+                <div class="h3 mb-0">{{ getDataCount()[3] }}</div>
             </div>
-            <span class="badge bg-primary text-dark align-self-start">Today</span>
+            <div class="rounded p-3 bg-warning-subtle">
+                <i class="bi bi-prescription fs-4 text-warning"></i>
+            </div>
         </div>
+        <!--<div class="card-footer px-lg-4 small text-success"><i class="bi bi-arrow-up-right"></i> +0.2 this quarter</div>-->
+        <div class="card-footer px-lg-4 small text-success">Today's Data</div>
     </div>
 </div>
 <div class="col-xl-8 col-lg-12">

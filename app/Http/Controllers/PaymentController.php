@@ -80,24 +80,8 @@ class PaymentController extends Controller implements HasMiddleware
             $inputs['order_id'] = $order->id;
             $inputs['branch_id'] = Session::get('branch')->id;
             unset($inputs['mrn']);
-            DB::transaction(function () use ($request, $order, $inputs) {
-                if (!$order->invoice_number && $request->invoice && $request->order_type == $this->otypes['Store']):
-                    $status = getOrderStatus('DLVD', 'order')->id;
-                    $order->update([
-                        'invoice_number' => generateInvoice($order, $request->amount),
-                        'invoice_generated_at' => Carbon::now(),
-                        'invoice_generated_by' => $request->user()->id,
-                    ]);
-                    OrderStatus::create([
-                        'order_id' => $order->id,
-                        'mrn' => $order->registration->mrn,
-                        'status_id' => $status,
-                        'created_by' => $request->user()->id,
-                        'updated_by' => $request->user()->id,
-                    ]);
-                endif;
-                Payment::create($inputs);
-            });
+            updateOrderStatus($order, ($request->invoice && $request->order_type == $this->otypes['Store']) ? true : false);
+            Payment::create($inputs);
         } catch (Exception $e) {
             return redirect()->back()->with("error", $e->getMessage())->withInput($inputs);
         }
@@ -152,24 +136,8 @@ class PaymentController extends Controller implements HasMiddleware
             $inputs['updated_by'] = $request->user()->id;
             $inputs['order_id'] = $order->id;
             unset($inputs['mrn']);
-            DB::transaction(function () use ($p, $request, $inputs, $order) {
-                if (!$order->invoice_number && $request->invoice && $request->order_type == $this->otypes['Store']):
-                    $status = getOrderStatus('DLVD', 'order')->id;
-                    $order->update([
-                        'invoice_number' => generateInvoice($order, $request->amount),
-                        'invoice_generated_at' => Carbon::now(),
-                        'invoice_generated_by' => $request->user()->id,
-                    ]);
-                    OrderStatus::create([
-                        'order_id' => $order->id,
-                        'mrn' => $order->registration->mrn,
-                        'status_id' => $status,
-                        'created_by' => $request->user()->id,
-                        'updated_by' => $request->user()->id,
-                    ]);
-                endif;
-                $p->update($inputs);
-            });
+            updateOrderStatus($order, ($request->invoice && $request->order_type == $this->otypes['Store']) ? true : false);
+            $p->update($inputs);
         } catch (Exception $e) {
             return redirect()->back()->with("error", $e->getMessage())->withInput($inputs);
         }

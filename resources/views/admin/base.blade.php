@@ -13,6 +13,7 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/datatables@1.10.18/media/css/jquery.dataTables.min.css">
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="{{ asset('/assets/plugins/datatables/dataTables.responsive.css') }}">
@@ -66,59 +67,8 @@
                                     <div class="card border-0">
                                         <div class="card-header d-flex justify-content-between align-items-center p-4 border-bottom-0">
                                             <h6 class="card-title mb-0">Notifications Center</h6>
-                                            <span class="badge bg-primary">19</span>
+                                            <span class="badge bg-primary">0</span>
                                         </div>
-                                        <ul class="list-unstyled list-group list-group-custom mb-0 rounded-0 li_animate">
-                                            <li class="list-group-item d-flex border-end-0 border-start-0">
-                                                <div class="d-flex flex-column grow p-2 overflow-hidden">
-                                                    <h6 class="mb-0 fw-medium">
-                                                        <a href="#">7 New Feedback</a>
-                                                        <small class="float-end text-muted">Today</small>
-                                                    </h6>
-                                                    <small class="d-block text-truncate">It will give a smart finishing to your site</small>
-                                                </div>
-                                            </li>
-                                            <li class="list-group-item d-flex border-end-0 border-start-0">
-                                                <div class="d-flex flex-column grow p-2 overflow-hidden">
-                                                    <h6 class="mb-0 fw-medium">
-                                                        <a href="#">New User</a>
-                                                        <small class="float-end text-muted">10:45</small>
-                                                    </h6>
-                                                    <small class="d-block text-truncate">I feel great! Thanks team</small>
-                                                </div>
-                                            </li>
-                                            <li class="list-group-item d-flex border-end-0 border-start-0">
-                                                <div class="d-flex flex-column grow p-2 overflow-hidden">
-                                                    <h6 class="mb-0 fw-medium">
-                                                        <a href="#">Server Warning</a>
-                                                        <small class="float-end text-muted">10:50</small>
-                                                    </h6>
-                                                    <small class="d-block text-truncate">Your connection is not private</small>
-                                                    <div class="mt-2 d-flex gap-2 align-items-center">
-                                                        <a href="#" class="btn btn-sm rounded-pill bg-primary text-white">Accept</a>
-                                                        <a href="#" class="btn btn-sm rounded-pill btn-dark text-white">Decline</a>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                            <li class="list-group-item d-flex border-end-0 border-start-0">
-                                                <div class="d-flex flex-column grow p-2 overflow-hidden">
-                                                    <h6 class="mb-0 fw-medium">
-                                                        <a href="#">Issue Fixed</a>
-                                                        <small class="float-end text-muted">11:05</small>
-                                                    </h6>
-                                                    <small class="d-block text-truncate">WE have fix all Design bug with Responsive</small>
-                                                </div>
-                                            </li>
-                                            <li class="list-group-item d-flex border-end-0 border-start-0">
-                                                <div class="d-flex flex-column grow p-2 overflow-hidden">
-                                                    <h6 class="mb-0 fw-medium">
-                                                        <a href="#">7 New Orders</a>
-                                                        <small class="float-end text-muted">11:35</small>
-                                                    </h6>
-                                                    <small class="d-block text-truncate">You received a new order from Tina.</small>
-                                                </div>
-                                            </li>
-                                        </ul>
                                         <div class="card-body py-2">
                                             <a href="#" class="btn btn-link px-2">View all notifications</a>
                                         </div>
