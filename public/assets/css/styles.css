@@ -513,3 +513,7 @@ ease-in-out;
 .select2{
     padding: .25rem .50rem !important;
 }
+
+.form-check-input{
+    border-color: var(--bs-primary) !important;
+}

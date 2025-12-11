@@ -31,7 +31,7 @@
                             <td>{{ $product->code }}</td>
                             <td>{{ $product->hsn->name }}</td>
                             <td>{{ $product->hsn->code }}</td>
-                            <td>{{ $product->manufacturer->name }}</td>
+                            <td>{{ $product->manufacturer?->name }}</td>
                             <td>{{ $product->selling_price }}</td>
                             <td>{!! $product->cancelled() !!}</td>
                             <td class="text-center">

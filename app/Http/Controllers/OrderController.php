@@ -98,7 +98,7 @@ class OrderController extends Controller implements HasMiddleware
                 throw new Exception('Order has been deleted and cannot be edited');
             endif;
             if ($order?->invoice_number):
-                throw new Exception('Order has been delivered and cannot be edited');
+                throw new Exception('Invoice has been generated and cannot be edited');
             endif;
             $extras = Extra::whereIn('category', ['thickness', 'sph', 'cyl', 'addition', 'pmode'])->get();
             $products = $this->products;
@@ -190,7 +190,9 @@ class OrderController extends Controller implements HasMiddleware
      */
     public function destroy(string $id)
     {
-        Order::findOrFail(decrypt($id))->delete();
+        $order = Order::findOrFail(decrypt($id));
+        $order->payments()->delete();
+        $order->delete();
         return redirect()->route('store.order.list')->with("success", "Order deleted successfully!");
     }
 }

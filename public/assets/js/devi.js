@@ -7,7 +7,7 @@ $(function(){
         }
     });
 
-    $(document).on("keydown", ".qty, .discount, .advance", function(){
+    $(document).on("keyup", ".qty, .discount, .advance", function(){
         calculateTotal();
     })
 

@@ -13,6 +13,7 @@ use App\Http\Controllers\IncomeExpenseController;
 use App\Http\Controllers\ManufacturerSupplierController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\PharmacyController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\RegistrationController;
 use App\Http\Controllers\RoleController;
@@ -189,6 +190,15 @@ Route::middleware(['web'])->group(function () {
             Route::get('edit/{rid}/{source}', 'edit')->name('store.order.edit');
             Route::post('edit/{rid}', 'update')->name('store.order.update');
             Route::get('delete/{id}', 'destroy')->name('store.order.delete');
+        });
+
+        Route::prefix('pharmacy')->controller(PharmacyController::class)->group(function () {
+            Route::get('', 'index')->name('pharmacy.order.list');
+            Route::get('create/{rid}', 'create')->name('pharmacy.order.create');
+            Route::post('create/{rid}', 'store')->name('pharmacy.order.save');
+            Route::get('edit/{id}', 'edit')->name('pharmacy.order.edit');
+            Route::post('edit/{id}', 'update')->name('pharmacy.order.update');
+            Route::get('delete/{id}', 'destroy')->name('pharmacy.order.delete');
         });
     });
 });

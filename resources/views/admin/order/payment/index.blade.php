@@ -101,8 +101,14 @@
                                                 @enderror
                                             </div>
                                         </div>
-                                        <div class="raw mt-3">
-                                            <div class="col text-end">
+                                        <div class="raw g-lg-12 mt-3">
+                                            <div class="col-md-6">
+                                                <label class="form-label">Generate Invoice </label><br>
+                                                {{ html()->checkbox('invoice', false, 1)->class('form-check-input') }}
+                                            </div>
+                                        </div>
+                                        <div class="raw text-end">
+                                            <div class="col-md-12">
                                                 {{ html()->submit('Save')->class('btn btn-submit btn-primary') }}
                                             </div>
                                         </div>

@@ -71,6 +71,14 @@ class PermissionSeeder extends Seeder
             'store-order-create',
             'store-order-edit',
             'store-order-delete',
+            'pharmacy-order-list',
+            'pharmacy-order-create',
+            'pharmacy-order-edit',
+            'pharmacy-order-delete',
+            'payment-list',
+            'payment-create',
+            'payment-edit',
+            'payment-delete',
         ];
 
         foreach ($permissions as $permission) {

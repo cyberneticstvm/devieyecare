@@ -28,7 +28,7 @@ class RegistrationController extends Controller implements HasMiddleware
         ];
     }
 
-    protected $ctypes, $gender, $doctors, $pmodes;
+    protected $ctypes, $gender, $doctors, $pmodes, $mrn;
     public function __construct()
     {
         $this->ctypes = Extra::where('category', 'ctype')->pluck('name', 'id');
@@ -163,7 +163,12 @@ class RegistrationController extends Controller implements HasMiddleware
      */
     public function destroy(string $id)
     {
-        Registration::findOrFail(decrypt($id))->delete();
+        $reg = Registration::findOrFail(decrypt($id));
+        foreach ($reg->order as $key => $order):
+            $order->payments()->delete();
+        endforeach;
+        $reg->order()->delete();
+        $reg->delete();
         return redirect()->route('registration.list')->with("success", "Registration deleted successfully!");
     }
 }

@@ -64,7 +64,9 @@
                         @if(Auth::user()->can('store-order-list'))
                         <li class="nav-item"><a class="nav-link {{ (in_array(Route::currentRouteName(), ['store.order.list', 'store.order.create', 'store.order.edit'])) ? 'active' : '' }}" href="{{ route('store.order.list') }}">Store Orders</a></li>
                         @endif
-                        <li class="nav-item"><a class="nav-link" href="{{ route('index') }}">Pharmacy Orders</a></li>
+                        @if(Auth::user()->can('pharmacy-order-list'))
+                        <li class="nav-item"><a class="nav-link {{ (in_array(Route::currentRouteName(), ['pharmacy.order.list', 'pharmacy.order.create', 'pharmacy.order.edit'])) ? 'active' : '' }}" href="{{ route('pharmacy.order.list') }}">Pharmacy Orders</a></li>
+                        @endif
                         @if(Auth::user()->can('payment-list'))
                         <li class="nav-item"><a class="nav-link {{ (in_array(Route::currentRouteName(), ['payment.list', 'payment.create', 'payment.edit'])) ? 'active' : '' }}" href="{{ route('payment.list') }}">Payments</a></li>
                         @endif

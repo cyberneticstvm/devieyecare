@@ -35,7 +35,7 @@
                             <td>{{ $reg->mobile }}</td>
                             <td>{{ $reg->doctor->name }}</td>
                             <td>{{ $reg->branch->name }}</td>
-                            <td><a href="{{ route('registration.create', ['rtype' => encrypt('Review'), 'typeid' => encrypt($reg->id)]) }}" data-toggle="tooltip" data-placement="top" title="Click here to make Pharmacy Order">Prescription</a></td>
+                            <td><a href="{{ route('pharmacy.order.create', encrypt($reg->id)) }}" data-toggle="tooltip" data-placement="top" title="Click here to make Pharmacy Order">Prescription</a></td>
                             <td>
                                 <div class="dropdown">
                                     <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">

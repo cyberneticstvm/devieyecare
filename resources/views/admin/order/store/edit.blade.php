@@ -42,9 +42,11 @@
                         <label class="form-label req">Surgery Advised </label>
                         {{ html()->select('surgery_advised', array('0' => 'No', '1' => 'Yes'), old('surgery_advised') ?? $registration->surgery_advised)->class('form-control')->attribute('id', 'surgery_advised')->placeholder('Select') }}
                     </div>
-                    <div class="control-group col-md-6 text-end">
-                        <label class="form-label">Generate Invoice </label>
-                        {{ html()->checkbox('invoice', $order?->invoice_number ? true : false, 1)->attribute('disabled', $order?->invoice_number ? true : false)->class('form-check-input') }}
+                    <div class="control-group col-md-6">
+                        <label class="form-label">Generate Invoice </label><br>
+                        {{ html()->checkbox('invoice', $order?->invoice_number ? true : false, 1)->if($order?->invoice_number > 0, function($el){
+                            return $el->attribute('disabled', 'disabled');
+                        })->class('form-check-input') }}
                     </div>
                 </div>
                 <div class="raw mt-5">

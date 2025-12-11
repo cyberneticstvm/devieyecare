@@ -109,7 +109,7 @@ function getCurrentFinancialYear(): string
         $endYear = $now->year;
     }
 
-    return $startYear . '-' . substr($endYear, 2, 2); // Format as YYYY/YY
+    return substr($startYear, 2, 2) . '-' . substr($endYear, 2, 2); // Format as YYYY/YY
 }
 
 function getDocFee($request)
@@ -145,12 +145,12 @@ function isExpenseExceeded($amount, $category, $type, $ie = null)
     return ($used > $limit) ? true : false;
 }
 
-function generateInvoice($order)
+function generateInvoice($order, $amount = 0)
 {
     $ino = null;
     $due = getStoreDueAmount($order->registration_id, 0);
-    if ($due == 0):
-        $ino = Order::where('branch_id', Session::get('branch')->id)->max('invoice_number') + 1 ?? Branch::find(Session::get('branch')->id)->invoice_starts_with;
+    if ($due == $amount):
+        $ino = (Order::where('branch_id', Session::get('branch')->id)->max('invoice_number') > 0) ? Order::where('branch_id', Session::get('branch')->id)->max('invoice_number') + 1 : Branch::find(Session::get('branch')->id)->invoice_starts_with;
     else:
         throw new Exception("Cannot generate invoice, due / excess amount is ₹" . $due);
     endif;

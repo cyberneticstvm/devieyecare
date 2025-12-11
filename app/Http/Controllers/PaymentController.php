@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Extra;
 use App\Models\Order;
+use App\Models\OrderStatus;
 use App\Models\Payment;
 use App\Models\Registration;
 use Carbon\Carbon;
@@ -12,6 +13,7 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 
 class PaymentController extends Controller implements HasMiddleware
@@ -30,7 +32,7 @@ class PaymentController extends Controller implements HasMiddleware
     {
         $this->ptypes = Extra::where('category', 'ptype')->pluck('name', 'id');
         $this->pmodes = Extra::where('category', 'pmode')->pluck('name', 'id');
-        $this->otypes = array('Store' => 'Store', 'Pharmacy' => 'Pharmacy');
+        $this->otypes = array('Store' => 'Store');
     }
     /**
      * Display a listing of the resource.
@@ -69,7 +71,7 @@ class PaymentController extends Controller implements HasMiddleware
             'notes' => 'nullable',
         ]);
         try {
-            $order = Order::where('registration_id', Registration::where('mrn', $request->mrn)->first()->id)->where('branch_id', Session::get('branch')->id)->firstOrFail();
+            $order = Order::where('registration_id', Registration::where('mrn', $request->mrn)->first()->id)->where('branch_id', Session::get('branch')->id)->whereNull('invoice_number')->firstOrFail();
             if ($request->amount > getStoreDueAmount($order->registration_id, 0)):
                 throw new Exception("Entered amount is greater than due amount");
             endif;
@@ -78,7 +80,24 @@ class PaymentController extends Controller implements HasMiddleware
             $inputs['order_id'] = $order->id;
             $inputs['branch_id'] = Session::get('branch')->id;
             unset($inputs['mrn']);
-            Payment::create($inputs);
+            DB::transaction(function () use ($request, $order, $inputs) {
+                if (!$order->invoice_number && $request->invoice && $request->order_type == $this->otypes['Store']):
+                    $status = getOrderStatus('DLVD', 'order')->id;
+                    $order->update([
+                        'invoice_number' => generateInvoice($order, $request->amount),
+                        'invoice_generated_at' => Carbon::now(),
+                        'invoice_generated_by' => $request->user()->id,
+                    ]);
+                    OrderStatus::create([
+                        'order_id' => $order->id,
+                        'mrn' => $order->registration->mrn,
+                        'status_id' => $status,
+                        'created_by' => $request->user()->id,
+                        'updated_by' => $request->user()->id,
+                    ]);
+                endif;
+                Payment::create($inputs);
+            });
         } catch (Exception $e) {
             return redirect()->back()->with("error", $e->getMessage())->withInput($inputs);
         }
@@ -99,9 +118,14 @@ class PaymentController extends Controller implements HasMiddleware
     public function edit(string $id)
     {
         $payment = Payment::findOrFail(decrypt($id));
-        $ptypes = $this->ptypes;
-        $pmodes = $this->pmodes;
-        $otypes = $this->otypes;
+        try {
+            $order = Order::where('id', $payment->order_id)->whereNull('invoice_number')->firstOrFail();
+            $ptypes = $this->ptypes;
+            $pmodes = $this->pmodes;
+            $otypes = $this->otypes;
+        } catch (Exception $e) {
+            return redirect()->back()->with("error", "Edit not allowed since the invoice has already been generated!");
+        }
         return view('admin.order.payment.edit', compact('payment', 'ptypes', 'pmodes', 'otypes'));
     }
 
@@ -120,7 +144,7 @@ class PaymentController extends Controller implements HasMiddleware
             'notes' => 'nullable',
         ]);
         try {
-            $order = Order::where('registration_id', Registration::where('mrn', $request->mrn)->first()->id)->where('branch_id', Session::get('branch')->id)->firstOrFail();
+            $order = Order::where('registration_id', Registration::where('mrn', $request->mrn)->first()->id)->where('branch_id', Session::get('branch')->id)->whereNull('invoice_number')->firstOrFail();
             $p = Payment::findOrFail(decrypt($id));
             if ($request->amount > getStoreDueAmount($order->registration_id, $p->amount)):
                 throw new Exception("Entered amount is greater than due amount");
@@ -128,7 +152,24 @@ class PaymentController extends Controller implements HasMiddleware
             $inputs['updated_by'] = $request->user()->id;
             $inputs['order_id'] = $order->id;
             unset($inputs['mrn']);
-            $p->update($inputs);
+            DB::transaction(function () use ($p, $request, $inputs, $order) {
+                if (!$order->invoice_number && $request->invoice && $request->order_type == $this->otypes['Store']):
+                    $status = getOrderStatus('DLVD', 'order')->id;
+                    $order->update([
+                        'invoice_number' => generateInvoice($order, $request->amount),
+                        'invoice_generated_at' => Carbon::now(),
+                        'invoice_generated_by' => $request->user()->id,
+                    ]);
+                    OrderStatus::create([
+                        'order_id' => $order->id,
+                        'mrn' => $order->registration->mrn,
+                        'status_id' => $status,
+                        'created_by' => $request->user()->id,
+                        'updated_by' => $request->user()->id,
+                    ]);
+                endif;
+                $p->update($inputs);
+            });
         } catch (Exception $e) {
             return redirect()->back()->with("error", $e->getMessage())->withInput($inputs);
         }
@@ -140,7 +181,13 @@ class PaymentController extends Controller implements HasMiddleware
      */
     public function destroy(string $id)
     {
-        Payment::findOrFail(decrypt($id))->delete();
+        $payment = Payment::findOrFail(decrypt($id));
+        try {
+            $order = Order::where('id', $payment->order_id)->whereNull('invoice_number')->firstOrFail();
+            $payment->delete();
+        } catch (Exception $e) {
+            return redirect()->back()->with("error", "Delete not allowed since the invoice has already been generated!");
+        }
         return redirect()->route('payment.list')->with("success", "Payment deleted successfully!");
     }
 }

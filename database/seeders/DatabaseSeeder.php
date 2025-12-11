@@ -186,7 +186,7 @@ class DatabaseSeeder extends Seeder
             ],
             [
                 'name' => 'Solution',
-                'short_name' => 'So',
+                'short_name' => 'SO',
                 'code' => '33079020',
                 'tax_percentage' => 18,
                 'is_expiry' => true,

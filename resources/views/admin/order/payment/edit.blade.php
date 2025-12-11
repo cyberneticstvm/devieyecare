@@ -58,6 +58,12 @@
                         <small class="text-danger">{{ $errors->first('notes') }}</small>
                         @enderror
                     </div>
+                    <div class="control-group col-md-3">
+                        <label class="form-label">Generate Invoice </label><br>
+                        {{ html()->checkbox('invoice', $payment->order?->invoice_number ? true : false, 1)->if($payment->order?->invoice_number > 0, function($el){
+                            return $el->attribute('disabled', 'disabled');
+                        })->class('form-check-input') }}
+                    </div>
                 </div>
                 <div class="raw mt-3">
                     <div class="col text-end">
