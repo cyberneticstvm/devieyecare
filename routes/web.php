@@ -48,6 +48,7 @@ Route::middleware(['web'])->group(function () {
         Route::prefix('helper')->controller(HelperController::class)->group(function () {
             Route::get('registration', 'searchRegistration')->name('search.registration');
             Route::post('registration', 'searchRegistrationShow')->name('search.registration.show');
+            Route::post('store/order/status/update', 'storeOrderStatusUpdate')->name('store.order.status.update');
         });
 
         Route::prefix('branch')->controller(BranchController::class)->group(function () {

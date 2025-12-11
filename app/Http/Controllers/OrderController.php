@@ -34,10 +34,11 @@ class OrderController extends Controller implements HasMiddleware
     /**
      * Display a listing of the resource.
      */
-    protected $products, $axis, $dia;
+    protected $products, $axis, $dia, $statuses;
     public function __construct()
     {
         $this->products = Product::whereIn('hsn_id', Hsn::whereIn('name', ['Frame', 'Lens'])->pluck('id'))->get();
+        $this->statuses = Extra::where('category', 'order')->pluck('name', 'name');
         $axis = [];
         $dia = [];
         for ($i = 0; $i <= 180; $i++):
@@ -54,7 +55,8 @@ class OrderController extends Controller implements HasMiddleware
         $orders = Order::withTrashed()->whereDate('created_at', Carbon::today())->when(!in_array(Auth::user()->roles->first()->name, ['Administrator']), function ($q) {
             return $q->where('branch_id', Session::get('branch')->id);
         })->latest()->get();
-        return view('admin.order.store.index', compact('orders'));
+        $statuses = $this->statuses;
+        return view('admin.order.store.index', compact('orders', 'statuses'));
     }
 
     /**

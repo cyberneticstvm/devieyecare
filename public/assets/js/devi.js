@@ -7,6 +7,13 @@ $(function(){
         }
     });
 
+    $(document).on("click", ".orderStatusUpdateDrawer", function(){
+        let mrn = $(this).data("mrn");
+        let oid = $(this).data("oid");
+        $(".mrn").html(mrn);
+        $("#oid").val(oid);
+    });
+
     $(document).on("keyup", ".qty, .discount, .advance", function(){
         calculateTotal();
     })

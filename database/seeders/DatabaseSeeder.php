@@ -103,8 +103,7 @@ class DatabaseSeeder extends Seeder
             'PNDG',
             'UPRS',
             'RFD',
-            'DLVD',
-            'CANCLD'
+            'DLVD'
         ];
 
         foreach ($months as $month) {
