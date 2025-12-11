@@ -37,6 +37,8 @@ Route::middleware(['web'])->group(function () {
 
     Route::middleware(['web', 'auth', 'auth.session', 'team', 'branch'])->group(function () {
         Route::prefix('')->controller(AuthController::class)->group(function () {
+            Route::get('force/logout', 'forceLogout')->name('force.logout');
+            Route::post('force/logout', 'forceLogoutAll')->name('force.logout.all');
             Route::get('logout', 'logout')->name('logout');
         });
 

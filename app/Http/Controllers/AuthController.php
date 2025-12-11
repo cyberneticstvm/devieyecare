@@ -87,4 +87,22 @@ class AuthController extends Controller implements HasMiddleware
         $request->session()->regenerateToken();
         return redirect()->route('login')->with("success", "User logged out successfully");
     }
+
+    function forceLogout()
+    {
+        return view("admin.misc.force_logout");
+    }
+
+    function forceLogoutAll(Request $request)
+    {
+        $credentials = $request->validate([
+            'password' => 'required|current-password',
+        ]);
+        try {
+            Auth::logoutOtherDevices($request->password);
+        } catch (Exception $e) {
+            return redirect()->back()->with("error", $e->getMessage());
+        }
+        return redirect()->route('index')->with("success", "User logged out from all devices successfully!");
+    }
 }

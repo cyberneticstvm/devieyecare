@@ -9,11 +9,11 @@
             <div class="col-lg-6">
                 {{ html()->form('POST')->route('search.registration.show')->class('d-flex')->attribute('role', 'search')->open() }}
                 {{ html()->text('search_term', $inputs[0] ?? old('search_term'))->class('form-control me-2')->attribute('id', 'navbarSearch')->placeholder('Name / Mobile / Mrn') }}
+                {{ html()->submit('Search')->class('btn btn-submit btn-primary') }}
+                {{ html()->form()->close() }}
                 @error('search_term')
                 <small class="text-danger">{{ $errors->first('search_term') }}</small>
                 @enderror
-                {{ html()->submit('Search')->class('btn btn-submit btn-primary') }}
-                {{ html()->form()->close() }}
             </div>
         </div>
     </div>

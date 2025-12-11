@@ -20,6 +20,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->priority([
             TeamsPermission::class,
         ]);
+        $middleware->append(AuthenticateSession::class);
         $middleware->alias([
             'team' => \App\Http\Middleware\TeamsPermission::class,
             'branch' => \App\Http\Middleware\Branch::class,

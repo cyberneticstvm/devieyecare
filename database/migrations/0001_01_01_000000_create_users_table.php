@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('mobile', 10)->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->string('login_session_id', 150)->unique()->nullable();
             $table->rememberToken();
             $table->timestamps();
             $table->softDeletes();

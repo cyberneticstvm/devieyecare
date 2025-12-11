@@ -194,6 +194,9 @@
                                             <p>{{ Auth::user()->email }}</p>
                                             <a href="{{ route('logout') }}" class="btn btn-primary text-uppercase w-100 rounded-pill">Sign out</a>
                                         </div>
+                                        <div class="list-group text-center">
+                                            <a href="{{ route('force.logout') }}" class="list-group-item rounded-pill list-group-item-action border-0 text-danger">Force Logout</a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
