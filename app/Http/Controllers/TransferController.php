@@ -8,6 +8,8 @@ use App\Models\Transfer;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class TransferController extends Controller implements HasMiddleware
 {
@@ -21,11 +23,14 @@ class TransferController extends Controller implements HasMiddleware
         ];
     }
 
-    protected $products, $branches;
+    protected $products, $from_branches, $to_branches;
     public function __construct()
     {
         $this->products = Product::orderBy('name')->pluck('name', 'id');
-        $this->branches = Branch::orderBy('name')->pluck('name', 'id');
+        $this->from_branches = Branch::when(!in_array(Auth::user()->roles->first()->name, ['Administrator']), function ($q) {
+            return $q->where('branch_id', Session::get('branch')->id);
+        })->orderBy('name')->pluck('name', 'id');
+        $this->to_branches = Branch::whereNot('is_store', 1)->orderBy('name')->pluck('name', 'id');
     }
     /**
      * Display a listing of the resource.
@@ -42,8 +47,9 @@ class TransferController extends Controller implements HasMiddleware
     public function create()
     {
         $products = $this->products;
-        $branches = $this->branches;
-        return view('admin.transfer.create', compact('products', 'branches'));
+        $from_branches = $this->from_branches;
+        $to_branches = $this->to_branches;
+        return view('admin.transfer.create', compact('products', 'from_branches', 'to_branches'));
     }
 
     /**

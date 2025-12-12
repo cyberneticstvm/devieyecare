@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Branch;
 use App\Models\ManufacturerSupplier;
 use App\Models\Product;
 use App\Models\Purchase;
@@ -66,6 +67,7 @@ class PurchaseController extends Controller implements HasMiddleware
             DB::transaction(function () use ($request, $inputs) {
                 $inputs['created_by'] = $request->user()->id;
                 $inputs['updated_by'] = $request->user()->id;
+                $inputs['branch_id'] = Branch::where('is_store', 1)->first()->id;
                 $purchase = Purchase::create($inputs);
                 $data = [];
                 foreach ($request->product_id as $key => $item):

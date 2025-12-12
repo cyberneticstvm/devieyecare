@@ -17,6 +17,7 @@ return new class extends Migration
             $table->foreignId('supplier_id')->constrained('manufacturer_suppliers', 'id')->onDelete('cascade');
             $table->string('invoice')->nullable();
             $table->text('notes')->nullable();
+            $table->foreignId('branch_id')->constrained()->onDelete('cascade');
             $table->foreignId('created_by')->constrained('users', 'id');
             $table->foreignId('updated_by')->constrained('users', 'id');
             $table->timestamps();

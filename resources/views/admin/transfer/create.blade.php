@@ -36,11 +36,11 @@
                                         <div class="row g-3">
                                             <div class="control-group col-md-6">
                                                 <label class="form-label req">From Branch </label>
-                                                {{ html()->select('from_branch', $branches, old('from_branch') ?? '')->class('select2')->placeholder('Select') }}
+                                                {{ html()->select('from_branch', $from_branches, old('from_branch') ?? '')->class('select2')->placeholder('Select') }}
                                             </div>
                                             <div class="control-group col-md-6">
                                                 <label class="form-label req">To Branch </label>
-                                                {{ html()->select('to_branch', $branches, old('to_branch') ?? '')->class('select2')->placeholder('Select') }}
+                                                {{ html()->select('to_branch', $to_branches, old('to_branch') ?? '')->class('select2')->placeholder('Select') }}
                                             </div>
                                             <div class="control-group col-md-6">
                                                 <label class="form-label req">Transfer Date</label>
