@@ -105,8 +105,12 @@
                         @if(Auth::user()->can('product-list'))
                         <li class="nav-item"><a class="nav-link {{ (in_array(Route::currentRouteName(), ['product.list', 'product.create', 'product.edit'])) ? 'active' : '' }}" href="{{ route('product.list') }}">Product Management</a></li>
                         @endif
-                        <li class="nav-item"><a class="nav-link" href="{{ route('index') }}">Purchase</a></li>
-                        <li class="nav-item"><a class="nav-link" href="{{ route('index') }}">Transfer</a></li>
+                        @if(Auth::user()->can('purchase-list'))
+                        <li class="nav-item"><a class="nav-link {{ (in_array(Route::currentRouteName(), ['purchase.list', 'purchase.create', 'purchase.edit'])) ? 'active' : '' }}" href="{{ route('purchase.list') }}">Purchase</a></li>
+                        @endif
+                        @if(Auth::user()->can('transfer-list'))
+                        <li class="nav-item"><a class="nav-link {{ (in_array(Route::currentRouteName(), ['transfer.list', 'transfer.create', 'transfer.edit'])) ? 'active' : '' }}" href="{{ route('transfer.list') }}">Transfer</a></li>
+                        @endif
                         <li class="nav-item"><a class="nav-link" href="{{ route('index') }}">Stock Status</a></li>
                     </ul>
                 </div>

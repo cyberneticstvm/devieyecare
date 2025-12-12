@@ -17,6 +17,7 @@ class HelperController extends Controller implements HasMiddleware
     {
         return [
             new middleware(\Spatie\Permission\Middleware\PermissionMiddleware::using('search-registration'), only: ['searchRegistration', 'searchRegistrationShow']),
+            new middleware(\Spatie\Permission\Middleware\PermissionMiddleware::using('order-status-update'), only: ['storeOrderStatusUpdate']),
         ];
     }
 

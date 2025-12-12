@@ -15,8 +15,10 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\PharmacyController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\RegistrationController;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\TransferController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VehicleController;
 use App\Http\Controllers\VehiclePaymentController;
@@ -202,6 +204,24 @@ Route::middleware(['web'])->group(function () {
             Route::get('edit/{id}', 'edit')->name('pharmacy.order.edit');
             Route::post('edit/{id}', 'update')->name('pharmacy.order.update');
             Route::get('delete/{id}', 'destroy')->name('pharmacy.order.delete');
+        });
+
+        Route::prefix('purchase')->controller(PurchaseController::class)->group(function () {
+            Route::get('', 'index')->name('purchase.list');
+            Route::get('create/', 'create')->name('purchase.create');
+            Route::post('create/', 'store')->name('purchase.save');
+            Route::get('edit/{id}', 'edit')->name('purchase.edit');
+            Route::post('edit/{id}', 'update')->name('purchase.update');
+            Route::get('delete/{id}', 'destroy')->name('purchase.delete');
+        });
+
+        Route::prefix('transfer')->controller(TransferController::class)->group(function () {
+            Route::get('', 'index')->name('transfer.list');
+            Route::get('create/', 'create')->name('transfer.create');
+            Route::post('create/', 'store')->name('transfer.save');
+            Route::get('edit/{id}', 'edit')->name('transfer.edit');
+            Route::post('edit/{id}', 'update')->name('transfer.update');
+            Route::get('delete/{id}', 'destroy')->name('transfer.delete');
         });
     });
 });

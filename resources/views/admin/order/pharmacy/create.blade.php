@@ -60,6 +60,7 @@
                                                 {{ html()->button('Add')->attribute('type', 'button')->class('btn btn-primary') }}
                                             </div>
                                         </div>
+                                        {{ html()->form()->close() }}
                                     </div>
                                 </div>
                             </div>

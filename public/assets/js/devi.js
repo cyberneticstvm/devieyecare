@@ -1,4 +1,4 @@
-$(function(){
+t$(function(){
     "use strict"
 
     $.ajaxSetup({
@@ -99,4 +99,158 @@ function validateOrderForm(){
         return false;
     }      
     return true;
+}
+
+function validatePurchaseForm(){
+    let frm = document.forms["purchaseForm"];
+    let frm1 = document.forms["purchaseItemsForm"];
+    let pdctLen = 0;
+    if(!frm['supplier_id'].value){
+        failed({
+            'error': 'Please select supplier'
+        });
+        return false;
+    }
+    if(!frm['invoice'].value){
+        failed({
+            'error': 'Please enter Purchase Invoice'
+        });
+        return false;
+    }
+    $("#purchaseItemsForm .slctdPct").each(function(){
+        if($(this).val() > 0){
+            pdctLen += 1;
+        }
+    });
+    if(pdctLen === 0){
+        failed({
+            'error': 'Please add at least one item to the table!'
+        });
+        return false;
+    }
+    $('<input>', {
+        type: 'hidden',
+        name: 'supplier_id',
+        value: frm['supplier_id'].value
+    }).appendTo(frm1);
+    $('<input>', {
+        type: 'hidden',
+        name: 'invoice',
+        value: frm['invoice'].value
+    }).appendTo(frm1);
+    $('<input>', {
+        type: 'hidden',
+        name: 'pdate',
+        value: frm['pdate'].value
+    }).appendTo(frm1);
+    $('<input>', {
+        type: 'hidden',
+        name: 'notes',
+        value: frm['notes'].value
+    }).appendTo(frm1);
+    return true;     
+}
+
+function validateTransferForm(){
+    let frm = document.forms["transferForm"];
+    let frm1 = document.forms["transferItemsForm"];
+    let pdctLen = 0;
+    if(!frm['from_branch'].value){
+        failed({
+            'error': 'Please select From Branch'
+        });
+        return false;
+    }
+    if(!frm['to_branch'].value){
+        failed({
+            'error': 'Please select To Branch'
+        });
+        return false;
+    }
+    if(frm['to_branch'].value == frm['from_branch'].value){
+        failed({
+            'error': 'From and To Branch should not be same!'
+        });
+        return false;
+    }
+    $("#transferItemsForm .slctdPct").each(function(){
+        if($(this).val() > 0){
+            pdctLen += 1;
+        }
+    });
+    if(pdctLen === 0){
+        failed({
+            'error': 'Please add at least one item to the table!'
+        });
+        return false;
+    }
+    $('<input>', {
+        type: 'hidden',
+        name: 'from_branch',
+        value: frm['from_branch'].value
+    }).appendTo(frm1);
+    $('<input>', {
+        type: 'hidden',
+        name: 'to_branch',
+        value: frm['to_branch'].value
+    }).appendTo(frm1);
+    $('<input>', {
+        type: 'hidden',
+        name: 'tdate',
+        value: frm['tdate'].value
+    }).appendTo(frm1);
+    $('<input>', {
+        type: 'hidden',
+        name: 'notes',
+        value: frm['notes'].value
+    }).appendTo(frm1);
+    return true;     
+}
+
+function addItem(type){
+    if(type == 'purchase'){
+        let frm = document.forms["purchaseItemForm"];
+        if(!frm['product_id'].value){
+            failed({
+                'error': 'Please select a product'
+            });
+            return false;
+        }
+        if(!frm['qty'].value){
+            failed({
+                'error': 'Please enter Qty'
+            });
+            return false;
+        }
+        if(!frm['purchase_price'].value){
+            failed({
+                'error': 'Please enter Purchase Price'
+            });
+            return false;
+        }
+        let pdct = $(".selPdct option:selected").text();
+        let tot = (parseFloat(frm['purchase_price'].value) && parseInt(frm['qty'].value)) ? parseFloat(frm['purchase_price'].value) * parseInt(frm['qty'].value) : 0;
+        $(".purchaseItem").append(`<tr><td><input type="hidden" name="product_id[]" value="${frm['product_id'].value}" class="slctdPct"><input type="text" name="product[]" value="${pdct}" class="border-0 w-100" readonly></td><td><input type="text" name="batch[]" value="${frm['batch'].value}" class="border-0 w-100" readonly></td><td><input type="text" name="expiry[]" value="${frm['expiry'].value}" class="border-0 w-100" readonly></td><td><input type="text" name="qty[]" value="${frm['qty'].value}" class="border-0 w-100" readonly></td><td><input type="text" name="purchase_price[]" value="${frm['purchase_price'].value}" class="border-0 w-100" readonly></td><td><input type="text" name="selling_price[]" value="${frm['selling_price'].value}" class="border-0 w-100" readonly></td><td><input type="text" name="total[]" value="${tot}" class="border-0 w-100" readonly></td><td><a href="javascript:void(0)" onclick="$(this).parent().parent().remove()">Remove</a></td></tr>`);
+        frm.reset();
+        $(".selPdct").select2();            
+    }
+    if(type == 'transfer'){
+        let frm = document.forms["transferItemForm"];
+        if(!frm['product_id'].value){
+            failed({
+                'error': 'Please select a product'
+            });
+            return false;
+        }
+        if(!frm['qty'].value){
+            failed({
+                'error': 'Please enter Qty'
+            });
+            return false;
+        }
+        let pdct = $(".selPdct option:selected").text();
+        $(".transferItem").append(`<tr><td><input type="hidden" name="product_id[]" value="${frm['product_id'].value}" class="slctdPct"><input type="text" name="product[]" value="${pdct}" class="border-0 w-100" readonly></td><td><input type="text" name="batch[]" value="${frm['batch'].value}" class="border-0 w-100" readonly></td><td><input type="text" name="qty[]" value="${frm['qty'].value}" class="border-0 w-100" readonly></td><td><a href="javascript:void(0)" onclick="$(this).parent().parent().remove()">Remove</a></td></tr>`);
+        frm.reset();
+        $(".selPdct").select2();
+    }   
 }

@@ -97,6 +97,7 @@
                                                 {{ html()->submit('Save')->class('btn btn-submit btn-primary') }}
                                             </div>
                                         </div>
+                                        {{ html()->form()->close() }}
                                     </div>
                                 </div>
                             </div>

@@ -42,7 +42,6 @@ $(function(){
     "use strict"
 
     $.getJSON('/ajax/chart/regorder', function (response) {
-        console.log(response);
         var options = {
         chart: {
             height: 350,

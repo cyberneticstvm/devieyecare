@@ -8,7 +8,7 @@
         <div class="row g-lg-12 g-3">
             <div class="col-lg-6">
                 {{ html()->form('POST')->route('force.logout.all')->class('d-flex')->attribute('role', 'search')->open() }}
-                {{ html()->password('password', '')->class('form-control me-2')->class('form-control me-2')->attribute('id', 'navbarSearch')->placeholder('******') }}
+                {{ html()->password('password', '')->class('form-control me-2')->class('form-control me-2')->attribute('id', 'navbarSearch')->placeholder('Current Password') }}
                 {{ html()->submit('Force Logout')->class('btn btn-submit btn-primary w-100') }}
                 {{ html()->form()->close() }}
                 @error('password')
