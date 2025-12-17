@@ -69,7 +69,7 @@ $(function(){
                         data: xdata,
                     });                    
                 }else{
-                    $('.selBatch').select2().html(new Option("Not Applicable", '0'));
+                    $('.selBatch').select2().html(new Option("Not Applicable", 'NA'));
                 }
             },
             error: function(xhr, status, error){
