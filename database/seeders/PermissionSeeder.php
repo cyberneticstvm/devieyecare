@@ -2,9 +2,15 @@
 
 namespace Database\Seeders;
 
+use App\Models\Branch;
+use App\Models\User;
+use App\Models\UserBranch;
+use App\Models\UserDevice;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
 
 class PermissionSeeder extends Seeder
 {
@@ -94,5 +100,45 @@ class PermissionSeeder extends Seeder
         foreach ($permissions as $permission) {
             Permission::create(['name' => $permission, 'guard_name' => 'web']);
         }
+
+        $user = User::factory()->create([
+            'name' => 'Vijoy Sasidharan',
+            'email' => 'mail@cybernetics.me',
+            'mobile' => '9188848860',
+            'password' => Hash::make('stupid'),
+        ]);
+
+        $branch = Branch::create([
+            'name' => 'Main Store',
+            'code' => 'STR',
+            'address' => 'Trivandrum',
+            'email' => 'store@store.com',
+            'contact' => '0123456789',
+            'is_store' => 1,
+            'display_capacity' => 0,
+            'invoice_starts_with' => 1,
+            'daily_expense_limit' => 1,
+            'created_by' => $user->id,
+            'updated_by' => $user->id,
+        ]);
+
+        $role = Role::create(['name' => 'Administrator']);
+        $permissions = Permission::pluck('id', 'id')->all();
+        $role->syncPermissions($permissions);
+        $user->assignRole([$role->id]);
+
+        foreach (requiredRoles() as $key => $role):
+            if ($role != 'Administrator')
+                Role::create(['name' => $role]);
+        endforeach;
+
+        UserBranch::create([
+            'user_id' => $user->id,
+            'branch_id' => $branch->id
+        ]);
+        UserDevice::insert([
+            'user_id' => $user->id,
+            'device_id' => UserDevice::where('category', 'device')->first()->id,
+        ]);
     }
 }
