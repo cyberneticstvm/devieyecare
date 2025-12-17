@@ -26,13 +26,16 @@
                         @if($order?->exists())
                         @forelse($order?->details as $key => $item)
                         <tr>
-                            <td>{{ $item->product->name }}</td>
-                            <td>{{ $item->batch }}</td>
-                            <td>{{ $item->expiry }}</td>
-                            <td>{{ $item->qty }}</td>
-                            <td>{{ $item->price }}</td>
-                            <td>{{ $item->total }}</td>
-                            <td></td>
+                            <td>
+                                <input type="hidden" name="product_id[]" value="{{ $item->product_id }}" class="slctdPct">
+                                <input type="text" name="product[]" value="{{ $item->product->name }}" class="border-0 w-100" />
+                            </td>
+                            <td><input type="text" name="batch[]" value="{{ $item->batch }}" class="border-0 w-100" /></td>
+                            <td><input type="text" name="expiry[]" value="{{ $item->expiry }}" class="border-0 w-100" /></td>
+                            <td><input type="text" name="qty[]" value="{{ $item->qty }}" class="border-0 w-100" /></td>
+                            <td><input type="text" name="price[]" value="{{ $item->price }}" class="border-0 w-100" /></td>
+                            <td><input type="text" name="total[]" value="{{ $item->total }}" class="border-0 w-100" /></td>
+                            <td><a href="javascript:void(0)" onclick="$(this).parent().parent().remove()">Remove</a></td>
                         </tr>
                         @empty
                         @endforelse
