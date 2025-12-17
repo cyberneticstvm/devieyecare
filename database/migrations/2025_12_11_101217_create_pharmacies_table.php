@@ -17,7 +17,7 @@ return new class extends Migration
             $table->foreignId('branch_id')->constrained()->onDelete('cascade');
             $table->unsignedBigInteger('invoice_number')->nullable();
             $table->decimal('discount', 8, 2)->default(0);
-            $table->decimal('total', 8, 2)->comment('After Discount')->default(0);
+            $table->decimal('total', 8, 2)->default(0);
             $table->foreignId('pmode')->constrained('extras', 'id')->nullable();
             $table->foreignId('created_by')->constrained('users', 'id');
             $table->foreignId('updated_by')->constrained('users', 'id');

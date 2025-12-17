@@ -246,6 +246,82 @@ function validateTransferForm(){
     return true;     
 }
 
+function validatePharmacyForm(){
+    let frm = document.forms["pharmacyItemsForm"];
+    let pdctLen = 0;
+    $("#pharmacyItemsForm .slctdPct").each(function(){
+        if($(this).val() > 0){
+            pdctLen += 1;
+        }
+    });
+    if(pdctLen === 0){
+        failed({
+            'error': 'Please add at least one item to the table!'
+        });
+        return false;
+    }
+    if(!frm['pmode'].value){
+        failed({
+            'error': 'Please select payment mode'
+        });
+        return false;
+    }
+}
+
+function validatePharmacyItem(){
+    let frm = document.forms["transferForm"];
+    if(!frm['product_id'].value){
+        failed({
+            'error': 'Please select a product'
+        });
+        return false;
+    }
+    if(!frm['batch'].value){
+        failed({
+            'error': 'Please select Batch'
+        });
+        return false;
+    }
+    if(!frm['qty'].value){
+        failed({
+            'error': 'Please enter Qty'
+        });
+        return false;
+    }
+    let pdct = $(".selPdct option:selected").text();
+    $.ajax({
+        type:'GET',
+        url: '/ajax/batch/price',
+        data: {'pdct': frm['product_id'].value, 'batch': frm['batch'].value},
+        dataType:'json',
+        success: (response) => {
+            if(response.status == 1){
+                let total = parseInt(frm['qty'].value) * parseFloat(response.product.selling_price);
+                $(".pharmacyItem").append(`<tr><td><input type="hidden" name="product_id[]" value="${frm['product_id'].value}" class="slctdPct"><input type="text" name="product[]" value="${pdct}" class="border-0 w-100" readonly></td><td><input type="text" name="batch[]" value="${frm['batch'].value}" class="border-0 w-100" readonly></td><td><input type="text" name="expiry[]" value="${response.product.expiry}" class="border-0 w-100" readonly></td><td><input type="text" name="qty[]" value="${frm['qty'].value}" class="border-0 w-100" readonly></td><td><input type="text" name="price[]" value="${response.product.selling_price}" class="border-0 w-100" readonly></td><td><input type="text" name="total[]" value="${total.toFixed(2)}" class="border-0 w-100" readonly></td><td><a href="javascript:void(0)" onclick="$(this).parent().parent().remove()">Remove</a></td></tr>`);
+                frm.reset();
+                $(".selPdct").select2();
+                $('.selBatch').select2();
+            }else{
+                failed({
+                    'error': 'Unable to fetch data',
+                });
+                return false;
+            }            
+        },
+        error: function(xhr, status, error){
+            console.error(xhr.responseText);
+        },
+        beforeSend: () => {
+            $(".addButton").attr("disabled", true);
+            $(".addButton").html("Loading...<span class='spinner-border spinner-border-sm' role='status' aria-hidden='true'></span>")
+        },
+        complete: () => {
+            $(".addButton").html("Add");
+            $(".addButton").attr("disabled", false);
+        }
+    });    
+}
+
 function addItem(type){
     if(type == 'purchase'){
         let frm = document.forms["purchaseItemForm"];

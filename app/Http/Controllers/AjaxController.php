@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Extra;
 use App\Models\Hsn;
 use App\Models\Product;
+use App\Models\PurchaseDetail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
@@ -51,6 +52,15 @@ class AjaxController extends Controller
         return response()->json([
             'batch' => $data,
             'is_expiry' => $is_expiry,
+        ]);
+    }
+
+    function getBatchPrice(Request $request)
+    {
+        $product = PurchaseDetail::where('product_id', $request->pdct)->where('batch', $request->batch)->first();
+        return response()->json([
+            'product' => ($product->exists()) ? $product : NULL,
+            'status' => ($product->exists()) ? 1 : 0,
         ]);
     }
 }
