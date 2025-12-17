@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Extra;
+use App\Models\Hsn;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -38,6 +39,18 @@ class AjaxController extends Controller
         $product = Product::findOrFail($request->pdctId);
         return response()->json([
             'product' => $product,
+        ]);
+    }
+
+    function getBatch(Request $request)
+    {
+        $is_expiry = 0;
+        if ($request->pdct > 0)
+            $is_expiry = Hsn::where('id', Product::find($request->pdct)->hsn_id)->first()->is_expiry;
+        $data = getInventory($request->frombr, $request->pdct);
+        return response()->json([
+            'batch' => $data,
+            'is_expiry' => $is_expiry,
         ]);
     }
 }

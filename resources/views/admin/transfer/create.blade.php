@@ -69,7 +69,7 @@
                                             </div>
                                             <div class="control-group col-md-8">
                                                 <label class="form-label">Batch Number</label>
-                                                {{ html()->text('batch', '')->class('form-control')->placeholder('Batch Number') }}
+                                                {{ html()->select('batch', '')->class('select2 selBatch')->placeholder('Select') }}
                                             </div>
                                             <div class="control-group col-md-4">
                                                 <label class="form-label req">Qty</label>

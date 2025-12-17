@@ -18,7 +18,7 @@
                         </tr>
                     </thead>
                     <tbody class="transferItem">
-                        @forelse($purchase->details as $key => $item)
+                        @forelse($transfer->details as $key => $item)
                         <tr>
                             <td>
                                 <input type="hidden" name="product_id[]" value="{{ $item->product->id }}" class="slctdPct"><input type="text" name="product[]" value="{{ $item->product->name }}" class="border-0 w-100" readonly>
@@ -53,11 +53,11 @@
                                         <div class="row g-3">
                                             <div class="control-group col-md-6">
                                                 <label class="form-label req">From Branch </label>
-                                                {{ html()->select('from_branch', $branches, $transfer->from_branch)->class('select2')->placeholder('Select') }}
+                                                {{ html()->select('from_branch', $from_branches, $transfer->from_branch)->class('select2')->placeholder('Select') }}
                                             </div>
                                             <div class="control-group col-md-6">
                                                 <label class="form-label req">To Branch </label>
-                                                {{ html()->select('to_branch', $branches, $transfer->to_branch)->class('select2')->placeholder('Select') }}
+                                                {{ html()->select('to_branch', $to_branches, $transfer->to_branch)->class('select2')->placeholder('Select') }}
                                             </div>
                                             <div class="control-group col-md-6">
                                                 <label class="form-label req">Transfer Date</label>
@@ -86,7 +86,7 @@
                                             </div>
                                             <div class="control-group col-md-8">
                                                 <label class="form-label">Batch Number</label>
-                                                {{ html()->text('batch', '')->class('form-control')->placeholder('Batch Number') }}
+                                                {{ html()->select('batch', '')->class('select2 selBatch')->placeholder('Select') }}
                                             </div>
                                             <div class="control-group col-md-4">
                                                 <label class="form-label req">Qty</label>

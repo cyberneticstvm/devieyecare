@@ -18,7 +18,7 @@ return new class extends Migration
             $table->foreignId('to_branch')->constrained('branches', 'id')->onDelete('cascade');
             $table->text('notes')->nullable();
             $table->boolean('is_approved')->default(0);
-            $table->foreignId('approved_by')->constrained('users', 'id')->nullable();
+            $table->unsignedBigInteger('approved_by')->nullable();
             $table->timestamp('approved_at')->nullable();
             $table->text('remarks')->nullable();
             $table->foreignId('created_by')->constrained('users', 'id');

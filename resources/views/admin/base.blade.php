@@ -459,7 +459,9 @@
             }
         </script>
         @include("admin.message")
+        @if(in_array(Route::current()->getName(), ['index']))
         <script src="{{ asset('/assets/js/chart.js') }}"></script>
+        @endif
         <script src="{{ asset('/assets/js/devi.js') }}"></script>
 </body>
 

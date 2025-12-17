@@ -1,4 +1,4 @@
-t$(function(){
+$(function(){
     "use strict"
 
     $.ajaxSetup({
@@ -41,7 +41,46 @@ t$(function(){
             }
         });
     });
-})
+
+    $(document).on("change", ".selPdct", function(){
+        let frm = document.forms["transferForm"];
+        if(!frm['from_branch'].value){
+            failed({
+                'error': 'Please select from branch'
+            });
+            $(".selPdct").val('').select2();
+            return false;
+        }
+        let fromBr = frm['from_branch'].value;
+        let pdctId = $(this).val();
+        $.ajax({
+            type:'GET',
+            url: '/ajax/batch/',
+            data: {'frombr': fromBr, 'pdct': pdctId},
+            dataType:'json',
+            success: (response) => {
+                var xdata = $.map(response.batch, function (obj) {
+                    obj.id = obj.batch;
+                    obj.text = obj.batchwqty;
+                    return obj;
+                });             
+                if(response.is_expiry === 1){
+                    $('.selBatch').html("<option value=''>Select</option>").select2({
+                        data: xdata,
+                    });                    
+                }else{
+                    $('.selBatch').select2().html(new Option("Not Applicable", '0'));
+                }
+            },
+            error: function(xhr, status, error){
+                console.error(xhr.responseText);
+            },
+            beforeSend: () => {
+                //$('.selBatch').val(null).trigger('change');
+            }
+        });
+    });
+});
 
 function calculateTotal(){
     let qty = 0;
@@ -242,6 +281,12 @@ function addItem(type){
             });
             return false;
         }
+        if(!frm['batch'].value){
+            failed({
+                'error': 'Please select Batch'
+            });
+            return false;
+        }
         if(!frm['qty'].value){
             failed({
                 'error': 'Please enter Qty'
@@ -252,5 +297,6 @@ function addItem(type){
         $(".transferItem").append(`<tr><td><input type="hidden" name="product_id[]" value="${frm['product_id'].value}" class="slctdPct"><input type="text" name="product[]" value="${pdct}" class="border-0 w-100" readonly></td><td><input type="text" name="batch[]" value="${frm['batch'].value}" class="border-0 w-100" readonly></td><td><input type="text" name="qty[]" value="${frm['qty'].value}" class="border-0 w-100" readonly></td><td><a href="javascript:void(0)" onclick="$(this).parent().parent().remove()">Remove</a></td></tr>`);
         frm.reset();
         $(".selPdct").select2();
+        $('.selBatch').select2();
     }   
 }

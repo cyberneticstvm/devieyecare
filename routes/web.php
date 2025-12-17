@@ -46,10 +46,13 @@ Route::middleware(['web'])->group(function () {
 
         Route::prefix('ajax')->controller(AjaxController::class)->group(function () {
             Route::get('product', 'getProductById')->name('ajax.get.product.by.id');
+            Route::get('batch', 'getBatch')->name('ajax.get.batch');
             Route::get('chart/regorder', 'getRegOrder')->name('ajax.chart.reg.order');
         });
 
         Route::prefix('helper')->controller(HelperController::class)->group(function () {
+            Route::get('inventory', 'inventory')->name('inventory');
+            Route::post('inventory', 'getInventory')->name('get.inventory');
             Route::get('registration', 'searchRegistration')->name('search.registration');
             Route::post('registration', 'searchRegistrationShow')->name('search.registration.show');
             Route::post('store/order/status/update', 'storeOrderStatusUpdate')->name('store.order.status.update');

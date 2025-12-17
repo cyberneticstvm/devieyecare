@@ -15,7 +15,7 @@ class Transfer extends Model
 
     public function details()
     {
-        return $this->hasMany(PurchaseDetail::class, 'purchase_id', 'id');
+        return $this->hasMany(TransferDetail::class, 'transfer_id', 'id');
     }
 
     public function fbranch()

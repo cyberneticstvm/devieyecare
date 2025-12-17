@@ -2,14 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Branch;
 use App\Models\Order;
 use App\Models\OrderStatus;
+use App\Models\Product;
 use App\Models\Registration;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
+use Illuminate\Support\Facades\Session;
 
 class HelperController extends Controller implements HasMiddleware
 {
@@ -18,7 +21,30 @@ class HelperController extends Controller implements HasMiddleware
         return [
             new middleware(\Spatie\Permission\Middleware\PermissionMiddleware::using('search-registration'), only: ['searchRegistration', 'searchRegistrationShow']),
             new middleware(\Spatie\Permission\Middleware\PermissionMiddleware::using('order-status-update'), only: ['storeOrderStatusUpdate']),
+            new middleware(\Spatie\Permission\Middleware\PermissionMiddleware::using('inventory-status'), only: ['inventory', 'getInventory']),
         ];
+    }
+    protected $branch;
+    function __construct()
+    {
+        $this->branch = Session::get('branch')->id;
+    }
+
+    function inventory()
+    {
+        $inputs = array($this->branch);
+        $data = getInventory($this->branch, 0);
+        $branches = fromBranches();
+        return view('admin.inventory.status', compact('inputs', 'data', 'branches'));
+    }
+
+    function getInventory(Request $request)
+    {
+        $inputs = array($request->branch);
+        $br = Branch::find($request->branch);
+        $data = getInventory($request->branch, 0);
+        $branches = fromBranches();
+        return view('admin.inventory.status', compact('inputs', 'data', 'branches'));
     }
 
     function searchRegistration()
