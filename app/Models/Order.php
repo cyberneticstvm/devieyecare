@@ -28,6 +28,11 @@ class Order extends Model
         return ($this->invoice_number) ? $this->invoice_number . '/' . $this->branch()->value('code') . '/' . getCurrentFinancialYear() : '';
     }
 
+    public function advisor()
+    {
+        return $this->belongsTo(User::class, 'product_advisor', 'id');
+    }
+
     public function details()
     {
         return $this->hasMany(OrderDetail::class, 'order_id', 'id');
@@ -40,7 +45,7 @@ class Order extends Model
 
     public function ostatus()
     {
-        return $this->hasMany(OrderStatus::class, 'order_id', 'id');
+        return $this->belongsTo(Extra::class, 'status', 'id');
     }
 
     public function cancelled()

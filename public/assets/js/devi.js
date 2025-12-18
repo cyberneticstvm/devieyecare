@@ -14,6 +14,20 @@ $(function(){
         $("#oid").val(oid);
     });
 
+    $(document).on("click", ".orderDetailsDrawer", function(){
+        let rid = $(this).data('rid');
+        let type = $(this).data('type');
+        $.ajax({
+            type:'GET',
+            url: '/ajax/order/details',
+            data: {'rid': rid, 'type': type},
+            dataType:'json',
+            success: (response) => {
+                $(".orderDetails").html(response.data);
+            }
+        });
+    });
+
     $(document).on("keyup", ".qty, .discount, .advance", function(){
         calculateTotal();
     })

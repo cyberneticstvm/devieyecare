@@ -17,6 +17,7 @@ use App\Http\Controllers\PharmacyController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\RegistrationController;
+use App\Http\Controllers\ReportController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\TransferController;
 use App\Http\Controllers\UserController;
@@ -47,6 +48,7 @@ Route::middleware(['web'])->group(function () {
         Route::prefix('ajax')->controller(AjaxController::class)->group(function () {
             Route::get('product', 'getProductById')->name('ajax.get.product.by.id');
             Route::get('batch', 'getBatch')->name('ajax.get.batch');
+            Route::get('order/details', 'getOrderDetails')->name('ajax.get.order.details');
             Route::get('batch/price', 'getBatchPrice')->name('ajax.get.batch.price');
             Route::get('chart/regorder', 'getRegOrder')->name('ajax.chart.reg.order');
         });
@@ -226,6 +228,15 @@ Route::middleware(['web'])->group(function () {
             Route::get('edit/{id}', 'edit')->name('transfer.edit');
             Route::post('edit/{id}', 'update')->name('transfer.update');
             Route::get('delete/{id}', 'destroy')->name('transfer.delete');
+        });
+
+        Route::prefix('report')->controller(ReportController::class)->group(function () {
+            Route::get('sales', 'sales')->name('report.sales');
+            Route::post('sales', 'salesFetch')->name('report.sales.fetch');
+            Route::get('registration', 'registration')->name('report.registration');
+            Route::post('registration', 'registrationFetch')->name('report.registration.fetch');
+            Route::get('daybook', 'daybook')->name('report.daybook');
+            Route::post('daybook', 'daybookFetch')->name('report.daybook.fetch');
         });
     });
 });

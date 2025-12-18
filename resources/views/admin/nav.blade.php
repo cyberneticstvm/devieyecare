@@ -158,9 +158,15 @@
                 </a>
                 <div class="collapse" id="collapseReports">
                     <ul class="nav flex-column li_animate">
-                        <li class="nav-item"><a class="nav-link" href="{{ route('index') }}">Daybook</a></li>
-                        <li class="nav-item"><a class="nav-link" href="{{ route('index') }}">Registration</a></li>
-                        <li class="nav-item"><a class="nav-link" href="{{ route('index') }}">Sales</a></li>
+                        @if(Auth::user()->can('report-daybook'))
+                        <li class="nav-item"><a class="nav-link {{ (in_array(Route::currentRouteName(), ['report.daybook', 'report.daybook.fetch'])) ? 'active' : '' }}" href="{{ route('report.daybook') }}">Daybook</a></li>
+                        @endif
+                        @if(Auth::user()->can('report-registration'))
+                        <li class="nav-item"><a class="nav-link {{ (in_array(Route::currentRouteName(), ['report.registration', 'report.registration.fetch'])) ? 'active' : '' }}" href="{{ route('report.registration') }}">Registration</a></li>
+                        @endif
+                        @if(Auth::user()->can('report-sales'))
+                        <li class="nav-item"><a class="nav-link {{ (in_array(Route::currentRouteName(), ['report.sales', 'report.sales.fetch'])) ? 'active' : '' }}" href="{{ route('report.sales') }}">Sales</a></li>
+                        @endif
                     </ul>
                 </div>
             </li>

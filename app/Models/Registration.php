@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -18,6 +19,11 @@ class Registration extends Model
         return $this->belongsTo(Branch::class, 'branch_id', 'id');
     }
 
+    public function getAge()
+    {
+        return $this->age + Carbon::parse($this->created_at)->age;
+    }
+
     public function doctor()
     {
         return $this->belongsTo(Doctor::class, 'doctor_id', 'id');
@@ -26,6 +32,11 @@ class Registration extends Model
     public function order()
     {
         return $this->hasMany(Order::class, 'registration_id', 'id');
+    }
+
+    public function pharmacy()
+    {
+        return $this->hasMany(Pharmacy::class, 'registration_id', 'id');
     }
 
     public function cancelled()

@@ -95,6 +95,9 @@ class PermissionSeeder extends Seeder
             'transfer-edit',
             'transfer-delete',
             'inventory-status',
+            'report-sales',
+            'report-registration',
+            'report-daybook',
         ];
 
         foreach ($permissions as $permission) {

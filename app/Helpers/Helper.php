@@ -148,7 +148,7 @@ function requiredRoles()
 function fromBranches()
 {
     $brs = Branch::when(!in_array(Auth::user()->roles->first()->name, ['Administrator']), function ($q) {
-        return $q->where('branch_id', Session::get('branch')->id);
+        return $q->where('id', Session::get('branch')->id);
     })->orderBy('name')->pluck('name', 'id');
     return $brs;
 }

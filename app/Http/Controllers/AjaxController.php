@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Extra;
 use App\Models\Hsn;
+use App\Models\Order;
 use App\Models\Product;
 use App\Models\PurchaseDetail;
 use Illuminate\Http\Request;
@@ -61,6 +62,36 @@ class AjaxController extends Controller
         return response()->json([
             'product' => ($product->exists()) ? $product : NULL,
             'status' => ($product->exists()) ? 1 : 0,
+        ]);
+    }
+
+    function getOrderDetails(Request $request)
+    {
+        $data = "";
+        if ($request->type == 'reg'):
+            $order = Order::where('registration_id', decrypt($request->rid))->first();
+            if ($order):
+                $data .= "<h5>" . $order->registration->getMrn() . "</h5>";
+                $data .= "<table class='table table-round border-top w-100'><thead><tr><th>Eye</th><th>SPH</th><th>CYL</th><th>AXIS</th><th>ADD</th><th>DIA</th><th>THICK</th><th>Product</th></tr></thead><tbody>";
+                foreach ($order->details as $key => $item):
+                    $data .= "<tr>";
+                    $data .= "<td>" . $item->eye . "</td>";
+                    $data .= "<td>" . $item->sph . "</td>";
+                    $data .= "<td>" . $item->cyl . "</td>";
+                    $data .= "<td>" . $item->axis . "</td>";
+                    $data .= "<td>" . $item->addition . "</td>";
+                    $data .= "<td>" . $item->dia . "</td>";
+                    $data .= "<td>" . $item->thickness?->name . "</td>";
+                    $data .= "<td>" . $item->product->name . "</td>";
+                    $data .= "</tr>";
+                endforeach;
+                $data .= "</tbody></table>";
+            else:
+                $data = "No records found";
+            endif;
+        endif;
+        return response()->json([
+            'data' => $data,
         ]);
     }
 }
