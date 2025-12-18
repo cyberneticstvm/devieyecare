@@ -58,7 +58,7 @@ class ReportController extends Controller implements HasMiddleware
 
     function salesFetch(Request $request)
     {
-        $inputs = $request->validate([
+        $params = $request->validate([
             'from_date' => 'required|date',
             'to_date' => 'required|date',
         ]);
@@ -91,7 +91,7 @@ class ReportController extends Controller implements HasMiddleware
 
     function registrationFetch(Request $request)
     {
-        $inputs = $request->validate([
+        $params = $request->validate([
             'from_date' => 'required|date',
             'to_date' => 'required|date',
         ]);
@@ -103,5 +103,25 @@ class ReportController extends Controller implements HasMiddleware
             return $q->where('branch_id', $request->branch);
         })->latest()->get();
         return view('admin.report.registration', compact('records', 'inputs', 'branches'));
+    }
+
+    function daybook()
+    {
+        $inputs = array(date('Y-m-d'), Session::get('branch')->id);
+        $branches = $this->branches;
+        $records = collect();
+        return view('admin.report.daybook', compact('records', 'inputs', 'branches'));
+    }
+
+    function daybookFetch(Request $request)
+    {
+        $params = $request->validate([
+            'ddate' => 'required|date',
+            'branch' => 'required|gt:0',
+        ]);
+        $inputs = array($request->ddate, $request->branch);
+        $branches = $this->branches;
+        $records = collect();
+        return view('admin.report.daybook', compact('records', 'inputs', 'branches'));
     }
 }
