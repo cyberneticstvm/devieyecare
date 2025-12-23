@@ -33,6 +33,16 @@ function getInventory($branch = 0, $product = 0)
     return collect($data);
 }
 
+function getDayBook($date, $branch)
+{
+    $cashpmode = Extra::where('category', 'pmode')->where('name', 'Cash')->first()->id;
+    $payments = Payment::leftJoin('orders AS o', 'payments.order_id', 'o.id')->leftJoin('registrations AS r', 'r.id', 'o.registration_id')->selectRaw("r.id, r.name AS cname, r.mrn, r.branch_id, r.status, 0 AS doc_fee_cash, 0 AS doc_fee_card, payments.created_at AS reg_date,'' AS docpmode, 0 AS ph_cash, 0 AS ph_card, '' AS ph_pmode, CASE WHEN payments.pmode = $cashpmode THEN payments.amount END AS advance_cash, CASE WHEN payments.pmode != $cashpmode THEN payments.amount END AS advance_card, payments.pmode AS advance_pmode, 0 AS balance, 0 AS total, 'payment' AS type")->whereNull('payments.deleted_at')->whereDate('payments.pdate', $date)->where('payments.branch_id', $branch);
+
+    $regs = Registration::leftJoin('pharmacies AS p', 'registrations.id', 'p.registration_id')->leftJoin('orders AS o', 'registrations.id', 'o.registration_id')->selectRaw("registrations.id, registrations.name AS cname, registrations.mrn, registrations.branch_id, registrations.status, CASE WHEN registrations.doc_fee_pmode = $cashpmode THEN registrations.doc_fee END AS doc_fee_cash, CASE WHEN registrations.doc_fee_pmode != $cashpmode THEN registrations.doc_fee END AS doc_fee_card, registrations.doc_fee_pmode AS docpmode, registrations.created_at AS reg_date, CASE WHEN p.deleted_at IS NULL AND p.pmode = $cashpmode THEN p.total END AS ph_cash, CASE WHEN p.deleted_at IS NULL AND p.pmode != $cashpmode THEN p.total END AS ph_card, CASE WHEN p.deleted_at IS NULL THEN p.pmode END AS ph_pmode, CASE WHEN o.deleted_at IS NULL AND o.advance_pmode = $cashpmode THEN o.advance END AS advance_cash,
+    CASE WHEN o.deleted_at IS NULL AND o.advance_pmode != $cashpmode THEN o.advance END AS advance_card, CASE WHEN o.deleted_at IS NULL THEN o.advance_pmode END AS advance_pmode, CASE WHEN o.deleted_at IS NULL THEN o.total-o.advance END AS balance, CASE WHEN o.deleted_at IS NULL THEN o.total END AS total, 'registration' AS type")->whereDate('registrations.created_at', $date)->where('registrations.branch_id', $branch)->whereNull('registrations.deleted_at')->unionall($payments)->get();
+    return collect($regs);
+}
+
 function teamId()
 {
     return 1;

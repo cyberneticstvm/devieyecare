@@ -44,6 +44,11 @@ class Registration extends Model
         return $this->deleted_at ? "<span class='badge bg-danger'>Cancelled</span>" : "<span class='badge bg-success'>Active</span>";
     }
 
+    public function ostatus()
+    {
+        return $this->belongsTo(Extra::class, 'status', 'id');
+    }
+
     public function getMrn()
     {
         return 'MRN/' . $this->mrn . '/' . $this->branch()->value('code');

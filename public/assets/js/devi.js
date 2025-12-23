@@ -28,6 +28,34 @@ $(function(){
         });
     });
 
+    $(document).on("click", ".expensesDrawer", function(){
+        let ddate = $(this).data('ddate');
+        let bid = $(this).data('branch');
+        $.ajax({
+            type:'GET',
+            url: '/ajax/expense/details',
+            data: {'branch': bid, 'ddate': ddate},
+            dataType:'json',
+            success: (response) => {
+                $(".expenseDetails").html(response.data);
+            }
+        });
+    });
+
+    $(document).on("click", ".vPaymentDrawer", function(){
+        let ddate = $(this).data('ddate');
+        let bid = $(this).data('branch');
+        $.ajax({
+            type:'GET',
+            url: '/ajax/vpayment/details',
+            data: {'branch': bid, 'ddate': ddate},
+            dataType:'json',
+            success: (response) => {
+                $(".vPaymentsDetails").html(response.data);
+            }
+        });
+    });
+
     $(document).on("keyup", ".qty, .discount, .advance", function(){
         calculateTotal();
     })

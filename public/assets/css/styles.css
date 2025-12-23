@@ -517,3 +517,7 @@ ease-in-out;
 .form-check-input{
     border-color: var(--bs-primary) !important;
 }
+
+.rowbg>td{
+    color: var(--bs-primary) !important;
+}

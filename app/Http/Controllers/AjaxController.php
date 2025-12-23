@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\Extra;
 use App\Models\Hsn;
+use App\Models\IncomeExpense;
 use App\Models\Order;
 use App\Models\Product;
 use App\Models\PurchaseDetail;
+use App\Models\VehiclePayment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
@@ -90,6 +92,48 @@ class AjaxController extends Controller
                 $data = "No records found";
             endif;
         endif;
+        return response()->json([
+            'data' => $data,
+        ]);
+    }
+
+    function getExpenseDetails(Request $request)
+    {
+        $data = "";
+        $iecat = Extra::where('name', 'Expense')->where('category', 'head')->first();
+        $expenses = IncomeExpense::where('branch_id', $request->branch)->whereDate('created_at', $request->ddate)->where('category_id', $iecat->id)->get();
+        $data .= "<table class='table table-round border-top w-100'><thead><tr><th>SL no</th><th>Head</th><th>Desc.</th><th>Amount</th></tr></thead><tbody>";
+        foreach ($expenses as $key => $item):
+            $data .= "<tr>";
+            $data .= "<td>" . $key + 1 . "</td>";
+            $data .= "<td>" . $item->head->name . "</td>";
+            $data .= "<td>" . $item->description . "</td>";
+            $data .= "<td>" . $item->amount . "</td>";
+            $data .= "</tr>";
+        endforeach;
+        $data .= "<tfoot><tr><th colspan='3' class='fw-bold textend'>Total</th><th class='fw-bold'>" . number_format($expenses->sum('amount'), 2) . "</th></tr></tfoot>";
+        $data .= "</tbody></table>";
+        return response()->json([
+            'data' => $data,
+        ]);
+    }
+
+    function getVPaymentDetails(Request $request)
+    {
+        $data = "";
+        $payments = VehiclePayment::where('branch_id', $request->branch)->whereDate('created_at', $request->ddate)->get();
+        $data .= "<table class='table table-round border-top w-100'><thead><tr><th>SL no</th><th>Vehicle</th><th>Pmode</th><th>Notes</th><th>Amount</th></tr></thead><tbody>";
+        foreach ($payments as $key => $item):
+            $data .= "<tr>";
+            $data .= "<td>" . $key + 1 . "</td>";
+            $data .= "<td>" . $item->vehicle->registration_number . "</td>";
+            $data .= "<td>" . $item->paymode->name . "</td>";
+            $data .= "<td>" . $item->notes . "</td>";
+            $data .= "<td>" . $item->amount . "</td>";
+            $data .= "</tr>";
+        endforeach;
+        $data .= "<tfoot><tr><th colspan='4' class='fw-bold textend'>Total</th><th class='fw-bold'>" . number_format($payments->sum('amount'), 2) . "</th></tr></tfoot>";
+        $data .= "</tbody></table>";
         return response()->json([
             'data' => $data,
         ]);

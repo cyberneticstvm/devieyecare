@@ -65,7 +65,7 @@
                         <tr>
                             <td>{{ $key + 1 }}</td>
                             <td>{{ $item->created_at->format('d.M.Y') }}</td>
-                            <td><a class="orderDetailsDrawer" data-bs-toggle="offcanvas" href="#OrderDetails" role="button" aria-controls="OrderDetails" aria-label="thunder AI theme setting" data-rid="{{ encrypt($item->id) }}" data-type="reg">{!! $item->getMrn() !!}</a></td>
+                            <td><a class="orderDetailsDrawer" data-bs-toggle="offcanvas" href="#OrderDetails" role="button" aria-controls="OrderDetails" aria-label="" data-rid="{{ encrypt($item->id) }}" data-type="reg">{!! $item->getMrn() !!}</a></td>
                             <td>{{ $item->name }}</a></td>
                             <td>{{ $item->getAge() }}</td>
                             <td>{{ $item->gender }}</td>

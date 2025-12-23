@@ -49,6 +49,8 @@ Route::middleware(['web'])->group(function () {
             Route::get('product', 'getProductById')->name('ajax.get.product.by.id');
             Route::get('batch', 'getBatch')->name('ajax.get.batch');
             Route::get('order/details', 'getOrderDetails')->name('ajax.get.order.details');
+            Route::get('expense/details', 'getExpenseDetails')->name('ajax.get.expense.details');
+            Route::get('vpayment/details', 'getVPaymentDetails')->name('ajax.get.vpayment.details');
             Route::get('batch/price', 'getBatchPrice')->name('ajax.get.batch.price');
             Route::get('chart/regorder', 'getRegOrder')->name('ajax.chart.reg.order');
         });

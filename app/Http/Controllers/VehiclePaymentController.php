@@ -9,6 +9,7 @@ use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
+use Illuminate\Support\Facades\Session;
 
 class VehiclePaymentController extends Controller implements HasMiddleware
 {
@@ -61,6 +62,7 @@ class VehiclePaymentController extends Controller implements HasMiddleware
         ]);
         try {
             $inputs['vehicle_id'] = decrypt($request->vehicle_id);
+            $inputs['branch_id'] = Session::get('branch')->id;
             $inputs['created_by'] = $request->user()->id;
             $inputs['updated_by'] = $request->user()->id;
             VehiclePayment::create($inputs);

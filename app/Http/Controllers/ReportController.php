@@ -4,15 +4,16 @@ namespace App\Http\Controllers;
 
 use App\Models\Branch;
 use App\Models\Extra;
+use App\Models\IncomeExpense;
 use App\Models\Order;
 use App\Models\Registration;
 use App\Models\User;
+use App\Models\VehiclePayment;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 
 class ReportController extends Controller implements HasMiddleware
@@ -109,8 +110,11 @@ class ReportController extends Controller implements HasMiddleware
     {
         $inputs = array(date('Y-m-d'), Session::get('branch')->id);
         $branches = $this->branches;
-        $records = collect();
-        return view('admin.report.daybook', compact('records', 'inputs', 'branches'));
+        $records = getDayBook(date('Y-m-d'), Session::get('branch')->id);
+        $iecat = Extra::where('name', 'Expense')->where('category', 'head')->first();
+        $expenses = IncomeExpense::whereDate('created_at', date('Y-m-d'))->where('branch_id', Session::get('branch')->id)->where('category_id', $iecat->id)->get();
+        $vpayments = VehiclePayment::whereDate('created_at', date('Y-m-d'))->where('branch_id', Session::get('branch')->id)->get();
+        return view('admin.report.daybook', compact('records', 'inputs', 'branches', 'expenses', 'vpayments'));
     }
 
     function daybookFetch(Request $request)
@@ -121,7 +125,10 @@ class ReportController extends Controller implements HasMiddleware
         ]);
         $inputs = array($request->ddate, $request->branch);
         $branches = $this->branches;
-        $records = collect();
-        return view('admin.report.daybook', compact('records', 'inputs', 'branches'));
+        $records = getDayBook($request->ddate, $request->branch);
+        $iecat = Extra::where('name', 'Expense')->where('category', 'head')->first();
+        $expenses = IncomeExpense::whereDate('created_at', $request->ddate)->where('branch_id', $request->branch)->where('category_id', $iecat->id)->get();
+        $vpayments = VehiclePayment::whereDate('created_at', $request->ddate)->where('branch_id', $request->branch)->get();
+        return view('admin.report.daybook', compact('records', 'inputs', 'branches', 'expenses', 'vpayments'));
     }
 }
