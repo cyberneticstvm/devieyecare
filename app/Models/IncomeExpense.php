@@ -23,6 +23,12 @@ class IncomeExpense extends Model
         return $this->belongsTo(Head::class, 'head_id', 'id');
     }
 
+    public function branch()
+    {
+        return $this->belongsTo(Branch::class, 'branch_id', 'id');
+    }
+
+
     public function category()
     {
         return $this->belongsTo(Extra::class, 'category_id', 'id');

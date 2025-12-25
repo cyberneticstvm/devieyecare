@@ -235,10 +235,14 @@ Route::middleware(['web'])->group(function () {
         Route::prefix('report')->controller(ReportController::class)->group(function () {
             Route::get('sales', 'sales')->name('report.sales');
             Route::post('sales', 'salesFetch')->name('report.sales.fetch');
+            Route::get('pharmacy', 'pharmacy')->name('report.pharmacy');
+            Route::post('pharmacy', 'pharmacyFetch')->name('report.pharmacy.fetch');
             Route::get('registration', 'registration')->name('report.registration');
             Route::post('registration', 'registrationFetch')->name('report.registration.fetch');
             Route::get('daybook', 'daybook')->name('report.daybook');
             Route::post('daybook', 'daybookFetch')->name('report.daybook.fetch');
+            Route::get('expense', 'expense')->name('report.expense');
+            Route::post('expense', 'expenseFetch')->name('report.expense.fetch');
         });
     });
 });

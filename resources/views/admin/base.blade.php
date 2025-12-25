@@ -424,7 +424,7 @@
         <script src="https://cdn.jsdelivr.net/npm/datatables@1.10.18/media/js/jquery.dataTables.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
         <script src="{{ asset('/assets/plugins/datatables/dataTables.responsive.js') }}"></script>
-        <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+
 
         <!--  -->
         <script src="{{ asset('/assets/js/common.js') }}"></script>
@@ -462,6 +462,7 @@
         </script>
         @include("admin.message")
         @if(in_array(Route::current()->getName(), ['index']))
+        <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
         <script src="{{ asset('/assets/js/chart.js') }}"></script>
         @endif
         <script src="{{ asset('/assets/js/devi.js') }}"></script>

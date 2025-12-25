@@ -165,7 +165,13 @@
                         <li class="nav-item"><a class="nav-link {{ (in_array(Route::currentRouteName(), ['report.registration', 'report.registration.fetch'])) ? 'active' : '' }}" href="{{ route('report.registration') }}">Registration</a></li>
                         @endif
                         @if(Auth::user()->can('report-sales'))
-                        <li class="nav-item"><a class="nav-link {{ (in_array(Route::currentRouteName(), ['report.sales', 'report.sales.fetch'])) ? 'active' : '' }}" href="{{ route('report.sales') }}">Sales</a></li>
+                        <li class="nav-item"><a class="nav-link {{ (in_array(Route::currentRouteName(), ['report.sales', 'report.sales.fetch'])) ? 'active' : '' }}" href="{{ route('report.sales') }}">Sales - Store</a></li>
+                        @endif
+                        @if(Auth::user()->can('report-pharmacy'))
+                        <li class="nav-item"><a class="nav-link {{ (in_array(Route::currentRouteName(), ['report.pharmacy', 'report.pharmacy.fetch'])) ? 'active' : '' }}" href="{{ route('report.pharmacy') }}">Sales - Pharmacy</a></li>
+                        @endif
+                        @if(Auth::user()->can('report-expense'))
+                        <li class="nav-item"><a class="nav-link {{ (in_array(Route::currentRouteName(), ['report.expense', 'report.expense.fetch'])) ? 'active' : '' }}" href="{{ route('report.expense') }}">Expense</a></li>
                         @endif
                     </ul>
                 </div>
