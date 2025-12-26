@@ -7,7 +7,7 @@
         <p class="fs-12">New Pharmacy Order</p>
         <div class="row g-lg-4 g-3">
             <div class="col-lg-8">
-                {{ html()->form('POST')->route($order?->exists() ? 'pharmacy.order.save' : 'pharmacy.order.update', encrypt($registration->id))->attribute('id', 'pharmacyItemsForm')->class('')->open() }}
+                {{ html()->form('POST')->route((!$order) ? 'pharmacy.order.save' : 'pharmacy.order.update', encrypt($registration->id))->attribute('id', 'pharmacyItemsForm')->class('')->open() }}
                 <input type="hidden" name="branch_id" value="{{ Session::get('branch')->id }}" />
                 <input type="hidden" name="registration_id" value="{{ encrypt($registration->id) }}" />
                 <table class="table table-round align-middle mb-0 table-hover w-100 mt-2 border-top">
@@ -23,7 +23,7 @@
                         </tr>
                     </thead>
                     <tbody class="pharmacyItem">
-                        @if($order?->exists())
+                        @if($order)
                         @forelse($order?->details as $key => $item)
                         <tr>
                             <td>

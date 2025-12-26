@@ -73,6 +73,7 @@ class PharmacyController extends Controller implements HasMiddleware
             DB::transaction(function () use ($request, $inputs) {
                 $inputs['invoice_number'] = Pharmacy::max('invoice_number') + 1 ?? 1;
                 $inputs['total'] = 0;
+                $inputs['discount'] = $request->discount ?? 0;
                 $inputs['registration_id'] = decrypt($request->registration_id);
                 $inputs['created_by'] = $request->user()->id;
                 $inputs['updated_by'] = $request->user()->id;
@@ -132,6 +133,7 @@ class PharmacyController extends Controller implements HasMiddleware
         try {
             DB::transaction(function () use ($request, $inputs, $id) {
                 $inputs['updated_by'] = $request->user()->id;
+                $inputs['discount'] = $request->discount ?? 0;
                 $pharmacy = Pharmacy::findOrFail(decrypt($id));
                 $pharmacy->update($inputs);
                 $data = [];

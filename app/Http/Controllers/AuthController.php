@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Branch;
 use App\Models\Extra;
+use App\Models\LoginLog;
 use App\Models\User;
 use App\Models\UserBranch;
+use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
 use Jenssegers\Agent\Agent;
@@ -43,7 +45,7 @@ class AuthController extends Controller implements HasMiddleware
                 $user = User::find(Auth::user()->id);
                 $devices = Extra::where('category', 'device')->whereIn('id', $user->devices()?->pluck('device_id'))->pluck('name')->toArray();
                 if (in_array(loggedDevice($agent), $devices)):
-                    //createLoginLog($agent, $location);
+                    createLoginLog($agent, $location);
                     return redirect()->route('index')->with("success", "User logged in successfully");
                 else:
                     Auth::logoutCurrentDevice();
@@ -62,6 +64,9 @@ class AuthController extends Controller implements HasMiddleware
     {
         $branch = Branch::findOrFail($request->branch);
         Session::put('branch', $branch);
+        LoginLog::where('user_id', Auth::user()->id)->where('login_session_id', Auth::user()->login_session_id)->update([
+            'branch_id' => Session::get('branch')->id,
+        ]);
         if (Session::has('branch')) :
             return redirect()->route('index')
                 ->withSuccess('User branch updated successfully!');
@@ -79,9 +84,9 @@ class AuthController extends Controller implements HasMiddleware
 
     function logout(Request $request)
     {
-        /*LoginLog::where('user_id', Auth::user()->id)->where('login_session_id', Auth::user()->login_session_id)->update([
-            'logout_at' => Carbon::now(),
-        ]);*/
+        LoginLog::where('user_id', Auth::user()->id)->where('login_session_id', Auth::user()->login_session_id)->update([
+            'logged_out_at' => Carbon::now(),
+        ]);
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();

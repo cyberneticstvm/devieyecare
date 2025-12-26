@@ -95,11 +95,13 @@ class PermissionSeeder extends Seeder
             'transfer-edit',
             'transfer-delete',
             'inventory-status',
+            'surgery-register',
             'report-sales',
             'report-pharmacy',
             'report-registration',
             'report-daybook',
             'report-expense',
+            'report-login-log',
         ];
 
         foreach ($permissions as $permission) {

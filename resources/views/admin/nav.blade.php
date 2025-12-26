@@ -70,6 +70,9 @@
                         @if(Auth::user()->can('payment-list'))
                         <li class="nav-item"><a class="nav-link {{ (in_array(Route::currentRouteName(), ['payment.list', 'payment.create', 'payment.edit'])) ? 'active' : '' }}" href="{{ route('payment.list') }}">Payments</a></li>
                         @endif
+                        @if(Auth::user()->can('surgery-register'))
+                        <li class="nav-item"><a class="nav-link {{ (in_array(Route::currentRouteName(), ['surgery.advised.register'])) ? 'active' : '' }}" href="{{ route('surgery.advised.register') }}">Surgery Advised</a></li>
+                        @endif
                     </ul>
                 </div>
             </li>
@@ -172,6 +175,9 @@
                         @endif
                         @if(Auth::user()->can('report-expense'))
                         <li class="nav-item"><a class="nav-link {{ (in_array(Route::currentRouteName(), ['report.expense', 'report.expense.fetch'])) ? 'active' : '' }}" href="{{ route('report.expense') }}">Expense</a></li>
+                        @endif
+                        @if(Auth::user()->can('report-login-log'))
+                        <li class="nav-item"><a class="nav-link {{ (in_array(Route::currentRouteName(), ['report.login.log', 'report.login.log.fetch'])) ? 'active' : '' }}" href="{{ route('report.login.log') }}">Login Log</a></li>
                         @endif
                     </ul>
                 </div>

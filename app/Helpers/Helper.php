@@ -14,14 +14,17 @@ use App\Models\Doctor;
 use App\Models\Extra;
 use App\Models\Hsn;
 use App\Models\IncomeExpense;
+use App\Models\LoginLog;
 use App\Models\Order;
 use App\Models\OrderStatus;
 use App\Models\Payment;
 use App\Models\Registration;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Str;
 
 function getInventory($branch = 0, $product = 0)
 {
@@ -78,7 +81,7 @@ function getOrderStatus($status, $type)
     return Extra::where('category', $type)->where('name', $status)->orderBy('id')->firstOrFail();
 }
 
-/*function createLoginLog($agent, $location)
+function createLoginLog($agent, $location)
 {
     $devices = Extra::where('category', 'device')->orderBy('id')->get()->toArray();
     $device = $devices[0]['name'];
@@ -97,26 +100,16 @@ function getOrderStatus($status, $type)
         'country' => $location->countryName,
         'region' => $location->regionName,
         'city' => $location->cityName,
-        'zip' => $location->zipCode,
+        'zipcode' => $location->zipCode,
         'lat' => $location->latitude,
         'lng' => $location->longitude,
         'login_session_id' => $uid,
-        'login_at' => Carbon::now(),
+        'logged_in_at' => Carbon::now(),
     ]);
     User::where('id', Auth::user()->id)->update([
         'login_session_id' => $uid,
     ]);
 }
-
-function getUserBranches()
-{
-    return Branch::whereIn('id', UserBranch::where('user_id', Auth::id())->pluck('branch_id'))->get();
-}
-
-function hsns()
-{
-    return Hsn::orderBy('name')->get();
-}*/
 
 function getCurrentFinancialYear(): string
 {

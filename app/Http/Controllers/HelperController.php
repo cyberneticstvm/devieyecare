@@ -22,6 +22,7 @@ class HelperController extends Controller implements HasMiddleware
             new middleware(\Spatie\Permission\Middleware\PermissionMiddleware::using('search-registration'), only: ['searchRegistration', 'searchRegistrationShow']),
             new middleware(\Spatie\Permission\Middleware\PermissionMiddleware::using('order-status-update'), only: ['storeOrderStatusUpdate']),
             new middleware(\Spatie\Permission\Middleware\PermissionMiddleware::using('inventory-status'), only: ['inventory', 'getInventory']),
+            new middleware(\Spatie\Permission\Middleware\PermissionMiddleware::using('surgery-register'), only: ['surgeryAdvised']),
         ];
     }
     protected $branch;
@@ -81,5 +82,11 @@ class HelperController extends Controller implements HasMiddleware
             return redirect()->back()->with("error", $e->getMessage());
         }
         return redirect()->route('store.order.list')->with("success", "Order status updated successfully!");
+    }
+
+    function surgeryAdvised()
+    {
+        $registrations = Registration::where('surgery_advised', 1)->latest()->get();
+        return view('admin.misc.surgery_advised', compact('registrations'));
     }
 }

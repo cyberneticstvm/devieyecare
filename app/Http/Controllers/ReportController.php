@@ -7,6 +7,7 @@ use App\Models\Extra;
 use App\Models\Head;
 use App\Models\Hsn;
 use App\Models\IncomeExpense;
+use App\Models\LoginLog;
 use App\Models\Order;
 use App\Models\Pharmacy;
 use App\Models\Product;
@@ -30,10 +31,11 @@ class ReportController extends Controller implements HasMiddleware
             new Middleware(\Spatie\Permission\Middleware\PermissionMiddleware::using('report-sales'), only: ['registration', 'registrationFetch']),
             new Middleware(\Spatie\Permission\Middleware\PermissionMiddleware::using('report-sales'), only: ['daybook', 'daybookFetch']),
             new Middleware(\Spatie\Permission\Middleware\PermissionMiddleware::using('report-sales'), only: ['expense', 'expenseFetch']),
+            new Middleware(\Spatie\Permission\Middleware\PermissionMiddleware::using('report-login-log'), only: ['loginLog', 'LoginLogFetch']),
         ];
     }
 
-    protected $branches, $advisors, $pmodes, $rtypes, $store_products, $medicines, $expense_heads;
+    protected $branches, $advisors, $pmodes, $rtypes, $store_products, $medicines, $expense_heads, $users;
     public function __construct()
     {
         $this->rtypes = array('0' => 'All', '1' => 'Due Date Report', '2' => 'Booked Without Advance', '3' => 'Booked Not Delivered');
@@ -55,6 +57,8 @@ class ReportController extends Controller implements HasMiddleware
         $this->medicines = Product::whereIn('hsn_id', Hsn::whereNotIn('name', ['Frame', 'Lens'])->pluck('id'))->union($brs)->pluck('name', 'id');
 
         $this->expense_heads = Head::where('category_id', Extra::where('name', 'Expense')->where('category', 'head')->first()->id)->union($brs)->pluck('name', 'id');
+
+        $this->users = User::orderBy('name')->union($brs)->pluck('name', 'id');
     }
 
     function sales()
@@ -198,5 +202,29 @@ class ReportController extends Controller implements HasMiddleware
             return $q->where('branch_id', $request->branch);
         })->get();
         return view('admin.report.expense', compact('records', 'inputs', 'branches', 'heads'));
+    }
+
+    function loginLog()
+    {
+        $inputs = array(date('Y-m-d'), date('Y-m-d'), '0');
+        $records = collect();
+        $users = $this->users;
+        return view('admin.report.login_log', compact('records', 'inputs', 'users'));
+    }
+
+    function loginLogFetch(Request $request)
+    {
+        $params = $request->validate([
+            'from_date' => 'required|date',
+            'to_date' => 'required|date',
+        ]);
+        $fdate = Carbon::parse($request->from_date)->startOfDay();
+        $tdate = Carbon::parse($request->to_date)->endOfDay();
+        $users = $this->users;
+        $inputs = array($request->from_date, $request->to_date, $request->user_id);
+        $records = LoginLog::whereBetween('created_at', [$fdate, $tdate])->when($request->user_id > 0, function ($q) use ($request) {
+            return $q->where('user_id', $request->user_id);
+        })->latest()->get();
+        return view('admin.report.login_log', compact('records', 'inputs', 'users'));
     }
 }

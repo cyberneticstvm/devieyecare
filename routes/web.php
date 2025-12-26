@@ -61,6 +61,7 @@ Route::middleware(['web'])->group(function () {
             Route::get('registration', 'searchRegistration')->name('search.registration');
             Route::post('registration', 'searchRegistrationShow')->name('search.registration.show');
             Route::post('store/order/status/update', 'storeOrderStatusUpdate')->name('store.order.status.update');
+            Route::get('surgery', 'surgeryAdvised')->name('surgery.advised.register');
         });
 
         Route::prefix('branch')->controller(BranchController::class)->group(function () {
@@ -243,6 +244,8 @@ Route::middleware(['web'])->group(function () {
             Route::post('daybook', 'daybookFetch')->name('report.daybook.fetch');
             Route::get('expense', 'expense')->name('report.expense');
             Route::post('expense', 'expenseFetch')->name('report.expense.fetch');
+            Route::get('loginlog', 'loginLog')->name('report.login.log');
+            Route::post('loginlog', 'loginLogFetch')->name('report.login.log.fetch');
         });
     });
 });
