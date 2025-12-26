@@ -132,9 +132,9 @@ class PharmacyController extends Controller implements HasMiddleware
         ]);
         try {
             DB::transaction(function () use ($request, $inputs, $id) {
+                $pharmacy = Pharmacy::findOrFail(decrypt($id));
                 $inputs['updated_by'] = $request->user()->id;
                 $inputs['discount'] = $request->discount ?? 0;
-                $pharmacy = Pharmacy::findOrFail(decrypt($id));
                 $pharmacy->update($inputs);
                 $data = [];
                 foreach ($request->product_id as $key => $item):
