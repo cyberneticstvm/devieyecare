@@ -8,7 +8,9 @@ use App\Models\IncomeExpense;
 use App\Models\Order;
 use App\Models\Product;
 use App\Models\PurchaseDetail;
+use App\Models\Registration;
 use App\Models\VehiclePayment;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
@@ -35,6 +37,46 @@ class AjaxController extends Controller
         return response()->json([
             'orders' => $orders,
             'registrations' => $regs,
+        ]);
+    }
+
+    function getExpenses(Request $request)
+    {
+        $dates = collect(range(0, 6))
+            ->map(function ($i) {
+                return Carbon::today()->subDays($i)->format('Y-m-d');
+            })
+            ->reverse()->values();
+
+        $counts = IncomeExpense::where('category_id', Extra::where('name', 'Expense')->where('category', 'head')->first()->id)->where('branch_id', $this->branch)->whereDate('ie_date', '>=', Carbon::now()->subDays(7))->selectRaw("SUM(amount) AS total, ie_date AS date")->groupBy('date')->pluck('total', 'date');
+        $result = $dates->map(function ($date) use ($counts) {
+            return [
+                'day'  => Carbon::parse($date)->format('d/M'),
+                'tot' => $counts[$date] ?? 0 // default to 0 if missing
+            ];
+        });
+        return response()->json([
+            'data' => $result,
+        ]);
+    }
+
+    function getReviews(Request $request)
+    {
+        $dates = collect(range(0, 29))
+            ->map(function ($i) {
+                return Carbon::today()->subDays($i)->format('Y-m-d');
+            })
+            ->reverse()->values();
+
+        $counts = Registration::where('rtype', Extra::where('name', 'Review')->where('category', 'rtype')->first()->id)->where('branch_id', $this->branch)->whereDate('created_at', '>=', Carbon::now()->subDays(30))->selectRaw("COUNT(id) AS total, DATE(created_at) AS date")->groupBy('date')->pluck('total', 'date');
+        $result = $dates->map(function ($date) use ($counts) {
+            return [
+                'day'  => Carbon::parse($date)->format('d/M'),
+                'tot' => $counts[$date] ?? 0 // default to 0 if missing
+            ];
+        });
+        return response()->json([
+            'data' => $result,
         ]);
     }
 

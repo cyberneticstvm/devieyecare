@@ -53,6 +53,9 @@ Route::middleware(['web'])->group(function () {
             Route::get('vpayment/details', 'getVPaymentDetails')->name('ajax.get.vpayment.details');
             Route::get('batch/price', 'getBatchPrice')->name('ajax.get.batch.price');
             Route::get('chart/regorder', 'getRegOrder')->name('ajax.chart.reg.order');
+            Route::get('chart/expenses', 'getExpenses')->name('ajax.chart.expenses');
+            Route::get('chart/review', 'getReviews')->name('ajax.chart.review');
+            Route::get('chart/testr', 'getReviews')->name('ajax.chart.review');
         });
 
         Route::prefix('helper')->controller(HelperController::class)->group(function () {

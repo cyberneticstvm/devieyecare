@@ -70,7 +70,7 @@
 <div class="col-xl-8 col-lg-12">
     <div class="card rounded-4 mb-3">
         <div class="card-header p-lg-4 p-3 d-flex justify-content-between align-items-center">
-            <h6 class="card-title mb-0">Registrations & Orders</h6>
+            <h6 class="card-title mb-0">Registrations & Orders - Last 12 Months</h6>
             <div class="dropdown">
                 <a href="#" class="dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"></a>
                 <ul class="dropdown-menu shadow li_animate">
@@ -80,6 +80,22 @@
         </div>
         <div class="card-body p-lg-4 p-3">
             <div id="apex-chart-line-column" style="height: 240px;"></div>
+        </div>
+    </div>
+</div>
+<div class="col-md-4">
+    <div class="card rounded-4">
+        <div class="card-body p-lg-4">
+            <h5 class="card-title">Expenses Overview - Last 7 Days</h5>
+            <div id="expenseChart"></div>
+        </div>
+    </div>
+</div>
+<div class="col-md-12">
+    <div class="card rounded-4">
+        <div class="card-body p-lg-4">
+            <h5 class="card-title">Review Overview - Last 30 Days</h5>
+            <div id="reviewChart"></div>
         </div>
     </div>
 </div>
