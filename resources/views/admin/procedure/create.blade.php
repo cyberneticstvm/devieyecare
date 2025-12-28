@@ -83,6 +83,7 @@
                                             <th>Days</th>
                                         </thead>
                                         <tbody class="medicineRow">
+                                            @if($registration?->procedure?->medicines)
                                             @forelse($registration?->procedure?->medicines as $key => $item)
                                             <tr>
                                                 <td>
@@ -102,6 +103,8 @@
                                                 </td>
                                             </tr>
                                             @empty
+                                            @endforelse
+                                            @endif
                                             <tr>
                                                 <td>
                                                     {{ html()->select($name = 'product_ids[]', $value = $products, '')->class('select2')->attribute('id', 'pid1')->placeholder('Select') }}
@@ -119,7 +122,6 @@
                                                     {{ html()->number('days[]', '', '', '', '')->class('form-control')->placeholder('0') }}
                                                 </td>
                                             </tr>
-                                            @endforelse
                                         </tbody>
                                         <tfoot>
                                             <tr>
