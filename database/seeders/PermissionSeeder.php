@@ -110,22 +110,16 @@ class PermissionSeeder extends Seeder
             Permission::create(['name' => $permission, 'guard_name' => 'web']);
         }
 
+        foreach (requiredRoles() as $key => $rol):
+            Role::create(['guard_name' => 'web', 'name' => $rol, 'team_id' => teamId()]);
+        endforeach;
+
         $user = User::factory()->create([
             'name' => 'Vijoy Sasidharan',
             'email' => 'mail@cybernetics.me',
             'mobile' => '9188848860',
             'password' => Hash::make('stupid'),
         ]);
-
-        $role = Role::create(['guard_name' => 'web', 'name' => 'Administrator', 'team_id' => teamId()]);
-        $permissions = Permission::pluck('id', 'id')->all();
-        $user->assignRole($role->id, teamId());
-        $role->syncPermissions($permissions);
-
-        foreach (requiredRoles() as $key => $rol):
-            if ($rol != 'Administrator')
-                Role::create(['name' => $rol, 'team_id' => teamId()]);
-        endforeach;
 
         $branch = Branch::create([
             'name' => 'Main Store',
@@ -149,5 +143,10 @@ class PermissionSeeder extends Seeder
             'user_id' => $user->id,
             'device_id' => UserDevice::where('category', 'device')->first()->id,
         ]);
+
+        $role = Role::findById(1, 'web');
+        $permissions = Permission::pluck('id', 'id')->all();
+        $user->assignRole($role->id, teamId());
+        $role->syncPermissions($permissions);
     }
 }
