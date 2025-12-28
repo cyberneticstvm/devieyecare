@@ -90,9 +90,12 @@ class AjaxController extends Controller
 
     function getProducts(Request $request)
     {
-        //if ($request->type == 'medicine'):
-        $products = Product::whereIn('hsn_id', Hsn::whereIn('name', ['Ointment', 'Eye Drop', 'Tablet'])->pluck('id'))->get();
-        //endif;
+        if ($request->type == 'medicine'):
+            $products = Product::whereIn('hsn_id', Hsn::whereIn('name', ['Ointment', 'Eye Drop', 'Tablet'])->pluck('id'))->get();
+        endif;
+        if ($request->type == 'status'):
+            $products = Extra::where('category', 'order')->get();
+        endif;
         return response()->json([
             'products' => $products,
         ]);

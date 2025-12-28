@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignId('order_id')->constrained()->onDelete('cascade');
             $table->foreignId('mrn')->constrained('registrations', 'mrn');
             $table->foreignId('status_id')->constrained('extras', 'id')->onDelete('cascade');
+            $table->string('comments')->nullable();
             $table->foreignId('created_by')->constrained('users', 'id');
             $table->foreignId('updated_by')->constrained('users', 'id');
             $table->timestamps();

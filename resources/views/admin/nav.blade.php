@@ -148,6 +148,9 @@
                         @if(Auth::user()->can('ms-list'))
                         <li class="nav-item"><a class="nav-link {{ (in_array(Route::currentRouteName(), ['ms.list', 'ms.create', 'ms.edit'])) ? 'active' : '' }}" href="{{ route('ms.list', 'Supplier') }}">Supplier</a></li>
                         @endif
+                        @if(Auth::user()->can('bulk-order-update'))
+                        <li class="nav-item"><a class="nav-link {{ (in_array(Route::currentRouteName(), ['bulk.order.status', 'bulk.order.status.update'])) ? 'active' : '' }}" href="{{ route('bulk.order.status') }}">Bulk Order Update</a></li>
+                        @endif
                     </ul>
                 </div>
             </li>

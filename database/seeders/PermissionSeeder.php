@@ -86,6 +86,7 @@ class PermissionSeeder extends Seeder
             'payment-edit',
             'payment-delete',
             'order-status-update',
+            'bulk-order-update',
             'purchase-list',
             'purchase-create',
             'purchase-edit',

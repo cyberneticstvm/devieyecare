@@ -67,6 +67,8 @@ Route::middleware(['web'])->group(function () {
             Route::post('registration', 'searchRegistrationShow')->name('search.registration.show');
             Route::post('store/order/status/update', 'storeOrderStatusUpdate')->name('store.order.status.update');
             Route::get('surgery', 'surgeryAdvised')->name('surgery.advised.register');
+            Route::get('orderstatus', 'orderStatus')->name('bulk.order.status');
+            Route::post('orderstatus', 'orderStatusUpdate')->name('bulk.order.status.update');
         });
 
         Route::prefix('branch')->controller(BranchController::class)->group(function () {

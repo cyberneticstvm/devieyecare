@@ -145,6 +145,26 @@ function addRow(type){
             }
         });
     }
+    if(type == 'status'){
+        $.ajax({
+            type:'GET',
+            url: '/ajax/products/',
+            data: {'type': type},
+            dataType:'json',
+            success: (response) => {
+                var xdata = $.map(response.products, function (obj) {
+                    obj.id = obj.id;
+                    obj.text = obj.name;
+                    return obj;
+                });
+                let uid = Math.floor(Math.random() * 100) + 1;
+                $(".orderStatusRow").append(`<tr><td><input type='text' name='mrns[]' class='form-control' placeholder='Mrn' /></td><td><select class='select2' name='status_ids[]' id='sid${uid}'></select></td><td><input type='text' name='comments[]' class='form-control' placeholder='Comment' /></td><td><a href="javascript:void(0)" onclick="$(this).parent().parent().remove()">Remove</a></td></tr>`);
+                $(".orderStatusRow tr:last").find('.select2').html("<option value=''>Select</option>").select2({
+                    data: xdata,
+                });    
+            }
+        });
+    }
 }
 
 function calculateTotal(){
