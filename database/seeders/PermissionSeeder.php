@@ -134,7 +134,7 @@ class PermissionSeeder extends Seeder
         $role = Role::create(['name' => 'Administrator', 'team_id' => teamId()]);
         $permissions = Permission::pluck('id', 'id')->all();
         $role->syncPermissions($permissions);
-        $user->assignRole([$role->id]);
+        $user->assignRole([$role->id], teamId());
 
         foreach (requiredRoles() as $key => $role):
             if ($role != 'Administrator')
