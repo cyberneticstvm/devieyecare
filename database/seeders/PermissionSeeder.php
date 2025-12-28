@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Branch;
+use App\Models\Extra;
 use App\Models\User;
 use App\Models\UserBranch;
 use App\Models\UserDevice;
@@ -141,7 +142,7 @@ class PermissionSeeder extends Seeder
         ]);
         UserDevice::insert([
             'user_id' => $user->id,
-            'device_id' => UserDevice::where('category', 'device')->first()->id,
+            'device_id' => Extra::where('category', 'device')->first()->id,
         ]);
 
         $role = Role::findById(1, 'web');
