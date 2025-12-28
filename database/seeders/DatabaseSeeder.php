@@ -8,6 +8,7 @@ use App\Models\UserDevice;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
+use Spatie\Permission\Models\Role;
 
 class DatabaseSeeder extends Seeder
 {
@@ -147,11 +148,11 @@ class DatabaseSeeder extends Seeder
         }
 
         $user = User::find(1);
-
+        $role = Role::find(1);
         UserDevice::insert([
             'user_id' => $user->id,
             'device_id' => Extra::where('category', 'device')->first()->id,
         ]);
-        $user->assignRole('Administrator', teamId());
+        $user->assignRole($role->id, teamId());
     }
 }
