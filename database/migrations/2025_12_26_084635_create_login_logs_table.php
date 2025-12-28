@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('login_logs', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained();
-            $table->foreignId('branch_id')->constrained()->nulluble();
+            $table->foreignId('branch_id')->constrained()->nullable();
             $table->string('ip_address', 25)->nullable();
             $table->string('user_agent')->nullable();
             $table->string('country', 25)->nullable();
