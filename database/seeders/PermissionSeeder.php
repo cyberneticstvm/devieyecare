@@ -131,7 +131,8 @@ class PermissionSeeder extends Seeder
             'updated_by' => $user->id,
         ]);
 
-        $role = Role::create(['guard_name' => 'web', 'name' => 'Administrator', 'team_id' => teamId()]);
+        Role::create(['guard_name' => 'web', 'name' => 'Administrator', 'team_id' => teamId()]);
+        $role = Role::findById(1, 'web');
         $permissions = Permission::pluck('id', 'id')->all();
         $role->syncPermissions($permissions);
         $user->assignRole($role->id, teamId());
