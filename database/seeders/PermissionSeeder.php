@@ -145,7 +145,7 @@ class PermissionSeeder extends Seeder
             'device_id' => 1, //Extra::where('category', 'device')->first()->id,
         ]);*/
 
-        $role = Role::findById(1, 'web');
+        $role = Role::find(1);
         $permissions = Permission::pluck('id', 'id')->all();
         $user->assignRole($role->id, teamId());
         $role->syncPermissions($permissions);
