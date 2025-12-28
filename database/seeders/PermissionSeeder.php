@@ -147,7 +147,7 @@ class PermissionSeeder extends Seeder
 
         $role = Role::find(1);
         $permissions = Permission::pluck('id', 'id')->all();
-        $user->assignRole($role->id, teamId());
+        $user->assignRole((int)$role->id, teamId());
         $role->syncPermissions($permissions);
     }
 }
