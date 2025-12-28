@@ -3,8 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\Extra;
-use App\Models\Hsn;
-use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -144,73 +142,5 @@ class DatabaseSeeder extends Seeder
         foreach ($statuses2 as $status) {
             Extra::insert(['name' => $status, 'category' => 'order']);
         }
-
-        $hsns = [
-            [
-                'name' => 'Lens',
-                'short_name' => 'LE',
-                'code' => '9015000',
-                'tax_percentage' => 5,
-                'is_expiry' => false,
-            ],
-            [
-                'name' => 'Frme',
-                'short_name' => 'FR',
-                'code' => '90031100',
-                'tax_percentage' => 5,
-                'is_expiry' => false,
-            ],
-            [
-                'name' => 'Contact Lens',
-                'short_name' => 'CL',
-                'code' => '90013000',
-                'tax_percentage' => 5,
-                'is_expiry' => true,
-            ],
-            [
-                'name' => 'Sunglass',
-                'short_name' => 'SG',
-                'code' => '90041000',
-                'tax_percentage' => 18,
-                'is_expiry' => false,
-            ],
-            [
-                'name' => 'Solution',
-                'short_name' => 'SO',
-                'code' => '33079020',
-                'tax_percentage' => 18,
-                'is_expiry' => true,
-            ],
-            [
-                'name' => 'Ointment',
-                'short_name' => 'OI',
-                'code' => '30049099',
-                'tax_percentage' => 5,
-                'is_expiry' => true,
-            ],
-            [
-                'name' => 'Eye Drop',
-                'short_name' => 'ED',
-                'code' => '30042039',
-                'tax_percentage' => 5,
-                'is_expiry' => true,
-            ],
-            [
-                'name' => 'Tablet',
-                'short_name' => 'TA',
-                'code' => '30049099',
-                'tax_percentage' => 5,
-                'is_expiry' => true,
-            ],
-            [
-                'name' => 'Accessory',
-                'short_name' => 'AC',
-                'code' => '90185090',
-                'tax_percentage' => 5,
-                'is_expiry' => false,
-            ],
-        ];
-
-        Hsn::create($hsns);
     }
 }
