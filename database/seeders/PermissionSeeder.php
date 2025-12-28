@@ -117,6 +117,16 @@ class PermissionSeeder extends Seeder
             'password' => Hash::make('stupid'),
         ]);
 
+        $role = Role::create(['guard_name' => 'web', 'name' => 'Administrator', 'team_id' => teamId()]);
+        $permissions = Permission::pluck('id', 'id')->all();
+        $role->syncPermissions($permissions);
+        $user->assignRole($role->id, teamId());
+
+        foreach (requiredRoles() as $key => $rol):
+            if ($rol != 'Administrator')
+                Role::create(['name' => $rol, 'team_id' => teamId()]);
+        endforeach;
+
         $branch = Branch::create([
             'name' => 'Main Store',
             'code' => 'STR',
@@ -130,17 +140,6 @@ class PermissionSeeder extends Seeder
             'created_by' => $user->id,
             'updated_by' => $user->id,
         ]);
-
-        Role::create(['guard_name' => 'web', 'name' => 'Administrator', 'team_id' => teamId()]);
-        $role = Role::findById(1, 'web');
-        $permissions = Permission::pluck('id', 'id')->all();
-        $role->syncPermissions($permissions);
-        $user->assignRole($role->id, teamId());
-
-        foreach (requiredRoles() as $key => $role):
-            if ($role != 'Administrator')
-                Role::create(['name' => $role, 'team_id' => teamId()]);
-        endforeach;
 
         UserBranch::create([
             'user_id' => $user->id,
