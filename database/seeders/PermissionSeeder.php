@@ -41,6 +41,10 @@ class PermissionSeeder extends Seeder
             'appointment-create',
             'appointment-edit',
             'appointment-delete',
+            'registration-list',
+            'registration-create',
+            'registration-edit',
+            'registration-delete',
             'camp-list',
             'camp-create',
             'camp-edit',
@@ -105,6 +109,7 @@ class PermissionSeeder extends Seeder
             'report-daybook',
             'report-expense',
             'report-login-log',
+            'search-registration',
         ];
 
         foreach ($permissions as $permission) {
