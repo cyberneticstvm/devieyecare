@@ -135,7 +135,7 @@ class PermissionSeeder extends Seeder
             'updated_by' => $user->id,
         ]);
 
-        UserBranch::create([
+        UserBranch::insert([
             'user_id' => $user->id,
             'branch_id' => $branch->id
         ]);
