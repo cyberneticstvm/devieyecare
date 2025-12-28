@@ -140,10 +140,10 @@ class PermissionSeeder extends Seeder
             'user_id' => $user->id,
             'branch_id' => $branch->id
         ]);
-        UserDevice::insert([
+        /*UserDevice::insert([
             'user_id' => $user->id,
-            'device_id' => Extra::where('category', 'device')->first()->id,
-        ]);
+            'device_id' => 1, //Extra::where('category', 'device')->first()->id,
+        ]);*/
 
         $role = Role::findById(1, 'web');
         $permissions = Permission::pluck('id', 'id')->all();
