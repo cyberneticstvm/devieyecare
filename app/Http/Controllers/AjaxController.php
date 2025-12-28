@@ -88,6 +88,16 @@ class AjaxController extends Controller
         ]);
     }
 
+    function getProducts(Request $request)
+    {
+        //if ($request->type == 'medicine'):
+        $products = Product::whereIn('hsn_id', Hsn::whereIn('name', ['Ointment', 'Eye Drop', 'Tablet'])->pluck('id'))->get();
+        //endif;
+        return response()->json([
+            'products' => $products,
+        ]);
+    }
+
     function getBatch(Request $request)
     {
         $is_expiry = 0;

@@ -34,6 +34,11 @@ class Registration extends Model
         return $this->hasMany(Order::class, 'registration_id', 'id');
     }
 
+    public function procedure()
+    {
+        return $this->hasOne(Procedure::class, 'registration_id', 'id');
+    }
+
     public function pharmacy()
     {
         return $this->hasMany(Pharmacy::class, 'registration_id', 'id');

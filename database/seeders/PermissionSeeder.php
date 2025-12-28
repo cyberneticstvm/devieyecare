@@ -96,6 +96,8 @@ class PermissionSeeder extends Seeder
             'transfer-delete',
             'inventory-status',
             'surgery-register',
+            'procedure',
+            'procedure-create',
             'report-sales',
             'report-pharmacy',
             'report-registration',

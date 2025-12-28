@@ -124,6 +124,29 @@ $(function(){
     });
 });
 
+function addRow(type){
+    if(type == 'medicine'){
+        $.ajax({
+            type:'GET',
+            url: '/ajax/products/',
+            data: {'type': type},
+            dataType:'json',
+            success: (response) => {
+                var xdata = $.map(response.products, function (obj) {
+                    obj.id = obj.id;
+                    obj.text = obj.name;
+                    return obj;
+                });
+                let uid = Math.floor(Math.random() * 100) + 1;
+                $(".medicineRow").append(`<tr><td><select class='select2' name='product_ids[]' id='pid${uid}'></select></td><td><input type='text' name='dosage1[]' class='form-control' placeholder='0' /></td><td><input type='text' name='dosage2[]' class='form-control' placeholder='0' /></td><td><input type='text' name='dosage3[]' class='form-control' placeholder='0' /></td><td><input type='text' name='days[]' class='form-control' placeholder='0' /></td></tr>`);
+                $(".medicineRow tr:last").find('.select2').html("<option value=''>Select</option>").select2({
+                    data: xdata,
+                });    
+            }
+        });
+    }
+}
+
 function calculateTotal(){
     let qty = 0;
     let price = 0;

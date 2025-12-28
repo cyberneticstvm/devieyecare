@@ -14,6 +14,7 @@ use App\Http\Controllers\ManufacturerSupplierController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\PharmacyController;
+use App\Http\Controllers\ProcedureController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\RegistrationController;
@@ -47,6 +48,7 @@ Route::middleware(['web'])->group(function () {
 
         Route::prefix('ajax')->controller(AjaxController::class)->group(function () {
             Route::get('product', 'getProductById')->name('ajax.get.product.by.id');
+            Route::get('products', 'getProducts')->name('ajax.get.products');
             Route::get('batch', 'getBatch')->name('ajax.get.batch');
             Route::get('order/details', 'getOrderDetails')->name('ajax.get.order.details');
             Route::get('expense/details', 'getExpenseDetails')->name('ajax.get.expense.details');
@@ -234,6 +236,13 @@ Route::middleware(['web'])->group(function () {
             Route::get('edit/{id}', 'edit')->name('transfer.edit');
             Route::post('edit/{id}', 'update')->name('transfer.update');
             Route::get('delete/{id}', 'destroy')->name('transfer.delete');
+        });
+
+        Route::prefix('procedure')->controller(ProcedureController::class)->group(function () {
+            Route::get('', 'index')->name('procedure');
+            Route::post('show', 'show')->name('procedure.fetch');
+            Route::get('create/{id}', 'create')->name('procedure.create');
+            Route::post('create/{id}', 'store')->name('procedure.save');
         });
 
         Route::prefix('report')->controller(ReportController::class)->group(function () {

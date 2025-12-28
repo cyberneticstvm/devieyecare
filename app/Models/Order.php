@@ -11,7 +11,7 @@ class Order extends Model
 
     protected $guarded = [];
 
-    protected $casts = ['due_date' => 'datetime'];
+    protected $casts = ['due_date' => 'datetime', 'invoice_generated_at' => 'datetime'];
 
     public function branch()
     {

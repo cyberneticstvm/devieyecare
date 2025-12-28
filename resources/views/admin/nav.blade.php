@@ -152,6 +152,22 @@
                 </div>
             </li>
             <li>
+                <a class="d-flex align-items-center justify-content-between hover-svg" data-bs-toggle="collapse" href="#collapseOpto" role="button" aria-expanded="false" aria-controls="collapseOpto">
+                    <span class="nav-title  fw-medium">Optometrist</span>
+                    <svg class="opacity-75" width="18" height="18" stroke-width="0.5" viewBox="0 0 21 21" fill="none" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M10.5 4.375V16.625" />
+                        <path d="M4.375 10.5H16.625" />
+                    </svg>
+                </a>
+                <div class="collapse" id="collapseOpto">
+                    <ul class="nav flex-column li_animate">
+                        @if(Auth::user()->can('procedure'))
+                        <li class="nav-item"><a class="nav-link {{ (in_array(Route::currentRouteName(), ['procedure.create', 'procedure.fetch', 'procedure'])) ? 'active' : '' }}" href="{{ route('procedure') }}">Procedure</a></li>
+                        @endif
+                    </ul>
+                </div>
+            </li>
+            <li>
                 <a class="d-flex align-items-center justify-content-between hover-svg" data-bs-toggle="collapse" href="#collapseReports" role="button" aria-expanded="false" aria-controls="collapseReports">
                     <span class="nav-title  fw-medium">Reports</span>
                     <svg class="opacity-75" width="18" height="18" stroke-width="0.5" viewBox="0 0 21 21" fill="none" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">

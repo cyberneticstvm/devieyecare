@@ -91,10 +91,10 @@
         </div>
     </div>
 </div>
-<div class="col-md-12">
+<div class="col-md-8">
     <div class="card rounded-4">
         <div class="card-body p-lg-4">
-            <h5 class="card-title">Review Overview - Last 30 Days</h5>
+            <h5 class="card-title">Patient Reviews Overview - Last 30 Days</h5>
             <div id="reviewChart"></div>
         </div>
     </div>
