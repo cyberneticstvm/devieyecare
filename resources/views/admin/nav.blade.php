@@ -115,7 +115,7 @@
                         <li class="nav-item"><a class="nav-link {{ (in_array(Route::currentRouteName(), ['transfer.list', 'transfer.create', 'transfer.edit'])) ? 'active' : '' }}" href="{{ route('transfer.list') }}">Transfer</a></li>
                         @endif
                         @if(Auth::user()->can('inventory-status'))
-                        <li class="nav-item"><a class="nav-link {{ (in_array(Route::currentRouteName(), ['inventory'])) ? 'active' : '' }}" href="{{ route('inventory') }}">Inventory Status</a></li>
+                        <li class="nav-item"><a class="nav-link {{ (in_array(Route::currentRouteName(), ['inventory', 'get.inventory'])) ? 'active' : '' }}" href="{{ route('inventory') }}">Inventory Status</a></li>
                         @endif
                     </ul>
                 </div>
