@@ -7,7 +7,6 @@ use App\Models\User;
 use App\Models\UserDevice;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Role;
 
 class DatabaseSeeder extends Seeder
@@ -153,6 +152,6 @@ class DatabaseSeeder extends Seeder
             'user_id' => $user->id,
             'device_id' => Extra::where('category', 'device')->first()->id,
         ]);
-        $user->assignRole($role->id, teamId());
+        $user->assignRole([$role->id], teamId());
     }
 }
