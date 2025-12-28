@@ -131,14 +131,14 @@ class PermissionSeeder extends Seeder
             'updated_by' => $user->id,
         ]);
 
-        $role = Role::create(['name' => 'Administrator']);
+        $role = Role::create(['name' => 'Administrator', 'team_id' => teamId()]);
         $permissions = Permission::pluck('id', 'id')->all();
         $role->syncPermissions($permissions);
         $user->assignRole([$role->id]);
 
         foreach (requiredRoles() as $key => $role):
             if ($role != 'Administrator')
-                Role::create(['name' => $role]);
+                Role::create(['name' => $role, 'team_id' => teamId()]);
         endforeach;
 
         UserBranch::create([
