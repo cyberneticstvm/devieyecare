@@ -3,8 +3,11 @@
 namespace Database\Seeders;
 
 use App\Models\Extra;
+use App\Models\User;
+use App\Models\UserDevice;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
 {
@@ -142,5 +145,13 @@ class DatabaseSeeder extends Seeder
         foreach ($statuses2 as $status) {
             Extra::insert(['name' => $status, 'category' => 'order']);
         }
+
+        $user = User::find(1);
+
+        UserDevice::insert([
+            'user_id' => $user->id,
+            'device_id' => Extra::where('category', 'device')->first()->id,
+        ]);
+        $user->assignRole('Administrator', teamId());
     }
 }

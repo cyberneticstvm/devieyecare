@@ -140,14 +140,9 @@ class PermissionSeeder extends Seeder
             'user_id' => $user->id,
             'branch_id' => $branch->id
         ]);
-        /*UserDevice::insert([
-            'user_id' => $user->id,
-            'device_id' => 1, //Extra::where('category', 'device')->first()->id,
-        ]);*/
 
         $role = Role::find(1);
         $permissions = Permission::pluck('id', 'id')->all();
         $role->syncPermissions($permissions);
-        $user->assignRole('Administrator', teamId());
     }
 }
