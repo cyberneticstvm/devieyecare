@@ -75,7 +75,7 @@
                                         {{ html()->text('eye[]', 'RE')->class('form-control')->maxlength(5)->placeholder('')->attribute('id', 'eye1')->attribute('readonly', true) }}
                                     </td>
                                     <td>
-                                        {{ html()->select('sph[]', $extras->where('category', 'sph')->pluck('name', 'name'), old('sph') ?? '')->class('select2')->attribute('id', 'sph1')->placeholder('Select') }}
+                                        {{ html()->select('sph[]', $extras->where('category', 'sph')->pluck('name', 'name'), old('sph') ?? $extras->where('category', 'sph')->where('other_info', 'selected')->first()->name)->class('select2')->attribute('id', 'sph1')->placeholder('Select') }}
                                     </td>
                                     <td>
                                         {{ html()->select('cyl[]', $extras->where('category', 'cyl')->pluck('name', 'name'), old('cyl') ?? $extras->where('category', 'cyl')->where('other_info', 'selected')->first()->name)->class('select2')->attribute('id', 'cyl1')->placeholder('Select') }}
@@ -111,10 +111,10 @@
                                         {{ html()->text('eye[]', 'LE')->class('form-control')->maxlength(5)->placeholder('')->attribute('id', 'eye2')->attribute('readonly', true) }}
                                     </td>
                                     <td>
-                                        {{ html()->select('sph[]', $extras->where('category', 'sph')->pluck('name', 'name'), old('sph') ?? '')->class('select2')->attribute('id', 'sph2')->placeholder('Select') }}
+                                        {{ html()->select('sph[]', $extras->where('category', 'sph')->pluck('name', 'name'), old('sph') ?? $extras->where('category', 'sph')->where('other_info', 'selected')->first()->name)->class('select2')->attribute('id', 'sph2')->placeholder('Select') }}
                                     </td>
                                     <td>
-                                        {{ html()->select('cyl[]', $extras->where('category', 'cyl')->pluck('name', 'name'), old('cyl') ?? '')->class('select2')->attribute('id', 'cyl2')->placeholder('Select') }}
+                                        {{ html()->select('cyl[]', $extras->where('category', 'cyl')->pluck('name', 'name'), old('cyl') ?? $extras->where('category', 'cyl')->where('other_info', 'selected')->first()->name)->class('select2')->attribute('id', 'cyl2')->placeholder('Select') }}
                                     </td>
                                     <td>
                                         {{ html()->select('axis[]', $axis, old('axis') ?? '')->class('select2')->attribute('id', 'axis2')->placeholder('Select') }}
