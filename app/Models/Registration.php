@@ -41,7 +41,7 @@ class Registration extends Model
 
     public function pharmacy()
     {
-        return $this->hasMany(Pharmacy::class, 'registration_id', 'id');
+        return $this->hasOne(Pharmacy::class, 'registration_id', 'id');
     }
 
     public function cancelled()

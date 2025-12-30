@@ -42,12 +42,12 @@
                                         Download
                                     </button>
                                     <ul class="dropdown-menu">
-                                        <li><a class="dropdown-item" href="#">OPT</a></li>
-                                        <li><a class="dropdown-item" href="#">Order Receipt</a></li>
-                                        <li><a class="dropdown-item" href="#">Service Fee Receipt</a></li>
-                                        <li><a class="dropdown-item" href="#">Pharmacy Receipt</a></li>
-                                        <li><a class="dropdown-item" href="#">Certificate</a></li>
-                                        <li><a class="dropdown-item" href="#">Envelope</a></li>
+                                        <li><a class="dropdown-item" href="{{ route('opt', ['registration_id' => encrypt($reg->id)]) }}" target="_blank">OPT</a></li>
+                                        <li><a class="dropdown-item" href="{{ route('store.order.receipt', ['registration_id' => encrypt($reg->id)]) }}" target="_blank">Order Receipt</a></li>
+                                        <li><a class="dropdown-item" href="{{ route('invoice', ['registration_id' => encrypt($reg->id)]) }}" target="_blank">Invoice</a></li>
+                                        <li><a class="dropdown-item" href="{{ route('service.fee.receipt', ['registration_id' => encrypt($reg->id)]) }}" target="_blank">Service Fee Receipt</a></li>
+                                        <li><a class="dropdown-item" href="{{ route('pharmacy.order.receipt', ['registration_id' => encrypt($reg->id)]) }}" target="_blank">Pharmacy Receipt</a></li>
+                                        <li><a class="dropdown-item" href="{{ route('certificate', ['registration_id' => encrypt($reg->id)]) }}" target="_blank">Certificate</a></li>
                                     </ul>
                                 </div>
                             </td>

@@ -25,7 +25,7 @@ class HsnSeeder extends Seeder
         );
         Hsn::create(
             [
-                'name' => 'Frme',
+                'name' => 'Frame',
                 'short_name' => 'FR',
                 'code' => '90031100',
                 'tax_percentage' => 5,

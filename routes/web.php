@@ -13,6 +13,7 @@ use App\Http\Controllers\IncomeExpenseController;
 use App\Http\Controllers\ManufacturerSupplierController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\PdfController;
 use App\Http\Controllers\PharmacyController;
 use App\Http\Controllers\ProcedureController;
 use App\Http\Controllers\ProductController;
@@ -260,6 +261,15 @@ Route::middleware(['web'])->group(function () {
             Route::post('expense', 'expenseFetch')->name('report.expense.fetch');
             Route::get('loginlog', 'loginLog')->name('report.login.log');
             Route::post('loginlog', 'loginLogFetch')->name('report.login.log.fetch');
+        });
+
+        Route::prefix('pdf')->controller(PdfController::class)->group(function () {
+            Route::get('opt', 'opt')->name('opt');
+            Route::get('storeorderreceipt', 'storeOrderReceipt')->name('store.order.receipt');
+            Route::get('invoice', 'invoice')->name('invoice');
+            Route::get('pharmacyorderreceipt', 'pharmacyOrderReceipt')->name('pharmacy.order.receipt');
+            Route::get('servicefeereceipt', 'serviceFeeReceipt')->name('service.fee.receipt');
+            Route::get('certificate', 'certificate')->name('certificate');
         });
     });
 });

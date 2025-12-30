@@ -71,7 +71,7 @@ class PharmacyController extends Controller implements HasMiddleware
         ]);
         try {
             DB::transaction(function () use ($request, $inputs) {
-                $inputs['invoice_number'] = Pharmacy::max('invoice_number') + 1 ?? 1;
+                $inputs['invoice_number'] = Pharmacy::withTrashed()->max('invoice_number') + 1 ?? 1;
                 $inputs['total'] = 0;
                 $inputs['discount'] = $request->discount ?? 0;
                 $inputs['registration_id'] = decrypt($request->registration_id);
@@ -93,7 +93,7 @@ class PharmacyController extends Controller implements HasMiddleware
                     ];
                 endforeach;
                 PharmacyDetail::insert($data);
-                $pharmacy->update(['total' => $pharmacy->details->sum('total')]);
+                $pharmacy->update(['total' => $pharmacy->details->sum('total') - $inputs['discount']]);
             });
         } catch (Exception $e) {
             return redirect()->back()->with("error", $e->getMessage())->withInput($inputs);
