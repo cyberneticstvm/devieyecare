@@ -132,10 +132,12 @@ function getDocFee($request)
     $fee = 0;
     $days = 7;
     $reg = Registration::where('mobile', $request->mobile)->selectRaw("IFNULL(DATEDIFF(now(), created_at), 0) as days")->latest()->first();
+    dd($reg);
+    die;
     $ctype = Extra::find($request->ctype);
     $diff = ($reg && $reg->days > 0) ? $reg->days : 0;
     if ($diff == 0 || $diff > $days):
-        $fee = Doctor::find($request->doctor_id)->value('fee');
+        $fee = Doctor::find($request->doctor_id)->fee;
     endif;
     if (in_array($ctype->name, ['Surgery'])):
         $fee = 0;
