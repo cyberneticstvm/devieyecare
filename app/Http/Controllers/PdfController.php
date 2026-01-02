@@ -49,6 +49,8 @@ class PdfController extends Controller
 
     function certificate(Request $request)
     {
-        //
+        $registration = Registration::findOrFail(decrypt($request->registration_id));
+        $pdf = Pdf::loadView('admin.pdf.certificate', compact('registration'));
+        return $pdf->stream('certificate.pdf');
     }
 }
