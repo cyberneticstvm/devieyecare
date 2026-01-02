@@ -8,7 +8,7 @@
         <h3>To whom it may concern</h3>
         -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
         <br>
-        <h4 class="text-center">STANDARDS OF VISION</h4>
+        <h4 class="text-center"><u>STANDARDS OF VISION</u></h4>
         <br>
         <table width="100%">
             <thead>
