@@ -150,7 +150,7 @@ class RegistrationController extends Controller implements HasMiddleware
         ]);
         try {
             $inputs['updated_by'] = $request->user()->id;
-            /*$inputs['doc_fee'] = getDocFee($request);*/
+            $inputs['doc_fee'] = getDocFee($request);
             Registration::findOrFail(decrypt($id))->update($inputs);
         } catch (Exception $e) {
             return redirect()->back()->with("error", $e->getMessage())->withInput($inputs);

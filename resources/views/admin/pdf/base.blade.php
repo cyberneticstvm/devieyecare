@@ -83,6 +83,10 @@
             margin-bottom: 50px;
         }
 
+        .mb-10 {
+            margin-bottom: 10px;
+        }
+
         .h-50>tr>td {
             height: 50px;
         }
@@ -109,7 +113,7 @@
             bottom: -30px;
             left: 0px;
             right: 0px;
-            height: 50px;
+            height: 70px;
             text-align: center;
             line-height: 35px;
         }
@@ -122,12 +126,17 @@
             <div class="col">
                 <table width=100%>
                     <tr>
-                        <td class="no-border text-center" width="100%">
-                            <img src="./assets/images/favicon.png" width="10%" />
+                        <td class="no-border text-end" width="55%">
+                            <img src="./assets/images/favicon.png" width="15%" />
+                        </td>
+                        <td class="text-end no-border">
+                            @if(isset($qrcode))
+                            <div style="float: right;"><img src="data:image/png;base64, {!! $qrcode !!}"></div>
+                            @endif
                         </td>
                     </tr>
                     <tr>
-                        <td class="no-border text-center" width="100%">
+                        <td colspan="2" class="no-border text-center" width="100%">
                             {{ $registration->branch->address }}<br>
                             Contact: {{ $registration->branch->contact }}
                         </td>

@@ -64,15 +64,11 @@
                     <pre>
                 </td>
             </tr>
-            <tr>
-                <td class="no-border text-center" width="100%" colspan="2">
-                    <img src="data:image/png;base64,{!! DNS1D::getBarcodePNG($registration->getMrn(), 'C39+', 1, 40, array(0,0,0), true) !!}" alt="{!! $registration->getMrn() !!}" />
-                </td>
-            </tr>
         </table>
     </div>
 </div>
 <footer>
-    <small>Printed at: {{ date('d.M.Y h:i a') }}</small>
+    <img src="data:image/png;base64,{!! DNS1D::getBarcodePNG($registration->getMrn(), 'C39+', 1, 40, array(0,0,0), true) !!}" alt="{!! $registration->getMrn() !!}" />
+    <div>Printed at: {{ date('d.M.Y h:i a') }}</div>
 </footer>
 @endsection

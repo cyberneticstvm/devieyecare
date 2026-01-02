@@ -29,9 +29,14 @@ class Registration extends Model
         return $this->belongsTo(Doctor::class, 'doctor_id', 'id');
     }
 
+    public function advisor()
+    {
+        return $this->belongsTo(User::class, 'product_advisor', 'id');
+    }
+
     public function order()
     {
-        return $this->hasMany(Order::class, 'registration_id', 'id');
+        return $this->hasOne(Order::class, 'registration_id', 'id');
     }
 
     public function procedure()

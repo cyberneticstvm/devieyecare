@@ -6,6 +6,7 @@ use App\Models\Order;
 use App\Models\Registration;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class PdfController extends Controller
 {
@@ -27,7 +28,8 @@ class PdfController extends Controller
     function storeOrderReceipt(Request $request)
     {
         $registration = Registration::findOrFail(decrypt($request->registration_id));
-        $pdf = Pdf::loadView('admin.pdf.store_order_receipt', compact('registration'));
+        $qrcode = base64_encode(QrCode::format('svg')->size(75)->errorCorrection('H')->generate('https://devieyecare.com'));
+        $pdf = Pdf::loadView('admin.pdf.store_order_receipt', compact('registration', 'qrcode'));
         return $pdf->stream('receipt.pdf');
     }
 
