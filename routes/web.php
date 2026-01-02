@@ -7,6 +7,7 @@ use App\Http\Controllers\BranchController;
 use App\Http\Controllers\CampController;
 use App\Http\Controllers\CampDetailController;
 use App\Http\Controllers\DoctorController;
+use App\Http\Controllers\ExportController;
 use App\Http\Controllers\HeadController;
 use App\Http\Controllers\HelperController;
 use App\Http\Controllers\IncomeExpenseController;
@@ -270,6 +271,10 @@ Route::middleware(['web'])->group(function () {
             Route::get('pharmacyorderreceipt', 'pharmacyOrderReceipt')->name('pharmacy.order.receipt');
             Route::get('servicefeereceipt', 'serviceFeeReceipt')->name('service.fee.receipt');
             Route::get('certificate', 'certificate')->name('certificate');
+        });
+
+        Route::prefix('export')->controller(ExportController::class)->group(function () {
+            Route::get('product', 'exportProduct')->name('product.export');
         });
     });
 });
