@@ -67,8 +67,34 @@
                                     <div class="card border-0">
                                         <div class="card-header d-flex justify-content-between align-items-center p-4 border-bottom-0">
                                             <h6 class="card-title mb-0">Notifications Center</h6>
-                                            <span class="badge bg-primary">0</span>
+                                            <span class="badge bg-primary">{{ docFeePmodePending()->count() }}</span>
                                         </div>
+                                        <ul class="list-unstyled list-group list-group-custom mb-0 rounded-0 li_animate">
+                                            <!--<li class="list-group-item d-flex border-end-0 border-start-0">
+                                                <div class="d-flex flex-column grow p-2 overflow-hidden">
+                                                    <h6 class="mb-0 fw-medium">
+                                                        <a href="#">7 New Feedback</a>
+                                                        <small class="float-end text-muted">Today</small>
+                                                    </h6>
+                                                    <small class="d-block text-truncate">It will give a smart finishing to your site</small>
+                                                </div>
+                                            </li>-->
+                                            @forelse(docFeePmodePending() as $key => $item)
+                                            <li class="list-group-item d-flex border-end-0 border-start-0">
+                                                <div class="d-flex flex-column grow p-2 overflow-hidden">
+                                                    <h6 class="mb-0 fw-medium">
+                                                        <a href="#" class="text-primary">{!! $item->getMrn() !!}</a>
+                                                        <small class="float-end text-muted">{{ $item->created_at->format('h:i a') }}</small>
+                                                    </h6>
+                                                    <small class="d-block text-truncate">Update DC payment mode</small>
+                                                    <div class="mt-2 d-flex gap-2 align-items-center">
+                                                        <a href="{{ route('registration.edit', encrypt($item->id)) }}" class="btn btn-sm rounded-pill bg-primary text-white">Update</a>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            @empty
+                                            @endforelse
+                                        </ul>
                                         <div class="card-body py-2">
                                             <a href="#" class="btn btn-link px-2">View all notifications</a>
                                         </div>

@@ -12,7 +12,9 @@ class ExportController extends Controller implements HasMiddleware
 {
     public static function middleware(): array
     {
-        return [];
+        return [
+            new Middleware(\Spatie\Permission\Middleware\PermissionMiddleware::using('product-excel-export'), only: ['exportProduct']),
+        ];
     }
 
     function exportProduct(Request $request)

@@ -15,3 +15,9 @@ function getDataCount()
     $pharmacy = Pharmacy::where('branch_id', Session::get('branch')?->id ?? 0)->whereDate('created_at', Carbon::today())->count();
     return array($registration, $review, $order, $pharmacy);
 }
+
+function docFeePmodePending()
+{
+    $data = Registration::where('doc_fee', '>', 0)->whereNull('doc_fee_pmode')->where('branch_id', Session::get('branch')?->id ?? 0)->whereDate('created_at', Carbon::today())->latest()->get();
+    return $data;
+}

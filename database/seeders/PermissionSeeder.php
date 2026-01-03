@@ -110,6 +110,7 @@ class PermissionSeeder extends Seeder
             'report-expense',
             'report-login-log',
             'search-registration',
+            'product-excel-export',
         ];
 
         foreach ($permissions as $permission) {
