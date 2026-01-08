@@ -135,6 +135,8 @@ class OrderController extends Controller implements HasMiddleware
                         'advance' => $request->advance ?? 0,
                         'advance_pmode' => $request->advance_pmode,
                         'due_date' => $request->due_date,
+                        'status' => getOrderStatus('BKD', 'order'),
+                        'remarks' => $request->remarks,
                         'product_advisor' => $request->product_advisor,
                         'created_by' => $request->user()->id,
                         'updated_by' => $request->user()->id,

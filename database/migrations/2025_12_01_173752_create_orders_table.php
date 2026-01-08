@@ -17,7 +17,7 @@ return new class extends Migration
             $table->foreignId('branch_id')->constrained()->onDelete('cascade');
             $table->unsignedBigInteger('invoice_number')->nullable();
             $table->timestamp('invoice_generated_at')->nullable();
-            $table->foreignId('invoice_generated_by')->constrained('users', 'id');
+            $table->foreignId('invoice_generated_by')->constrained('users', 'id')->nullable();
             $table->decimal('discount', 8, 2)->default(0);
             $table->decimal('total', 8, 2)->comment('After Discount')->default(0);
             $table->decimal('advance', 8, 2)->default(0);
