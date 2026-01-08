@@ -55,10 +55,10 @@
 }
 
 [data-thunderal="theme-blue"] {
-    --bs-primary: #4178E5;
+    --bs-primary: #17a2b8;
     --bs-primary-rgb: 65, 120, 229;
     --bs-primary-bg-subtle: #b8c8e8;
-    --bs-btn-bg: #4178E5;
+    --bs-btn-bg: #17a2b8;
     --bs-pagination-color: var(--bs-primary);
     --bs-pagination-active-bg: var(--bs-primary);
     --bs-nav-pills-link-active-bg: #2758ba;
