@@ -348,7 +348,7 @@
                             <div class="rounded-4" style="background-color: #6C50BF;"></div>
                         </li>
                         <li data-theme="blue">
-                            <div class="rounded-4" style="background-color: #4178E5;"></div>
+                            <div class="rounded-4" style="background-color: #17a2b8;"></div>
                         </li>
                         <li data-theme="cyan">
                             <div class="rounded-4" style="background-color: #53bdb1;"></div>
