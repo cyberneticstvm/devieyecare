@@ -17,11 +17,11 @@ return new class extends Migration
             $table->foreignId('branch_id')->constrained()->onDelete('cascade');
             $table->unsignedBigInteger('invoice_number')->nullable();
             $table->timestamp('invoice_generated_at')->nullable();
-            $table->foreignId('invoice_generated_by')->constrained('users', 'id')->nullable();
+            $table->foreignId('invoice_generated_by')->nullable()->constrained('users', 'id');
             $table->decimal('discount', 8, 2)->default(0);
             $table->decimal('total', 8, 2)->comment('After Discount')->default(0);
             $table->decimal('advance', 8, 2)->default(0);
-            $table->foreignId('advance_pmode')->constrained('extras', 'id')->nullable();
+            $table->foreignId('advance_pmode')->nullable()->constrained('extras', 'id');
             $table->date('due_date')->comment('Expected delivery date')->nullable();
             $table->foreignId('product_advisor')->constrained('users', 'id')->onDelete('cascade');
             $table->string('remarks')->nullable();

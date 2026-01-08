@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('axis', 7)->nullable();
             $table->string('addition', 7)->nullable();
             $table->string('dia', 7)->nullable();
-            $table->foreignId('thick')->constrained('extras', 'id')->nullable();
+            $table->foreignId('thick')->nullable()->constrained('extras', 'id');
             $table->string('ipd', 7)->nullable();
             $table->foreignId('product_id')->constrained()->onDelete('cascade');
             $table->integer('qty')->nullable();
