@@ -56,11 +56,11 @@
                             <thead>
                                 <tr>
                                     <th class="py-2 fw-medium small text-uppercase" style="width: 7%;">EYE</th>
-                                    <th class="py-2 fw-medium small text-uppercase" style="width: 7%;">SPH</th>
-                                    <th class="py-2 fw-medium small text-uppercase" style="width: 7%;">CYL</th>
-                                    <th class="py-2 fw-medium small text-uppercase" style="width: 7%;">AXIS</th>
-                                    <th class="py-2 fw-medium small text-uppercase" style="width: 7%;">ADD</th>
-                                    <th class="py-2 fw-medium small text-uppercase" style="width: 7%;">DIA</th>
+                                    <th class="py-2 fw-medium small text-uppercase" style="width: 10%;">SPH</th>
+                                    <th class="py-2 fw-medium small text-uppercase" style="width: 10%;">CYL</th>
+                                    <th class="py-2 fw-medium small text-uppercase" style="width: 10%;">AXIS</th>
+                                    <th class="py-2 fw-medium small text-uppercase" style="width: 10%;">ADD</th>
+                                    <th class="py-2 fw-medium small text-uppercase" style="width: 10%;">DIA</th>
                                     <th class="py-2 fw-medium small text-uppercase" style="width: 10%;">THICK</th>
                                     <th class="py-2 fw-medium small text-uppercase" style="width: 7%;">IPD</th>
                                     <th class="py-2 fw-medium small text-uppercase">Product</th>
