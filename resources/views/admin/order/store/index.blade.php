@@ -34,7 +34,7 @@
                             <td>{{ $order->registration->mobile }}</td>
                             <td>{{ $order->branch->name }}</td>
                             <td></td>
-                            <td class="text-primary"><a class="orderStatusUpdateDrawer" data-bs-toggle="offcanvas" href="#OrderStatusSettings" role="button" aria-controls="OrderStatusSettings" aria-label="thunder AI theme setting" data-mrn="{!! $order->registration->getMrn() !!}" data-oid="{{ encrypt($order->id) }}">{{ $order->ostatus()->latest()->first()->status->name }}</a></td>
+                            <td class="text-primary"><a class="orderStatusUpdateDrawer" data-bs-toggle="offcanvas" href="#OrderStatusSettings" role="button" aria-controls="OrderStatusSettings" aria-label="thunder AI theme setting" data-mrn="{!! $order->registration->getMrn() !!}" data-oid="{{ encrypt($order->id) }}">{{ $order->ostatus->name }}</a></td>
                             <td>{!! $order->cancelled() !!}</td>
                             <td class="text-center">
                                 <a href="{{ route('store.order.edit', ['rid' => encrypt($order->id), 'source' => 'order']) }}" class="text-secondary">Edit</a> | <a href="{{ route('store.order.delete', encrypt($order->id)) }}" class="text-danger dlt">Delete</a>
