@@ -98,7 +98,7 @@
                                         <div class="row g-3">
                                             <div class="control-group col-md-12">
                                                 <label class="form-label req">Product </label>
-                                                {{ html()->select('product_id', $products, old('product_id') ?? '')->class('select2 selPdct')->placeholder('Select') }}
+                                                {{ html()->select('product_id', $products, old('product_id') ?? '')->class('select2 selPdct')->attribute('data-frm', 'purchase')->placeholder('Select') }}
                                             </div>
                                             <div class="control-group col-md-6">
                                                 <label class="form-label">Batch Number</label>
