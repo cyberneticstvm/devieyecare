@@ -104,8 +104,8 @@
                                     </svg>
                                 </a>
                                 <ul class="dropdown-menu p-2 p-xl-3 language shadow-lg rounded-4 li_animate">
-                                    @forelse(userBranches() as $key => $br)
-                                    <li class="mb-1"><a class="dropdown-item rounded-pill active" href="route('switch.branch', ['bid' => encrypt($br->id)])">{{ $br->name }}</a></li>
+                                    @forelse(userBranches()->whereNot('id', Session::get('branch')->id) as $key => $br)
+                                    <li class="mb-1"><a class="dropdown-item rounded-pill" href="route('switch.branch', ['bid' => encrypt($br->id)])">{{ $br->name }}</a></li>
                                     @empty
                                     @endforelse
                                 </ul>
