@@ -66,7 +66,6 @@
                                 <div class="row g-lg-12 g-3">
                                     <div class="col-lg-12">
                                         {{ html()->form('POST')->attribute('id', 'purchaseForm')->class('')->open() }}
-                                        <input type="hidden" name="from_branch" value="{{ Session::get('branch')->id }}" />
                                         <div class="row g-3">
                                             <div class="control-group col-md-12">
                                                 <label class="form-label req">Supplier </label>

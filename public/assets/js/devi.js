@@ -86,7 +86,7 @@ $(function(){
 
     $(document).on("change", ".selPdct", function(){
         let frm = document.forms["transferForm"];
-        if(!frm['from_branch'].value){
+        if(!frm['from_branch']?.value){
             failed({
                 'error': 'Please select from branch'
             });
