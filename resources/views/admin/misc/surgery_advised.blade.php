@@ -1,7 +1,7 @@
 @extends("admin.base")
 @section("content")
 <div class="col-12">
-    <div class="border-top mb-4 pt-3">
+    <div class="mb-4 pt-3">
         <h5 class="fw-medium text-uppercase mb-0">Surgery Advised Register</h5>
         <p class="fs-12">Showing Surgery Advised Register</p>
         <div class="row g-lg-4 g-3">

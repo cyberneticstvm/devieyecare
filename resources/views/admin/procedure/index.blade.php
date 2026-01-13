@@ -1,7 +1,7 @@
 @extends("admin.base")
 @section("content")
 <div class="col-12">
-    <div class="border-top mb-4 pt-3">
+    <div class="mb-4 pt-3">
         <h5 class="fw-medium text-uppercase mb-0">Search Procedure</h5>
         <p class="fs-12">Search Procedure</p>
         <div class="row g-lg-12 g-3">
