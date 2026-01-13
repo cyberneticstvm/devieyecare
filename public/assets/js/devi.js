@@ -94,7 +94,7 @@ $(function(){
             $(".selPdct").val('').select2();
             return false;
         }
-        let fromBr = frm['from_branch']?.value;
+        let fromBr = (ftype == 'transfer') ? frm['from_branch']?.value : 0;
         let pdctId = $(this).val();
         $.ajax({
             type:'GET',
