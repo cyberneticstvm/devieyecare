@@ -86,15 +86,14 @@ $(function(){
 
     $(document).on("change", ".selPdct", function(){
         let frm = document.forms["transferForm"];
-        let frm1 = document.forms["purchaseForm"];
-        if(!frm['from_branch'].value || !frm['from_branch'].value == '0'){
+        if(frm['type'].value == 'transfer' && !frm['from_branch'].value){
             failed({
                 'error': 'Please select from branch'
             });
             $(".selPdct").val('').select2();
             return false;
         }
-        let fromBr = frm['from_branch'].value;
+        let fromBr = (frm['type'].value == 'transfer') ? frm['from_branch'].value : 0;
         let pdctId = $(this).val();
         $.ajax({
             type:'GET',
