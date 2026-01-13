@@ -87,15 +87,14 @@ $(function(){
     $(document).on("change", ".selPdct", function(){
         let ftype = $(this).data('frm');
         let frm = document.forms["transferForm"];
-        console.log(ftype);
-        if(!frm['from_branch']?.value){
+        if(ftype == 'transfer' && !frm['from_branch']?.value){
             failed({
                 'error': 'Please select from branch'
             });
             $(".selPdct").val('').select2();
             return false;
         }
-        let fromBr = frm['from_branch'].value;
+        let fromBr = frm['from_branch']?.value;
         let pdctId = $(this).val();
         $.ajax({
             type:'GET',
