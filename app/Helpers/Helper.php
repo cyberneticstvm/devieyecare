@@ -164,7 +164,7 @@ function toBranches()
 
 function userBranches()
 {
-    return Branch::whereIn('id', UserBranch::where('user_id', Auth::id())->pluck('branch_id'))->pluck('name', 'id');
+    return Branch::whereIn('id', UserBranch::where('user_id', Auth::id())->pluck('branch_id'))->get();
 }
 
 function isExpenseExceeded($amount, $category, $type, $ie = null)

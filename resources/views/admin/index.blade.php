@@ -110,7 +110,7 @@
                     <div class="col">
                         <div class="control-group col-md-12">
                             <label for="roleEx3" class="form-label mt-3 req">Select Branch</label>
-                            {{ html()->select($name = 'branch', $branches, old('branch'))->class('form-control')->placeholder('Select')->required() }}
+                            {{ html()->select($name = 'branch', $branches->pluck('name', 'id'), old('branch'))->class('form-control')->placeholder('Select')->required() }}
                             @error('branch')
                             <small class="text-danger">{{ $errors->first('branch') }}</small>
                             @enderror
