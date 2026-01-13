@@ -80,7 +80,7 @@ class AuthController extends Controller implements HasMiddleware
 
     function index()
     {
-        $branches = Branch::whereIn('id', UserBranch::where('user_id', Auth::id())->pluck('branch_id'))->pluck('name', 'id');
+        $branches = userBranches();
         return view('admin.index', compact('branches'));
     }
 

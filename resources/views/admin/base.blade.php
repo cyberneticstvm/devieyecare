@@ -104,9 +104,10 @@
                                     </svg>
                                 </a>
                                 <ul class="dropdown-menu p-2 p-xl-3 language shadow-lg rounded-4 li_animate">
-                                    <li class="mb-1"><a class="dropdown-item rounded-pill active" href="#">English</a></li>
-                                    <li class="mb-1"><a class="dropdown-item rounded-pill" href="#">French</a></li>
-                                    <li class="mb-1"><a class="dropdown-item rounded-pill" href="#">German</a></li>
+                                    @forelse(userBranches() as $key => $br)
+                                    <li class="mb-1"><a class="dropdown-item rounded-pill active" href="route('switch.branch', ['bid' => encrypt($br->id)])">{{ $br->name }}</a></li>
+                                    @empty
+                                    @endforelse
                                 </ul>
                             </div>
                             <!-- Theme Light/Dark/Auto -->

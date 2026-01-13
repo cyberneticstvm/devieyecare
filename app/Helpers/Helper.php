@@ -20,6 +20,7 @@ use App\Models\OrderStatus;
 use App\Models\Payment;
 use App\Models\Registration;
 use App\Models\User;
+use App\Models\UserBranch;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -159,6 +160,11 @@ function fromBranches()
 function toBranches()
 {
     return Branch::whereNot('is_store', 1)->orderBy('name')->pluck('name', 'id');
+}
+
+function userBranches()
+{
+    return Branch::whereIn('id', UserBranch::where('user_id', Auth::id())->pluck('branch_id'))->pluck('name', 'id');
 }
 
 function isExpenseExceeded($amount, $category, $type, $ie = null)

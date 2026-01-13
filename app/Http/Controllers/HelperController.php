@@ -33,6 +33,11 @@ class HelperController extends Controller implements HasMiddleware
         $this->branch = Session::get('branch')->id;
     }
 
+    function switchBranch(Request $request)
+    {
+        //
+    }
+
     function inventory()
     {
         $inputs = array($this->branch);
