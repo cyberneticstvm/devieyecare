@@ -96,7 +96,7 @@
                             <!-- Dropdown Menu for Switch Branch -->
                             <div class="d-md-inline-block d-none dropdown">
                                 <a class="nav-link dropdown-toggle hover-svg" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Switch Branch">
-                                    <svg width="800px" height="800px" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" stroke-width="3" stroke="#000000" fill="none">
+                                    <svg width="25px" height="25px" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" stroke-width="3" stroke="#000000" fill="none">
                                         <line x1="9.1" y1="44.71" x2="54.9" y2="44.71" />
                                         <polyline points="21.31 31.86 9.1 44.74 21.31 56.47" />
                                         <line x1="54.9" y1="20.33" x2="9.1" y2="20.33" />
