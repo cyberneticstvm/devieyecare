@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Branch;
 use App\Models\Extra;
+use App\Models\LoginLog;
 use App\Models\Order;
 use App\Models\OrderStatus;
 use App\Models\Product;
@@ -13,6 +14,7 @@ use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 
 class HelperController extends Controller implements HasMiddleware
@@ -35,7 +37,13 @@ class HelperController extends Controller implements HasMiddleware
 
     function switchBranch(Request $request)
     {
-        //
+        $branch = Branch::findOrFail($request->branch);
+        Session::forget('branch');
+        Session::put('branch', $branch);
+        LoginLog::where('user_id', Auth::user()->id)->where('login_session_id', Auth::user()->login_session_id)->update([
+            'branch_id' => Session::get('branch')->id,
+        ]);
+        return redirect()->back()->with("success", "Branch switched successfully!");
     }
 
     function inventory()

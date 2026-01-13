@@ -106,7 +106,7 @@
                                 <ul class="dropdown-menu p-2 p-xl-3 language shadow-lg rounded-4 li_animate">
                                     <li class="text-center"><small class="text-primary">Switch Branch</small></li>
                                     @forelse(userBranches()->where('id', '!=', Session::get('branch')->id) as $key => $br)
-                                    <li class="mb-1"><a class="dropdown-item rounded-pill" href="{{ route('switch.branch', ['bid' => encrypt($br->id)]) }}">{{ $br->name }}</a></li>
+                                    <li class="mb-1"><a class="dropdown-item rounded-pill proceed" href="{{ route('switch.branch', ['bid' => encrypt($br->id)]) }}" class>{{ $br->name }}</a></li>
                                     @empty
                                     @endforelse
                                 </ul>
