@@ -37,7 +37,7 @@ class HelperController extends Controller implements HasMiddleware
 
     function switchBranch(Request $request)
     {
-        $branch = Branch::findOrFail($request->branch);
+        $branch = Branch::findOrFail(decrypt($request->branch));
         Session::forget('branch');
         Session::put('branch', $branch);
         LoginLog::where('user_id', Auth::user()->id)->where('login_session_id', Auth::user()->login_session_id)->update([
