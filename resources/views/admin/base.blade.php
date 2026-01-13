@@ -96,7 +96,7 @@
                             <!-- Dropdown Menu for Switch Branch -->
                             <div class="d-md-inline-block d-none dropdown">
                                 <a class="nav-link dropdown-toggle hover-svg" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Switch Branch">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
                                         <path d="M25 13.7501C24.6943 11.5504 23.6738 9.5122 22.0958 7.94949C20.5178 6.38679 18.4697 5.38627 16.2671 5.10206C14.0645 4.81785 11.8295 5.26572 9.9065 6.37668C7.98348 7.48763 6.47906 9.20004 5.625 11.2501M5 6.25012V11.2501H10"></path>
                                         <path d="M5 16.25C5.3057 18.4497 6.32616 20.4879 7.9042 22.0506C9.48224 23.6133 11.5303 24.6139 13.7329 24.8981C15.9355 25.1823 18.1705 24.7344 20.0935 23.6234C22.0165 22.5125 23.5209 20.8001 24.375 18.75M25 23.75V18.75H20"></path>
                                     </svg>
