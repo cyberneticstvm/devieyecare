@@ -36,7 +36,7 @@
                                         <div class="row g-3">
                                             <div class="control-group col-md-6">
                                                 <label class="form-label req">From Branch </label>
-                                                {{ html()->select('from_branch', $from_branches, old('from_branch') ?? '')->class('select2')->placeholder('Select') }}
+                                                {{ html()->select('from_branch', $from_branches, old('from_branch') ?? 0)->class('select2')->placeholder('Select') }}
                                             </div>
                                             <div class="control-group col-md-6">
                                                 <label class="form-label req">To Branch </label>
