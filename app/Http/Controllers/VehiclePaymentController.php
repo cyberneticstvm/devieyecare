@@ -37,7 +37,8 @@ class VehiclePaymentController extends Controller implements HasMiddleware
         $payments = VehiclePayment::withTrashed()->where('vehicle_id', decrypt($vid))->orderByDesc('pdate')->get();
         $vehicle = Vehicle::findOrFail(decrypt($vid));
         $pmodes = $this->pmodes;
-        return view('admin.vehicle.payment.index', compact('payments', 'vehicle', 'pmodes'));
+        $amount = getVehicleFee($vehicle);
+        return view('admin.vehicle.payment.index', compact('payments', 'vehicle', 'pmodes', 'amount'));
     }
 
     /**

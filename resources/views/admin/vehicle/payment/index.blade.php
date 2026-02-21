@@ -60,7 +60,7 @@
                                             </div>
                                             <div class="control-group col-md-6">
                                                 <label class="form-label req">Amount </label>
-                                                {{ html()->number('amount', old('amount') ?? '', '1', '', '')->class('form-control')->placeholder('0.00') }}
+                                                {{ html()->number('amount', old('amount') ?? $amount, '1', '', '')->class('form-control')->placeholder('0.00')->attribute("readonly", true) }}
                                                 @error('amount')
                                                 <small class="text-danger">{{ $errors->first('amount') }}</small>
                                                 @enderror

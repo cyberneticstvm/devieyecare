@@ -23,6 +23,6 @@ class Vehicle extends Model
 
     public function payments()
     {
-        return $this->hasMany(VehiclePayment::class, 'payment_id', 'id');
+        return $this->hasMany(VehiclePayment::class, 'vehicle_id', 'id');
     }
 }

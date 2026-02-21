@@ -14,6 +14,8 @@
                             <th class="py-2 fw-medium small text-uppercase">Reg. Number</th>
                             <th class="py-2 fw-medium small text-uppercase">Name</th>
                             <th class="py-2 fw-medium small text-uppercase">Mobile</th>
+                            <th class="py-2 fw-medium small text-uppercase">Reg.Date</th>
+                            <th class="py-2 fw-medium small text-uppercase">Last Paid</th>
                             <th class="py-2 fw-medium small text-uppercase">Status</th>
                             <th class="py-2 fw-medium small text-uppercase">Action</th>
                         </tr>
@@ -25,6 +27,8 @@
                             <td><a href="{{ route('vehicle.payment.list', encrypt($vehicle->id)) }}" data-toggle="tooltip" data-placement="top" title="Click here to make payment for this vehicle">{{ $vehicle->registration_number }}</a></td>
                             <td>{{ $vehicle->name }}</td>
                             <td>{{ $vehicle->mobile }}</td>
+                            <td>{{ $vehicle->created_at->format("d.M.Y") }}</td>
+                            <td>{{ $vehicle->payments()?->latest()?->first()?->pdate->format("d.M.Y") }}</td>
                             <td>{!! $vehicle->cancelled() !!}</td>
                             <td class="text-center">
                                 <a href="{{ route('vehicle.edit', encrypt($vehicle->id)) }}" class="text-secondary">Edit</a> | <a href="{{ route('vehicle.delete', encrypt($vehicle->id)) }}" class="text-danger dlt">Delete</a>

@@ -9,6 +9,7 @@
     return $code;
 }*/
 
+use App\Models\Appointment;
 use App\Models\Branch;
 use App\Models\Doctor;
 use App\Models\Extra;
@@ -19,6 +20,7 @@ use App\Models\Order;
 use App\Models\OrderStatus;
 use App\Models\Payment;
 use App\Models\Registration;
+use App\Models\Setting;
 use App\Models\User;
 use App\Models\UserBranch;
 use Carbon\Carbon;
@@ -26,6 +28,11 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
+
+function settings()
+{
+    return Setting::find(1);
+}
 
 function getInventory($branch = 0, $product = 0)
 {
@@ -221,4 +228,56 @@ function updateOrderStatus($order, $is_invoice = false)
         'updated_by' => Auth::id(),
     ]);
     $order->update(['status' => $status]);
+}
+
+function getAppointments()
+{
+    return Appointment::withTrashed()->whereDate('adate', '>=', Carbon::today())->orderByDesc('adate')->whereNull('registration_id')->when(!in_array(Auth::user()->roles->first()->name, ['Administrator']), function ($q) {
+        return $q->where('branch_id', Session::get('branch')->id);
+    })->get();
+}
+
+function getGenders()
+{
+    return Extra::where('category', 'gender')->pluck('name', 'name');
+}
+
+function getDoctors()
+{
+    return Doctor::pluck('name', 'id');
+}
+
+function getBranches()
+{
+    return Branch::pluck('name', 'id');
+}
+
+function checkLoggedinTime($user)
+{
+    /*if ($user->hasRole(["Administrator"])):
+        return true;
+    endif;*/
+    $start = Carbon::createFromTimeString(settings()->user_login_allowed_time_from);
+    $end = Carbon::createFromTimeString(settings()->user_login_allowed_time_to);
+    $is_first_login = true;
+    if (LoginLog::where("user_id", $user->id)->whereDate("created_at", Carbon::today())->first()->exists()):
+        $is_first_login = false;
+    endif;
+    if ($is_first_login && Carbon::now()->between($start, $end)):
+        return false;
+    else:
+        return true;
+    endif;
+}
+
+function getVehicleFee($vehicle)
+{
+    $amount = settings()->vehicle_fee_per_month;
+    $last_paid_date = $vehicle->payments()?->latest()?->first()?->pdate;
+    if ($last_paid_date):
+        $per_day_amount = $amount / 30;
+        $pending_days = $last_paid_date->diffInDays(Carbon::today());
+        $amount = $pending_days * $per_day_amount;
+    endif;
+    return number_format(floor($amount), 2);
 }

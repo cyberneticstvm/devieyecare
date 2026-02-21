@@ -174,6 +174,7 @@
                                         <div class="card-body">
                                             <h5 class="mb-1">{{ Auth::user()->name }}</h5>
                                             <p>{{ Auth::user()->email }}</p>
+                                            <p>{{ Auth::user()->roles->first()->name }}</p>
                                             <a href="{{ route('logout') }}" class="btn btn-primary text-uppercase w-100 rounded-pill">Sign out</a>
                                         </div>
                                         <div class="list-group text-center">

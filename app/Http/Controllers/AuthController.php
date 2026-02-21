@@ -42,13 +42,18 @@ class AuthController extends Controller implements HasMiddleware
             if (Auth::attempt($credentials, $remember)):
                 $agent = new Agent();
                 $location = Location::get($request->ip);
-                $user = User::find(Auth::user()->id);
+                $user = Auth::user();
                 $devices = Extra::where('category', 'device')->whereIn('id', $user->devices()?->pluck('device_id'))->pluck('name')->toArray();
                 if (in_array(loggedDevice($agent), $devices)):
-                    createLoginLog($agent, $location);
-                    /*$branch = Branch::find(Auth::user()->branches->first()->id);
-                    Session::put('branch', $branch);*/
-                    return redirect()->route('index')->with("success", "User logged in successfully");
+                    if (checkLoggedinTime($user)):
+                        createLoginLog($agent, $location);
+                        /*$branch = Branch::find(Auth::user()->branches->first()->id);
+                        Session::put('branch', $branch);*/
+                        return redirect()->route('index')->with("success", "User logged in successfully");
+                    else:
+                        Auth::logoutCurrentDevice();
+                        return redirect()->back()->with("error", "User not allowed to logged in at this time");
+                    endif;
                 else:
                     Auth::logoutCurrentDevice();
                     return redirect()->back()->with("error", "User not allowed to logged into this device");

@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained();
             $table->foreignId('branch_id')->constrained()->nullable();
-            $table->string('ip_address', 25)->nullable();
+            $table->string('ip_address', 50)->nullable();
             $table->string('user_agent')->nullable();
             $table->string('country', 25)->nullable();
             $table->string('region', 50)->nullable();
