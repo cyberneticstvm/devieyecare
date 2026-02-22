@@ -25,10 +25,11 @@ class ProcedureController extends Controller implements HasMiddleware
         ];
     }
 
-    protected $products;
+    protected $products, $procs;
     public function __construct()
     {
         $this->products = Product::whereIn('hsn_id', Hsn::whereIn('name', ['Ointment', 'Eye Drop', 'Tablet'])->pluck('id'))->pluck('name', 'id');
+        $this->procs = Product::whereIn('hsn_id', Hsn::whereIn('name', ['Procedure'])->pluck('id'))->pluck('name', 'id');
     }
 
     /**
@@ -43,11 +44,11 @@ class ProcedureController extends Controller implements HasMiddleware
     /**
      * Show the form for creating a new resource.
      */
-    public function create(string $id)
+    public function create(string $category, string $id)
     {
         $registration = Registration::findOrFail(decrypt($id));
-        $products = $this->products;
-        return view('admin.procedure.create', compact('registration', 'products'));
+        $products = ($category == 'Medicine') ? $this->products : $this->procs;
+        return view('admin.procedure.create', compact('registration', 'products', 'category'));
     }
 
     /**
@@ -56,7 +57,7 @@ class ProcedureController extends Controller implements HasMiddleware
     public function store(Request $request, string $id)
     {
         try {
-            $inputs = $request->except(array('product_ids', 'dosage1', 'dosage2', 'dosage3', 'days', 'file_attachment', 'procedure_id'));
+            $inputs = $request->except(array('product_ids', 'dosage1', 'dosage2', 'dosage3', 'days', 'file_attachment', 'procedure_id', 'category'));
             DB::transaction(function () use ($request, $inputs, $id) {
                 $registration = Registration::findOrFail(decrypt($id));
                 $inputs['registration_id'] = $registration->id;
@@ -67,20 +68,25 @@ class ProcedureController extends Controller implements HasMiddleware
                     $inputs
                 );
                 $data = [];
-                foreach ($request->product_ids as $key => $item):
-                    if ($item > 0):
-                        $data[] = [
-                            'procedure_id' => $record->id,
-                            'product_id' => $item,
-                            'dosage1' => $request->dosage1[$key],
-                            'dosage2' => $request->dosage2[$key],
-                            'dosage3' => $request->dosage3[$key],
-                            'days' => $request->days[$key],
-                            'created_at' => $record->created_at,
-                            'updated_at' => $record->updated_at,
-                        ];
-                    endif;
-                endforeach;
+                if ($request->product_ids):
+                    foreach ($request->product_ids as $key => $item):
+                        if ($item > 0):
+                            $data[] = [
+                                'procedure_id' => $record->id,
+                                'product_id' => $item,
+                                'dosage1' => $request->dosage1[$key],
+                                'dosage2' => $request->dosage2[$key],
+                                'dosage3' => $request->dosage3[$key],
+                                'days' => $request->days[$key],
+                                'category' => $request->category,
+                                'created_at' => $record->created_at,
+                                'updated_at' => $record->updated_at,
+                            ];
+                        endif;
+                    endforeach;
+                    ProcedureMedicine::where('procedure_id', $record->id)->delete();
+                    ProcedureMedicine::insert($data);
+                endif;
                 if ($request->file('file_attachment')):
                     $files = [];
                     foreach ($request->file('file_attachment') as $key => $attachment):
@@ -96,8 +102,6 @@ class ProcedureController extends Controller implements HasMiddleware
                     endforeach;
                     ProcedureDocument::insert($files);
                 endif;
-                ProcedureMedicine::where('procedure_id', $record->id)->delete();
-                ProcedureMedicine::insert($data);
             });
         } catch (Exception $e) {
             return redirect()->back()->with("error", $e->getMessage())->withInput($request->all());

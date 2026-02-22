@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('dosage2')->nullable();
             $table->string('dosage3')->nullable();
             $table->string('days')->nullable();
+            $table->string("category")->nullable();
             $table->timestamps();
         });
     }

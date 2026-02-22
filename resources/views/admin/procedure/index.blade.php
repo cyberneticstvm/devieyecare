@@ -25,7 +25,7 @@
                                         <table class="table table-bordered table-striped">
                                             <tr>
                                                 <th>Medical Record No.</th>
-                                                <td><a href="{{ route('procedure.create', encrypt($registration?->id)) }}">{!! $registration?->getMrn() !!}</a></td>
+                                                <td>{!! $registration?->getMrn() !!}</td>
                                             </tr>
                                             <tr>
                                                 <th>Customer Name</th>
@@ -50,6 +50,12 @@
                                             <tr>
                                                 <th>Billed / Delivered Date</th>
                                                 <td>{{ $registration?->order()?->first()?->invoice_generated_at?->format('d.M.Y h:i a') ?? 'NA' }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Action</th>
+                                                <td>
+                                                    <a href="{{ route('procedure.create', ['category' => 'Medicine', encrypt($registration?->id)]) }}">Medicine</a> | <a href="{{ route('procedure.create', ['category' => 'Spectacle', encrypt($registration?->id)]) }}">Spectacle</a> | <a href="{{ route('procedure.create', ['category' => 'Procedure', encrypt($registration?->id)]) }}">Procedure</a>
+                                                </td>
                                             </tr>
                                         </table>
                                     </div>

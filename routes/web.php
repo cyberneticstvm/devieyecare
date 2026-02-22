@@ -258,7 +258,7 @@ Route::middleware(['web'])->group(function () {
         Route::prefix('procedure')->controller(ProcedureController::class)->group(function () {
             Route::get('', 'index')->name('procedure');
             Route::post('show', 'show')->name('procedure.fetch');
-            Route::get('create/{id}', 'create')->name('procedure.create');
+            Route::get('create/{category}/{id}', 'create')->name('procedure.create');
             Route::post('create/{id}', 'store')->name('procedure.save');
         });
 
