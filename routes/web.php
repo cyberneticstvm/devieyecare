@@ -8,6 +8,7 @@ use App\Http\Controllers\CampController;
 use App\Http\Controllers\CampDetailController;
 use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\ExportController;
+use App\Http\Controllers\FixedAssetController;
 use App\Http\Controllers\HeadController;
 use App\Http\Controllers\HelperController;
 use App\Http\Controllers\IncomeExpenseController;
@@ -162,6 +163,7 @@ Route::middleware(['web'])->group(function () {
             Route::get('edit/{id}', 'edit')->name('vehicle.payment.edit');
             Route::post('edit/{id}', 'update')->name('vehicle.payment.update');
             Route::get('delete/{id}', 'destroy')->name('vehicle.payment.delete');
+            Route::get('approve/{id}', 'approve')->name('vehicle.payment.approve');
         });
 
         Route::prefix('head')->controller(HeadController::class)->group(function () {
@@ -180,6 +182,7 @@ Route::middleware(['web'])->group(function () {
             Route::get('edit/{category}/{id}', 'edit')->name('ie.edit');
             Route::post('edit/{category}/{id}', 'update')->name('ie.update');
             Route::get('delete/{category}/{id}', 'destroy')->name('ie.delete');
+            Route::get('approve/{category}/{id}', 'ie_approve')->name('ie.approve');
         });
 
         Route::prefix('ms')->controller(ManufacturerSupplierController::class)->group(function () {
@@ -207,6 +210,15 @@ Route::middleware(['web'])->group(function () {
             Route::get('edit/{id}', 'edit')->name('payment.edit');
             Route::post('edit/{id}', 'update')->name('payment.update');
             Route::get('delete/{id}', 'destroy')->name('payment.delete');
+        });
+
+        Route::prefix('fixedasset')->controller(FixedAssetController::class)->group(function () {
+            Route::get('', 'index')->name('fa.list');
+            Route::get('create', 'create')->name('fa.create');
+            Route::post('create', 'store')->name('fa.save');
+            Route::get('edit/{id}', 'edit')->name('fa.edit');
+            Route::post('edit/{id}', 'update')->name('fa.update');
+            Route::get('delete/{id}', 'destroy')->name('fa.delete');
         });
 
         Route::prefix('order')->controller(OrderController::class)->group(function () {

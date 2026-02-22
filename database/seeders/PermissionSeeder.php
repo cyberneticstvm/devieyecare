@@ -111,6 +111,12 @@ class PermissionSeeder extends Seeder
             'report-login-log',
             'search-registration',
             'product-excel-export',
+            'ie-approve',
+            'vehicle-payment-approve',
+            'fixed-asset-list',
+            'fixed-asset-create',
+            'fixed-asset-edit',
+            'fixed-asset-delete'
         ];
 
         foreach ($permissions as $permission) {

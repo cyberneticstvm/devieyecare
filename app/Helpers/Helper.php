@@ -260,7 +260,7 @@ function checkLoggedinTime($user)
     $start = Carbon::createFromTimeString(settings()->user_login_allowed_time_from);
     $end = Carbon::createFromTimeString(settings()->user_login_allowed_time_to);
     $is_first_login = true;
-    if (LoginLog::where("user_id", $user->id)->whereDate("created_at", Carbon::today())->first()->exists()):
+    if (LoginLog::where("user_id", $user->id)->whereDate("created_at", Carbon::today())->exists()):
         $is_first_login = false;
     endif;
     if ($is_first_login && Carbon::now()->between($start, $end)):

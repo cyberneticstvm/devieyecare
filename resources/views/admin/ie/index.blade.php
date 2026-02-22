@@ -11,6 +11,7 @@
                     <thead>
                         <tr>
                             <th class="py-2 fw-medium small text-uppercase">SL No</th>
+                            <th class="py-2 fw-medium small text-uppercase">Approved</th>
                             <th class="py-2 fw-medium small text-uppercase">Head</th>
                             <th class="py-2 fw-medium small text-uppercase">Description</th>
                             <th class="py-2 fw-medium small text-uppercase">Amount</th>
@@ -22,6 +23,13 @@
                         @forelse($ies as $key => $ie)
                         <tr>
                             <td>{{ $key + 1 }}</td>
+                            <td class="text-center">
+                                @if(!$ie->status)
+                                <a href="{{ route('ie.approve', ['category' => 'Expense', 'id' => encrypt($ie->id)]) }}" class="text-info proceed">Approve</a>
+                                @else
+                                <i class="bi bi-check-lg fw-bold text-success"></i>
+                                @endif
+                            </td>
                             <td>{{ $ie->head->name }}</td>
                             <td>{{ $ie->description }}</td>
                             <td class="text-end">{{ $ie->amount }}</td>
@@ -35,7 +43,7 @@
                     </tbody>
                     <tfoot>
                         <tr>
-                            <td colspan="3" class="fw-bold text-end">Total</td>
+                            <td colspan="4" class="fw-bold text-end">Total</td>
                             <td class="fw-bold text-end">{{ number_format($ies->sum('amount'), 2) }}</td>
                             <td colspan="2"></td>
                         </tr>

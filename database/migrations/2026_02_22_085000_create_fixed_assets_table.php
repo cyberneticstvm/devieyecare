@@ -11,15 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('income_expenses', function (Blueprint $table) {
+        Schema::create('fixed_assets', function (Blueprint $table) {
             $table->id();
-            $table->date('ie_date')->nullable();
-            $table->foreignId('head_id')->constrained()->onDelete('cascade');
-            $table->foreignId('category_id')->constrained('extras', 'id')->onDelete('cascade');
-            $table->decimal('amount', 8, 2)->default(0);
-            $table->text('description')->nullable();
-            $table->foreignId('branch_id')->constrained()->onDelete('cascade');
-            $table->boolean("status")->default(0);
+            $table->string("name");
+            $table->integer("qty")->default(0);
+            $table->foreignId("branch_id")->constrained()->onDelete("cascade");
             $table->foreignId('created_by')->constrained('users', 'id');
             $table->foreignId('updated_by')->constrained('users', 'id');
             $table->timestamps();
@@ -32,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('income_expenses');
+        Schema::dropIfExists('fixed_assets');
     }
 };

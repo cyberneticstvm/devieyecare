@@ -21,6 +21,7 @@ class VehiclePaymentController extends Controller implements HasMiddleware
             new Middleware(\Spatie\Permission\Middleware\PermissionMiddleware::using('vehicle-payment-create'), only: ['create', 'store']),
             new Middleware(\Spatie\Permission\Middleware\PermissionMiddleware::using('vehicle-payment-edit'), only: ['edit', 'update']),
             new Middleware(\Spatie\Permission\Middleware\PermissionMiddleware::using('vehicle-payment-delete'), only: ['destroy']),
+            new Middleware(\Spatie\Permission\Middleware\PermissionMiddleware::using('vehicle-payment-approve'), only: ['approve']),
         ];
     }
 
@@ -120,5 +121,14 @@ class VehiclePaymentController extends Controller implements HasMiddleware
         $payment = VehiclePayment::findOrFail(decrypt($id));
         $payment->delete();
         return redirect()->route('vehicle.payment.list', encrypt($payment->vehicle_id))->with("success", "Vehicle payment deleted successfully!");
+    }
+
+    public function approve(string $id)
+    {
+        $payment = VehiclePayment::findOrFail(decrypt($id));
+        $payment->update([
+            "status" => true,
+        ]);
+        return redirect()->route('vehicle.payment.list', encrypt($payment->vehicle_id))->with("success", "Request approved successfully!");
     }
 }

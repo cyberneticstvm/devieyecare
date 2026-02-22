@@ -22,6 +22,7 @@ class IncomeExpenseController extends Controller implements HasMiddleware
             new Middleware(\Spatie\Permission\Middleware\PermissionMiddleware::using('ie-create'), only: ['create', 'store']),
             new Middleware(\Spatie\Permission\Middleware\PermissionMiddleware::using('ie-edit'), only: ['edit', 'update']),
             new Middleware(\Spatie\Permission\Middleware\PermissionMiddleware::using('ie-delete'), only: ['destroy']),
+            new Middleware(\Spatie\Permission\Middleware\PermissionMiddleware::using('ie-approve'), only: ['ie_approve']),
         ];
     }
 
@@ -128,5 +129,13 @@ class IncomeExpenseController extends Controller implements HasMiddleware
     {
         IncomeExpense::findOrFail(decrypt($id))->delete();
         return redirect()->route('ie.list', $this->category->name)->with("success", $this->category->name . " deleted successfully!");
+    }
+
+    public function ie_approve(string $category, string $id)
+    {
+        IncomeExpense::findOrFail(decrypt($id))->update([
+            "status" => true,
+        ]);
+        return redirect()->route('ie.list', $this->category->name)->with("success", "Request approved successfully!");
     }
 }
