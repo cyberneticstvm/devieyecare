@@ -273,6 +273,8 @@ Route::middleware(['web'])->group(function () {
             Route::post('daybook', 'daybookFetch')->name('report.daybook.fetch');
             Route::get('expense', 'expense')->name('report.expense');
             Route::post('expense', 'expenseFetch')->name('report.expense.fetch');
+            Route::get('card', 'card')->name('report.card');
+            Route::post('card', 'card_fetch')->name('report.card.fetch');
             Route::get('loginlog', 'loginLog')->name('report.login.log');
             Route::post('loginlog', 'loginLogFetch')->name('report.login.log.fetch');
         });

@@ -108,6 +108,7 @@ class PermissionSeeder extends Seeder
             'report-registration',
             'report-daybook',
             'report-expense',
+            'report-card',
             'report-login-log',
             'search-registration',
             'product-excel-export',

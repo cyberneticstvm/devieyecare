@@ -124,6 +124,9 @@
                 @if(Auth::user()->can('report-expense'))
                 <li class=""><a class="dropdown-item rounded-pill {{ (in_array(Route::currentRouteName(), ['report.expense', 'report.expense.fetch'])) ? 'active' : '' }}" href="{{ route('report.expense') }}">Expense</a></li>
                 @endif
+                @if(Auth::user()->can('report-card'))
+                <li class=""><a class="dropdown-item rounded-pill {{ (in_array(Route::currentRouteName(), ['report.card', 'report.card.fetch'])) ? 'active' : '' }}" href="{{ route('report.card') }}">Card</a></li>
+                @endif
                 @if(Auth::user()->can('report-login-log'))
                 <li class=""><a class="dropdown-item rounded-pill {{ (in_array(Route::currentRouteName(), ['report.login.log', 'report.login.log.fetch'])) ? 'active' : '' }}" href="{{ route('report.login.log') }}">Login Log</a></li>
                 @endif

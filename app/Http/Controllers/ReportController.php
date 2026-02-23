@@ -9,6 +9,7 @@ use App\Models\Hsn;
 use App\Models\IncomeExpense;
 use App\Models\LoginLog;
 use App\Models\Order;
+use App\Models\Payment;
 use App\Models\Pharmacy;
 use App\Models\Product;
 use App\Models\Registration;
@@ -31,6 +32,7 @@ class ReportController extends Controller implements HasMiddleware
             new Middleware(\Spatie\Permission\Middleware\PermissionMiddleware::using('report-sales'), only: ['registration', 'registrationFetch']),
             new Middleware(\Spatie\Permission\Middleware\PermissionMiddleware::using('report-sales'), only: ['daybook', 'daybookFetch']),
             new Middleware(\Spatie\Permission\Middleware\PermissionMiddleware::using('report-sales'), only: ['expense', 'expenseFetch']),
+            new Middleware(\Spatie\Permission\Middleware\PermissionMiddleware::using('report-card'), only: ['card', 'card_fetch']),
             new Middleware(\Spatie\Permission\Middleware\PermissionMiddleware::using('report-login-log'), only: ['loginLog', 'LoginLogFetch']),
         ];
     }
@@ -52,7 +54,7 @@ class ReportController extends Controller implements HasMiddleware
         })->when(in_array(Auth::user()->roles->first()->name, ['Administrator']), function ($q) use ($brs) {
             return $q->union($brs);
         })->pluck('name', 'id');
-        $this->pmodes = Extra::where('category', 'pmode')->union(Extra::selectRaw("'All' as name, '0' AS id"))->pluck('name', 'id');
+        $this->pmodes = Extra::selectRaw("name, id")->where('category', 'pmode')->union(Extra::selectRaw("'All' as name, '0' AS id"));
         $this->store_products = Product::whereIn('hsn_id', Hsn::whereIn('name', ['Frame', 'Lens'])->pluck('id'))->union($brs)->pluck('name', 'id');
         $this->medicines = Product::whereIn('hsn_id', Hsn::whereNotIn('name', ['Frame', 'Lens'])->pluck('id'))->union($brs)->pluck('name', 'id');
 
@@ -202,6 +204,32 @@ class ReportController extends Controller implements HasMiddleware
             return $q->where('branch_id', $request->branch);
         })->get();
         return view('admin.report.expense', compact('records', 'inputs', 'branches', 'heads'));
+    }
+
+    function card()
+    {
+        $inputs = array(date('Y-m-d'), date('Y-m-d'), Session::get('branch')->id);
+        $branches = $this->branches;
+        $card_pmode_id = 0;
+        $payments = collect();
+        return view('admin.report.card', compact('payments', 'inputs', 'branches', 'card_pmode_id'));
+    }
+
+    function card_fetch(Request $request)
+    {
+        $fdate = Carbon::parse($request->from_date)->startOfDay();
+        $tdate = Carbon::parse($request->to_date)->endOfDay();
+        $inputs = array($request->from_date, $request->to_date, $request->branch);
+        $branches = $this->branches;
+        $card_pmode_id = $this->pmodes->where("name", "Card")->first()->id;
+        $records = Registration::selectRaw("id, mrn, name, branch_id, doc_fee, doc_fee_pmode, 0 AS advance, 0 AS balance, created_at")->whereBetween("created_at", [$fdate, $tdate])->when($request->branch > 0, function ($q) use ($request) {
+            return $q->where('branch_id', $request->branch);
+        });
+        $payments = Registration::leftJoin("orders AS o", "o.registration_id", "registrations.id")->leftJoin("payments AS p", "p.order_id", "o.id")->selectRaw("registrations.id, registrations.mrn, registrations.name, registrations.branch_id, registrations.doc_fee, registrations.doc_fee_pmode, CASE WHEN p.payment_type = 328 THEN amount END AS advance, CASE WHEN p.payment_type = 330 THEN amount END AS balance, p.created_at")->where("pmode", $card_pmode_id)->whereBetween("p.created_at", [$fdate, $tdate])->whereNotIn("registrations.id", $records->pluck("id"))->when($request->branch > 0, function ($q) use ($request) {
+            return $q->where('p.branch_id', $request->branch);
+        })->union($records)->get();
+
+        return view('admin.report.card', compact('payments', 'inputs', 'branches', 'card_pmode_id'));
     }
 
     function loginLog()
