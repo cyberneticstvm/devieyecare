@@ -34,6 +34,15 @@ function settings()
     return Setting::find(1);
 }
 
+function unique_id($model, $col)
+{
+    do {
+        $code = random_int(1000000, 9999999);
+    } while ($model::where($col, $code)->first());
+
+    return $code;
+}
+
 function getInventory($branch = 0, $product = 0)
 {
     $is_store = 0;
@@ -138,7 +147,7 @@ function getCurrentFinancialYear(): string
 function getDocFee($request)
 {
     $fee = 0;
-    $days = 7;
+    $days = settings()->consultation_fee_waived_days;
     $reg = Registration::where('mobile', $request->mobile)->selectRaw("IFNULL(DATEDIFF(now(), created_at), 0) as days")->latest()->first();
     $diff = ($reg && $reg->days > 0) ? $reg->days : 0;
     if ($diff == 0 || $diff > $days):
@@ -263,7 +272,7 @@ function checkLoggedinTime($user)
     if (LoginLog::where("user_id", $user->id)->whereDate("created_at", Carbon::today())->exists()):
         $is_first_login = false;
     endif;
-    if ($is_first_login && Carbon::now()->between($start, $end)):
+    if ($is_first_login && !Carbon::now()->between($start, $end)):
         return false;
     else:
         return true;

@@ -13,6 +13,7 @@ use App\Http\Controllers\HeadController;
 use App\Http\Controllers\HelperController;
 use App\Http\Controllers\IncomeExpenseController;
 use App\Http\Controllers\ManufacturerSupplierController;
+use App\Http\Controllers\MaterialController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\PdfController;
@@ -23,6 +24,8 @@ use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\RegistrationController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\RxStockController;
+use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\TransferController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VehicleController;
@@ -221,6 +224,24 @@ Route::middleware(['web'])->group(function () {
             Route::get('delete/{id}', 'destroy')->name('fa.delete');
         });
 
+        Route::prefix('material')->controller(MaterialController::class)->group(function () {
+            Route::get('', 'index')->name('material.list');
+            Route::get('create/', 'create')->name('material.create');
+            Route::post('create/', 'store')->name('material.save');
+            Route::get('edit/{id}', 'edit')->name('material.edit');
+            Route::post('edit/{id}', 'update')->name('material.update');
+            Route::get('delete/{id}', 'destroy')->name('material.delete');
+        });
+
+        Route::prefix('rxstock')->controller(RxStockController::class)->group(function () {
+            Route::get('', 'index')->name('rx.list');
+            Route::get('create/', 'create')->name('rx.create');
+            Route::post('create/', 'store')->name('rx.save');
+            Route::get('edit/{id}', 'edit')->name('rx.edit');
+            Route::post('edit/{id}', 'update')->name('rx.update');
+            Route::get('delete/{id}', 'destroy')->name('rx.delete');
+        });
+
         Route::prefix('order')->controller(OrderController::class)->group(function () {
             Route::get('', 'index')->name('store.order.list');
             Route::get('edit/{rid}/{source}', 'edit')->name('store.order.edit');
@@ -290,6 +311,11 @@ Route::middleware(['web'])->group(function () {
 
         Route::prefix('export')->controller(ExportController::class)->group(function () {
             Route::get('product', 'exportProduct')->name('product.export');
+        });
+
+        Route::prefix('settings')->controller(SettingsController::class)->group(function () {
+            Route::get('', 'index')->name('settings');
+            Route::post('', 'save')->name('settings.save');
         });
     });
 });

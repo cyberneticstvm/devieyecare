@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Extra;
 use App\Models\Order;
-use App\Models\OrderStatus;
 use App\Models\Payment;
 use App\Models\Registration;
 use Carbon\Carbon;
@@ -13,7 +12,6 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 
 class PaymentController extends Controller implements HasMiddleware

@@ -96,6 +96,12 @@
                 @if(Auth::user()->can('bulk-order-update'))
                 <li class=""><a class="dropdown-item rounded-pill {{ (in_array(Route::currentRouteName(), ['bulk.order.status', 'bulk.order.status.update'])) ? 'active' : '' }}" href="{{ route('bulk.order.status') }}">Bulk Order Update</a></li>
                 @endif
+                @if(Auth::user()->can('material-list'))
+                <li class=""><a class="dropdown-item rounded-pill {{ (in_array(Route::currentRouteName(), ['material.list', 'material.create', 'material.edit'])) ? 'active' : '' }}" href="{{ route('material.list') }}">Material</a></li>
+                @endif
+                @if(Auth::user()->can('rx-stock-list'))
+                <li class=""><a class="dropdown-item rounded-pill {{ (in_array(Route::currentRouteName(), ['rx.list', 'rx.create', 'rx.edit'])) ? 'active' : '' }}" href="{{ route('rx.list') }}">RX Stock</a></li>
+                @endif
             </ul>
         </li>
         <li class="me-lg-3 nav-item dropdown">
@@ -129,6 +135,14 @@
                 @endif
                 @if(Auth::user()->can('report-login-log'))
                 <li class=""><a class="dropdown-item rounded-pill {{ (in_array(Route::currentRouteName(), ['report.login.log', 'report.login.log.fetch'])) ? 'active' : '' }}" href="{{ route('report.login.log') }}">Login Log</a></li>
+                @endif
+            </ul>
+        </li>
+        <li class="me-lg-3 nav-item dropdown">
+            <a class="nav-link py-1 dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Settings</a>
+            <ul class="dropdown-menu p-2 p-xl-3 language shadow-lg rounded-4 li_animate">
+                @if(Auth::user()->can('settings'))
+                <li class=""><a class="dropdown-item rounded-pill {{ (in_array(Route::currentRouteName(), ['settings', 'settings.save'])) ? 'active' : '' }}" href="{{ route('settings') }}">Settings</a></li>
                 @endif
             </ul>
         </li>
