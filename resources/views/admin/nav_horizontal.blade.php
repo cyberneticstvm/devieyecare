@@ -7,6 +7,9 @@
                 @if(Auth::user()->can('dashboard'))
                 <li class=""><a class="dropdown-item rounded-pill {{ (in_array(Route::currentRouteName(), ['index'])) ? 'active' : '' }}" href="{{ route('index') }}">Dashboard</a></li>
                 @endif
+                @if(Auth::user()->can('analytics'))
+                <li class=""><a class="dropdown-item rounded-pill {{ (in_array(Route::currentRouteName(), ['analytics'])) ? 'active' : '' }}" href="{{ route('analytics') }}">Analytics</a></li>
+                @endif
                 @if(Auth::user()->can('appointment-list'))
                 <li class=""><a class="dropdown-item rounded-pill {{ (in_array(Route::currentRouteName(), ['appointment.list', 'appointment.create', 'appointment.edit'])) ? 'active' : '' }}" href="{{ route('appointment.list') }}">Appointments</a></li>
                 @endif

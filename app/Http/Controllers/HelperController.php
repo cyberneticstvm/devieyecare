@@ -22,6 +22,7 @@ class HelperController extends Controller implements HasMiddleware
     public static function middleware(): array
     {
         return [
+            new middleware(\Spatie\Permission\Middleware\PermissionMiddleware::using('analytics'), only: ['analytics']),
             new middleware(\Spatie\Permission\Middleware\PermissionMiddleware::using('search-registration'), only: ['searchRegistration', 'searchRegistrationShow']),
             new middleware(\Spatie\Permission\Middleware\PermissionMiddleware::using('order-status-update'), only: ['storeOrderStatusUpdate']),
             new middleware(\Spatie\Permission\Middleware\PermissionMiddleware::using('inventory-status'), only: ['inventory', 'getInventory']),
@@ -33,6 +34,11 @@ class HelperController extends Controller implements HasMiddleware
     function __construct()
     {
         $this->branch = Session::get('branch')->id;
+    }
+
+    function analytics()
+    {
+        return view("admin.analytics");
     }
 
     function switchBranch(Request $request)

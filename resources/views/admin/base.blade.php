@@ -378,7 +378,7 @@
         }
     </script>
     @include("admin.message")
-    @if(in_array(Route::current()->getName(), ['index']))
+    @if(in_array(Route::current()->getName(), ['analytics']))
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
     <script src="{{ asset('/assets/js/chart.js') }}"></script>
     @endif

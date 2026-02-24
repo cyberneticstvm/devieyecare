@@ -3,8 +3,8 @@
 <!-- Upcoming Appointments -->
 <div class="col-12">
     <div class="mb-4 pt-3">
-        <h5 class="fw-medium text-uppercase mb-0">Dashboard</h5>
-        <p class="fs-12">Showing interactive realtime dashboard</p>
+        <h5 class="fw-medium text-uppercase mb-0">Analytics</h5>
+        <p class="fs-12">Showing interactive realtime analytics</p>
     </div>
 </div>
 <div class="col-12 col-lg-3 col-md-6 col-sm-6">

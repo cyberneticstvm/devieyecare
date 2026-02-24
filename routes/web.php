@@ -67,6 +67,7 @@ Route::middleware(['web'])->group(function () {
         });
 
         Route::prefix('helper')->controller(HelperController::class)->group(function () {
+            Route::get('analytics', 'analytics')->name('analytics');
             Route::get('switchbranch/{bid}', 'switchBranch')->name('switch.branch');
             Route::get('inventory', 'inventory')->name('inventory');
             Route::post('inventory', 'getInventory')->name('get.inventory');

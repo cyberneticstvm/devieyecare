@@ -21,6 +21,7 @@ class PermissionSeeder extends Seeder
     {
         $permissions = [
             'dashboard',
+            'analytics',
             'role-list',
             'role-create',
             'role-edit',
