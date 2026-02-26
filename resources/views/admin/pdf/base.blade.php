@@ -137,8 +137,8 @@
                     </tr>
                     <tr>
                         <td colspan="2" class="no-border text-center" width="100%">
-                            {{ $registration->branch->address }}<br>
-                            Contact: {{ $registration->branch->contact }}
+                            {{ isset($registration) ? $registration?->branch?->address : '' }}<br>
+                            {{ isset($registration) ? 'Contact:' .$registration?->branch?->contact : '' }}
                         </td>
                     </tr>
                 </table>

@@ -127,7 +127,8 @@ class PermissionSeeder extends Seeder
             'fixed-asset-list',
             'fixed-asset-create',
             'fixed-asset-edit',
-            'fixed-asset-delete'
+            'fixed-asset-delete',
+            'pending-order-for-lab',
         ];
 
         foreach ($permissions as $permission) {

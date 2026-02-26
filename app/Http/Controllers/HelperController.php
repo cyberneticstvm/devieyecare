@@ -6,8 +6,8 @@ use App\Models\Branch;
 use App\Models\Extra;
 use App\Models\LoginLog;
 use App\Models\Order;
+use App\Models\OrderDetail;
 use App\Models\OrderStatus;
-use App\Models\Product;
 use App\Models\Registration;
 use Carbon\Carbon;
 use Exception;
@@ -15,7 +15,9 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class HelperController extends Controller implements HasMiddleware
 {
@@ -23,6 +25,7 @@ class HelperController extends Controller implements HasMiddleware
     {
         return [
             new middleware(\Spatie\Permission\Middleware\PermissionMiddleware::using('analytics'), only: ['analytics']),
+            new middleware(\Spatie\Permission\Middleware\PermissionMiddleware::using('pending-order-for-lab'), only: ['lab']),
             new middleware(\Spatie\Permission\Middleware\PermissionMiddleware::using('search-registration'), only: ['searchRegistration', 'searchRegistrationShow']),
             new middleware(\Spatie\Permission\Middleware\PermissionMiddleware::using('order-status-update'), only: ['storeOrderStatusUpdate']),
             new middleware(\Spatie\Permission\Middleware\PermissionMiddleware::using('inventory-status'), only: ['inventory', 'getInventory']),
@@ -39,6 +42,36 @@ class HelperController extends Controller implements HasMiddleware
     function analytics()
     {
         return view("admin.analytics");
+    }
+
+    function lab()
+    {
+        $orders = Order::whereNull("lab")->whereDate("created_at", Carbon::today())->latest()->get();
+        $status = Extra::where("category", "lab")->pluck("name", "id");
+        return view("admin.lab.index", compact('orders', 'status'));
+    }
+
+    function lab_save(Request $request)
+    {
+        $inputs = $request->validate([
+            "orders" => "required",
+        ]);
+        $orders = Order::whereIn("id", $request->orders)->get();
+        DB::transaction(function () use ($request, $orders) {
+            Order::whereIn("id", $request->orders)->update([
+                "lab" => true,
+            ]);
+            $inputs = $request->all();
+            foreach ($orders as $key => $order):
+                foreach ($order->details as $key1 => $item):
+                    OrderDetail::where('id', $item->id)->update([
+                        "lab_note" => $inputs['lab_note_' . $item->id],
+                    ]);
+                endforeach;
+            endforeach;
+        });
+        $pdf = Pdf::loadView('admin.lab.receipt', compact('orders'));
+        return $pdf->stream('lab_orders.pdf');
     }
 
     function switchBranch(Request $request)

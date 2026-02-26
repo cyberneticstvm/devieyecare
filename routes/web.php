@@ -77,6 +77,8 @@ Route::middleware(['web'])->group(function () {
             Route::get('surgery', 'surgeryAdvised')->name('surgery.advised.register');
             Route::get('orderstatus', 'orderStatus')->name('bulk.order.status');
             Route::post('orderstatus', 'orderStatusUpdate')->name('bulk.order.status.update');
+            Route::get('lab', 'lab')->name('lab');
+            Route::post('lab', 'lab_save')->name('lab.save');
         });
 
         Route::prefix('branch')->controller(BranchController::class)->group(function () {

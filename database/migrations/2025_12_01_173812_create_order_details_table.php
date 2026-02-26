@@ -26,6 +26,7 @@ return new class extends Migration
             $table->integer('qty')->nullable();
             $table->decimal('price', 8, 2)->default(0);
             $table->decimal('total', 8, 2)->default(0);
+            $table->foreignId('lab_note')->nullable()->constrained('extras', 'id');
             $table->timestamps();
         });
     }

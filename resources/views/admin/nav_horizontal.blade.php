@@ -105,6 +105,9 @@
                 @if(Auth::user()->can('rx-stock-list'))
                 <li class=""><a class="dropdown-item rounded-pill {{ (in_array(Route::currentRouteName(), ['rx.list', 'rx.create', 'rx.edit'])) ? 'active' : '' }}" href="{{ route('rx.list') }}">RX Stock</a></li>
                 @endif
+                @if(Auth::user()->can('pending-order-for-lab'))
+                <li class=""><a class="dropdown-item rounded-pill {{ (in_array(Route::currentRouteName(), ['lab'])) ? 'active' : '' }}" href="{{ route('lab') }}">Pending Order for Lab</a></li>
+                @endif
             </ul>
         </li>
         <li class="me-lg-3 nav-item dropdown">

@@ -156,7 +156,7 @@ class AjaxController extends Controller
     {
         $data = "";
         $iecat = Extra::where('name', 'Expense')->where('category', 'head')->first();
-        $expenses = IncomeExpense::where('branch_id', $request->branch)->whereDate('created_at', $request->ddate)->where('category_id', $iecat->id)->get();
+        $expenses = IncomeExpense::where('branch_id', $request->branch)->whereDate('created_at', $request->ddate)->where('category_id', $iecat->id)->where("status", 1)->get();
         $data .= "<table class='table table-round border-top w-100'><thead><tr><th>SL no</th><th>Head</th><th>Desc.</th><th>Amount</th></tr></thead><tbody>";
         foreach ($expenses as $key => $item):
             $data .= "<tr>";
@@ -176,7 +176,7 @@ class AjaxController extends Controller
     function getVPaymentDetails(Request $request)
     {
         $data = "";
-        $payments = VehiclePayment::where('branch_id', $request->branch)->whereDate('created_at', $request->ddate)->get();
+        $payments = VehiclePayment::where('branch_id', $request->branch)->whereDate('created_at', $request->ddate)->where("status", 1)->get();
         $data .= "<table class='table table-round border-top w-100'><thead><tr><th>SL no</th><th>Vehicle</th><th>Pmode</th><th>Notes</th><th>Amount</th></tr></thead><tbody>";
         foreach ($payments as $key => $item):
             $data .= "<tr>";

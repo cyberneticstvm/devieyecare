@@ -12,7 +12,7 @@
             <div class="col-md-12">
                 <table class="table table-bordered table-striped">
                     <thead>
-                        <th class="text-center w-50">Medicine</th>
+                        <th class="text-center w-50">{{ $category }}</th>
                         <th colspan="3" class="text-center w-40">Dosage</th>
                         <th class="w-10">Days</th>
                     </thead>
