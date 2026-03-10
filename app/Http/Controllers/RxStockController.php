@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Branch;
 use App\Models\Extra;
 use App\Models\Material;
+use App\Models\Product;
 use App\Models\RxStock;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controllers\HasMiddleware;
@@ -21,7 +23,7 @@ class RxStockController extends Controller implements HasMiddleware
         ];
     }
 
-    protected $products, $axis, $dia, $statuses;
+    protected $axis, $materials;
     public function __construct()
     {
         $axis = [];
@@ -29,16 +31,18 @@ class RxStockController extends Controller implements HasMiddleware
             $axis[$i] = $i;
         endfor;
         $this->axis = $axis;
+        $products = Product::selectRaw("CONCAT('product', '-', id) AS id, name, 'product' AS type");
+        $this->materials = Material::selectRaw("CONCAT('material', '-', id) AS id, name, 'material' AS type")->unionAll($products);
     }
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $rxstock = RxStock::withTrashed()->latest()->get();
+        $rxstock = RxStock::withTrashed()->where("transaction_type", "purchase")->latest()->get();
         $extras = Extra::whereIn('category', ['sph', 'cyl', 'addition'])->get();
         $axis = $this->axis;
-        $materials = Material::latest()->pluck("name", "id");
+        $materials = $this->materials;
         return view('admin.rx.index', compact('rxstock', 'materials', 'extras', 'axis'));
     }
 
@@ -56,14 +60,22 @@ class RxStockController extends Controller implements HasMiddleware
     public function store(Request $request)
     {
         $inputs = $request->validate([
+            "eye" => "nullable",
             "material_id" => "required",
             "sph" => "nullable",
             "cyl" => "nullable",
             "axis" => "nullable",
             "addition" => "nullable",
             "qty" => "nullable",
+            "location" => "nullable"
         ]);
-        RxStock::create($inputs);
+        $data = $inputs;
+        $data['type'] = explode('-', $request->material_id)[0];
+        $data['material_id'] = explode('-', $request->material_id)[1];
+        $data['to_branch'] = Branch::where("is_store", 1)->first()->id;
+        $data['from_branch'] = 0;
+        $data['transaction_type'] = "purchase";
+        RxStock::create($data);
         return redirect()->route('rx.list')->with("success", "Rx Stock created successfully!");
     }
 

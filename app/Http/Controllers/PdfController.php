@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Order;
+use App\Models\Product;
 use App\Models\Registration;
+use App\Models\RxStock;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
@@ -52,5 +54,27 @@ class PdfController extends Controller
         $registration = Registration::findOrFail(decrypt($request->registration_id));
         $pdf = Pdf::loadView('admin.pdf.certificate', compact('registration'));
         return $pdf->stream('certificate.pdf');
+    }
+
+    function envelope(Request $request)
+    {
+        $stock = RxStock::findOrFail(decrypt($request->sid));
+        if ($stock->type == "material"):
+            $qrcode = base64_encode(QrCode::format('svg')->size(75)->errorCorrection('H')->generate('https://devieyecare.com'));
+            $pdf = Pdf::loadView('admin.pdf.envelope', compact('stock', 'qrcode'));
+            return $pdf->stream('envelope.pdf');
+        endif;
+        return redirect()->back()->with("error", "Envelope could not printed for Product");
+    }
+
+    function stock_barcode(Request $request)
+    {
+        $stock = RxStock::findOrFail(decrypt($request->sid));
+        if ($stock->type == "product"):
+            $product = Product::findOrFail($stock->material_id);
+            $pdf = Pdf::loadView('admin.pdf.stock_barcode', compact('product'));
+            return $pdf->stream('barcode.pdf');
+        endif;
+        return redirect()->back()->with("error", "Barcode could not printed for Material Stock");
     }
 }

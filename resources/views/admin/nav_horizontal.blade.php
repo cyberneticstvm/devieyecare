@@ -103,7 +103,7 @@
                 <li class=""><a class="dropdown-item rounded-pill {{ (in_array(Route::currentRouteName(), ['material.list', 'material.create', 'material.edit'])) ? 'active' : '' }}" href="{{ route('material.list') }}">Material</a></li>
                 @endif
                 @if(Auth::user()->can('rx-stock-list'))
-                <li class=""><a class="dropdown-item rounded-pill {{ (in_array(Route::currentRouteName(), ['rx.list', 'rx.create', 'rx.edit'])) ? 'active' : '' }}" href="{{ route('rx.list') }}">RX Stock</a></li>
+                <li class=""><a class="dropdown-item rounded-pill {{ (in_array(Route::currentRouteName(), ['rx.list', 'rx.create', 'rx.edit'])) ? 'active' : '' }}" href="{{ route('rx.list') }}">Stock</a></li>
                 @endif
                 @if(Auth::user()->can('pending-order-for-lab'))
                 <li class=""><a class="dropdown-item rounded-pill {{ (in_array(Route::currentRouteName(), ['lab'])) ? 'active' : '' }}" href="{{ route('lab') }}">Pending Order for Lab</a></li>
@@ -149,6 +149,14 @@
             <ul class="dropdown-menu p-2 p-xl-3 language shadow-lg rounded-4 li_animate">
                 @if(Auth::user()->can('settings'))
                 <li class=""><a class="dropdown-item rounded-pill {{ (in_array(Route::currentRouteName(), ['settings', 'settings.save'])) ? 'active' : '' }}" href="{{ route('settings') }}">Settings</a></li>
+                @endif
+            </ul>
+        </li>
+        <li class="me-lg-3 nav-item dropdown">
+            <a class="nav-link py-1 dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Speckson</a>
+            <ul class="dropdown-menu p-2 p-xl-3 language shadow-lg rounded-4 li_animate">
+                @if(Auth::user()->can('manage-speckson'))
+                <li class=""><a class="dropdown-item rounded-pill {{ (in_array(Route::currentRouteName(), ['speckson.product.list', 'speckson.product.create', 'speckson.product.edit'])) ? 'active' : '' }}" href="{{ route('speckson.product.list') }}">Product Management</a></li>
                 @endif
             </ul>
         </li>

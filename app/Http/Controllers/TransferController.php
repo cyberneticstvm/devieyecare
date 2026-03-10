@@ -82,6 +82,7 @@ class TransferController extends Controller implements HasMiddleware
                     ];
                 endforeach;
                 TransferDetail::insert($data);
+                recordTransaction($data, $transfer, "transfer", "create");
             });
         } catch (Exception $e) {
             return redirect()->back()->with("error", $e->getMessage())->withInput($inputs);
@@ -138,6 +139,7 @@ class TransferController extends Controller implements HasMiddleware
                 endforeach;
                 TransferDetail::where('transfer_id', $transfer->id)->delete();
                 TransferDetail::insert($data);
+                recordTransaction($data, $transfer, "transfer", "update");
             });
         } catch (Exception $e) {
             return redirect()->back()->with("error", $e->getMessage())->withInput($inputs);

@@ -94,6 +94,7 @@ class PharmacyController extends Controller implements HasMiddleware
                 endforeach;
                 PharmacyDetail::insert($data);
                 $pharmacy->update(['total' => $pharmacy->details->sum('total') - $inputs['discount']]);
+                recordTransaction($data, $pharmacy, "pharmacy", "create");
             });
         } catch (Exception $e) {
             return redirect()->back()->with("error", $e->getMessage())->withInput($inputs);

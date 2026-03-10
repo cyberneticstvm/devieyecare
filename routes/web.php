@@ -310,6 +310,8 @@ Route::middleware(['web'])->group(function () {
             Route::get('pharmacyorderreceipt', 'pharmacyOrderReceipt')->name('pharmacy.order.receipt');
             Route::get('servicefeereceipt', 'serviceFeeReceipt')->name('service.fee.receipt');
             Route::get('certificate', 'certificate')->name('certificate');
+            Route::get('stockbarcode', 'stock_barcode')->name('stock.barcode');
+            Route::get('envelope', 'envelope')->name('stock.envelope');
         });
 
         Route::prefix('export')->controller(ExportController::class)->group(function () {

@@ -1,0 +1,1 @@
+<img src="data:image/png;base64,{!! DNS1D::getBarcodePNG($product->code, 'C39+', 1, 40, array(0,0,0), true) !!}" alt="{{ $product->name }}" />

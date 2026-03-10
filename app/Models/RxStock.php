@@ -16,6 +16,11 @@ class RxStock extends Model
         return $this->belongsTo(Material::class, 'material_id', 'id')->withTrashed();
     }
 
+    public function product()
+    {
+        return $this->belongsTo(Product::class, 'material_id', 'id')->withTrashed();
+    }
+
     public function cancelled()
     {
         return $this->deleted_at ? "<span class='badge bg-danger'>Cancelled</span>" : "<span class='badge bg-success'>Active</span>";

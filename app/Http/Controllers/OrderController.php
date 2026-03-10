@@ -167,6 +167,7 @@ class OrderController extends Controller implements HasMiddleware
                 endforeach;
                 OrderDetail::where('order_id', $order->id)->delete();
                 OrderDetail::insert($data);
+                recordTransaction($data, $order, "order", "update");
             });
         } catch (Exception $e) {
             return redirect()->back()->with("error", $e->getMessage())->withInput($request->all());

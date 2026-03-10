@@ -20,6 +20,7 @@ use App\Models\Order;
 use App\Models\OrderStatus;
 use App\Models\Payment;
 use App\Models\Registration;
+use App\Models\RxStock;
 use App\Models\Setting;
 use App\Models\User;
 use App\Models\UserBranch;
@@ -289,4 +290,42 @@ function getVehicleFee($vehicle)
         $amount = $pending_days * $per_day_amount;
     endif;
     return number_format(floor($amount), 2);
+}
+
+function recordTransaction($data, $parent, $type, $action)
+{
+    // $data = Data to be inserted, $parent = Parent Data, $type = order/pharmacy/transfer, $action = store/update
+    if ($action == "update") RxStock::where("transaction_type", $type)->where("transaction_type_id", $parent->id)->delete();
+    $inputs = [];
+    if ($type == "order" || $type == "pharmacy"):
+        foreach ($data as $key => $item):
+            $inputs[] = [
+                "material_id" => $item['product_id'],
+                "type" => "product",
+                "qty" => $item['qty'],
+                "to_branch" => 0,
+                "from_branch" => $parent->branch_id,
+                "transaction_type" => $type,
+                "transaction_type_id" => $parent->id,
+                "created_at" => $parent->created_at,
+                "updated_at" => $parent->updated_at,
+            ];
+        endforeach;
+    endif;
+    if ($type == "transfer"):
+        foreach ($data as $key => $item):
+            $inputs[] = [
+                "material_id" => $item['product_id'],
+                "type" => "product",
+                "qty" => $item['qty'],
+                "to_branch" => $parent->to_branch,
+                "from_branch" => $parent->from_branch,
+                "transaction_type" => $type,
+                "transaction_type_id" => $parent->id,
+                "created_at" => $parent->created_at,
+                "updated_at" => $parent->updated_at,
+            ];
+        endforeach;
+    endif;
+    RxStock::insert($inputs);
 }
