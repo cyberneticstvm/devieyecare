@@ -33,8 +33,8 @@
                             <td>{{ $reg->name }}</td>
                             <td>{{ $reg->address }}</td>
                             <td>{{ $reg->mobile }}</td>
-                            <td>{{ $reg->doctor->name }}</td>
-                            <td>{{ $reg->branch->name }}</td>
+                            <td>{{ $reg->doctor?->name }}</td>
+                            <td>{{ $reg->branch?->name }}</td>
                             <td><a href="{{ route('pharmacy.order.create', encrypt($reg->id)) }}" data-toggle="tooltip" data-placement="top" title="Click here to make Pharmacy Order">Prescription</a></td>
                             <td>
                                 <div class="dropdown">
