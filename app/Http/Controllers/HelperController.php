@@ -18,6 +18,25 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Support\Facades\Http;
+
+class ApiService
+{
+    public function get_registration($request)
+    {
+        $url = "https://login.devieyecare.com/includes/api.php";
+        try {
+            $response = Http::get($url, ['type' => $request->search_type, 'reg_id' => $request->search_term])->json();
+            if ($response['status']) {
+                return $response['data'];
+            } else {
+                return response()->json(['error' => 'Failed to fetch data'], $response['message']);
+            }
+        } catch (Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+    }
+}
 
 class HelperController extends Controller implements HasMiddleware
 {
@@ -33,10 +52,11 @@ class HelperController extends Controller implements HasMiddleware
             new middleware(\Spatie\Permission\Middleware\PermissionMiddleware::using('bulk-order-update'), only: ['orderStatus', 'orderStatusUpdate']),
         ];
     }
-    protected $branch;
-    function __construct()
+    protected $branch, $apiService;
+    function __construct(ApiService $apiService)
     {
         $this->branch = Session::get('branch')->id;
+        $this->apiService = $apiService;
     }
 
     function analytics()
@@ -105,7 +125,7 @@ class HelperController extends Controller implements HasMiddleware
     function searchRegistration()
     {
         $registrations = [];
-        $inputs = array('');
+        $inputs = array('', 'new');
         return view('admin.search.registration', compact('registrations', 'inputs'));
     }
 
@@ -115,8 +135,12 @@ class HelperController extends Controller implements HasMiddleware
             'search_term' => 'required',
         ]);
         try {
-            $inputs = array($request->search_term);
-            $registrations = Registration::orWhere('mrn', $request->search_term)->orWhere('mobile', $request->search_term)->orWhere('name', $request->search_term)->get();
+            $inputs = array($request->search_term, $request->search_type);
+            if ($request->search_type == "new"):
+                $registrations = Registration::orWhere('mrn', $request->search_term)->orWhere('mobile', $request->search_term)->orWhere('name', $request->search_term)->get();
+            else:
+                $registrations = $this->apiService->get_registration($request);
+            endif;
         } catch (Exception $e) {
             return redirect()->back()->with("error", $e->getMessage())->withInput($data);
         }

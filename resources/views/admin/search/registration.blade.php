@@ -9,6 +9,7 @@
             <div class="col-lg-6">
                 {{ html()->form('POST')->route('search.registration.show')->class('d-flex')->attribute('role', 'search')->open() }}
                 {{ html()->text('search_term', $inputs[0] ?? old('search_term'))->class('form-control me-2')->attribute('id', 'navbarSearch')->placeholder('Name / Mobile / Mrn') }}
+                {{ html()->select('search_type', array('new' => 'New', 'old' => 'Old'), $inputs[1] ?? old('search_type'))->class('form-control me-2')->attribute('id', 'search_type') }}
                 {{ html()->submit('Search')->class('btn btn-submit btn-primary w-100') }}
                 {{ html()->form()->close() }}
                 @error('search_term')
@@ -41,6 +42,7 @@
                             <th class="py-2 fw-medium small text-uppercase">Action</th>
                         </tr>
                     </thead>
+                    @if($inputs[1] == "new")
                     <tbody>
                         @forelse($registrations as $key => $reg)
                         <tr>
@@ -76,9 +78,28 @@
                         @empty
                         @endforelse
                     </tbody>
+                    @else
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td></td>
+                            <td><a class="oldOrderDrawer" data-bs-toggle="offcanvas" href="#oldOrderDetails" role="button" aria-controls="oldOrderDetails">{{ $registrations['mrn'] }}</a></td>
+                            <td>{{ $registrations['name'] }}</td>
+                            <td>{{ $registrations['address'] }}</td>
+                            <td>{{ $registrations['mobile'] }}</td>
+                            <td>{{ $registrations['doctor'] }}</td>
+                            <td>{{ $registrations['branch'] }}</td>
+                            <td>{{ $registrations['medicine'] }}</td>
+                            <td></td>
+                            <td>{{ $registrations['status'] }}</td>
+                            <td><a href="https://login.devieyecare.com/registration.php?reg_id={{ $registrations['reg_id'] }}" target="_blank">Edit</a></td>
+                        </tr>
+                    </tbody>
+                    @endif
                 </table>
             </div>
         </div>
     </div>
 </div>
+@include("admin.misc.drawer.old_order_details")
 @endsection

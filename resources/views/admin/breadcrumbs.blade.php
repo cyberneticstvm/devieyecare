@@ -11,6 +11,7 @@
             <ul class="page-action list-unstyled ms-auto mb-0 gap-3 d-flex align-items-center justify-content-end">
                 <li class="position-relative d-md-block d-none">
                     {{ html()->form('POST')->route('search.registration.show')->open() }}
+                    <input type="hidden" name="search_type" value="new" />
                     <input class="form-control position-absolute px-3 rounded-pill z-0" type="text" id="PageSearchInput" name="search_term" placeholder="Search..." />
                     <a href="#" class="hover-svg position-relative text-decoration-none z-3" id="searchToggleBtn">
                         <svg width="26" height="26" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg" stroke-linecap="round" stroke-linejoin="round">
