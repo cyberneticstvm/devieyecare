@@ -70,6 +70,7 @@ class ProcedureController extends Controller implements HasMiddleware
                 $data = [];
                 if ($request->product_ids):
                     foreach ($request->product_ids as $key => $item):
+                        $hsn = Hsn::where("id", Product::find($item)->hsn_id)->first();
                         if ($item > 0):
                             $data[] = [
                                 'procedure_id' => $record->id,
@@ -78,7 +79,7 @@ class ProcedureController extends Controller implements HasMiddleware
                                 'dosage2' => $request->dosage2[$key],
                                 'dosage3' => $request->dosage3[$key],
                                 'days' => $request->days[$key],
-                                'category' => $request->category,
+                                'category' => $hsn->name,
                                 'created_at' => $record->created_at,
                                 'updated_at' => $record->updated_at,
                             ];
