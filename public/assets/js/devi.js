@@ -125,6 +125,8 @@ $(function(){
     });
 });
 
+
+
 function addRow(type){
     if(type == 'medicine'){
         $.ajax({
@@ -141,6 +143,26 @@ function addRow(type){
                 let uid = Math.floor(Math.random() * 100) + 1;
                 $(".medicineRow").append(`<tr><td><select class='select2' name='product_ids[]' id='pid${uid}'></select></td><td><input type='text' name='dosage1[]' class='form-control' placeholder='0' /></td><td><input type='text' name='dosage2[]' class='form-control' placeholder='0' /></td><td><input type='text' name='dosage3[]' class='form-control' placeholder='0' /></td><td><input type='text' name='days[]' class='form-control' placeholder='0' /></td></tr>`);
                 $(".medicineRow tr:last").find('.select2').html("<option value=''>Select</option>").select2({
+                    data: xdata,
+                });    
+            }
+        });
+    }
+    if(type == 'divmed'){
+        $.ajax({
+            type:'GET',
+            url: '/ajax/products/',
+            data: {'type': 'medicine'},
+            dataType:'json',
+            success: (response) => {
+                var xdata = $.map(response.products, function (obj) {
+                    obj.id = obj.id;
+                    obj.text = obj.name;
+                    return obj;
+                });
+                let uid = Math.floor(Math.random() * 100) + 1;
+                $(".divMedicineRow").append(`<hr/><div class="row g-lg-12 g-3"><div class="col-md-3 col-12"><select class='select2' name='product_ids[]' id='pid${uid}'></select></div><div class="col-md-2 col-6"><input type='text' name='dosage1[]' class='form-control' placeholder='Dosage' /></div><div class="col-md-2 col-6"><input type='text' name='dosage2[]' class='form-control' placeholder='Dosage' /></div><div class="col-md-2 col-6"><input type='text' name='dosage3[]' class='form-control' placeholder='Dosage' /></div><div class="col-md-2 col-6"><input type='text' name='days[]' class='form-control' placeholder='Days' /></div></div>`);
+                $(".divMedicineRow .row:last").find('.select2').html("<option value=''>Select</option>").select2({
                     data: xdata,
                 });    
             }

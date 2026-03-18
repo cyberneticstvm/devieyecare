@@ -28,7 +28,7 @@ class ProcedureController extends Controller implements HasMiddleware
     protected $products, $procs;
     public function __construct()
     {
-        $this->products = Product::whereIn('hsn_id', Hsn::whereIn('name', ['Ointment', 'Eye Drop', 'Tablet'])->pluck('id'))->pluck('name', 'id');
+        $this->products = Product::whereIn('hsn_id', Hsn::whereIn('name', ['Ointment', 'Eye Drop', 'Tablet', 'Procedure'])->pluck('id'))->pluck('name', 'id');
         $this->procs = Product::whereIn('hsn_id', Hsn::whereIn('name', ['Procedure'])->pluck('id'))->pluck('name', 'id');
     }
 
