@@ -28,13 +28,14 @@ class RegistrationController extends Controller implements HasMiddleware
         ];
     }
 
-    protected $ctypes, $gender, $doctors, $pmodes, $mrn;
+    protected $ctypes, $gender, $doctors, $pmodes, $mrn, $next_mrn;
     public function __construct()
     {
         $this->ctypes = Extra::where('category', 'ctype')->pluck('name', 'id');
         $this->gender = Extra::where('category', 'gender')->pluck('name', 'name');
         $this->doctors = Doctor::pluck('name', 'id');
         $this->pmodes = Extra::where('category', 'pmode')->pluck('name', 'id');
+        $this->next_mrn = 1;
     }
     /**
      * Display a listing of the resource.
@@ -92,7 +93,7 @@ class RegistrationController extends Controller implements HasMiddleware
             $inputs['created_by'] = $request->user()->id;
             $inputs['updated_by'] = $request->user()->id;
             $inputs['branch_id'] = Session::get('branch')->id;
-            $inputs['mrn'] = Registration::max('mrn') + 1 ?? 1;
+            $inputs['mrn'] = Registration::max('mrn') + 1 ?? $this->next_mrn;
             $inputs['doc_fee'] = getDocFee($request);
             $inputs['status'] = getOrderStatus('RGSTD', 'registration')->id;
             DB::transaction(function () use ($inputs) {

@@ -24,7 +24,7 @@ class UserController extends Controller implements HasMiddleware
     protected $branches, $devices, $roles;
     public function __construct()
     {
-        $this->branches = Branch::pluck('name', 'id');
+        $this->branches = Branch::where('is_store', 0)->pluck('name', 'id');
         $this->devices = Extra::where('category', 'device')->pluck('name', 'id');
         $this->roles = Role::where('team_id', teamId())->pluck('name', 'name')->all();
     }
