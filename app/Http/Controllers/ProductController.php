@@ -71,6 +71,16 @@ class ProductController extends Controller implements HasMiddleware
             'default_delivery_days' => 'required|numeric|min:1',
             'eligible_for_adviser' => 'required',
             'description' => 'nullable',
+            'frame_type' => 'nullable',
+            'material' => 'nullable',
+            'avatar' => 'nullable',
+            'dia' => 'nullable',
+            'temple_size' => 'nullable',
+            'bridge_size' => 'nullable',
+            'weight' => 'nullable',
+            'model_name' => 'nullable',
+            'brand' => 'nullable',
+            'product_image' => 'nullable',
         ]);
         try {
             $hsn = Hsn::findOrFail($inputs['hsn_id']);
@@ -126,6 +136,16 @@ class ProductController extends Controller implements HasMiddleware
             'default_delivery_days' => 'required|numeric|min:1',
             'eligible_for_adviser' => 'required',
             'description' => 'nullable',
+            'frame_type' => 'nullable',
+            'material' => 'nullable',
+            'avatar' => 'nullable',
+            'dia' => 'nullable',
+            'temple_size' => 'nullable',
+            'bridge_size' => 'nullable',
+            'weight' => 'nullable',
+            'model_name' => 'nullable',
+            'brand' => 'nullable',
+            'product_image' => 'nullable',
         ]);
         try {
             $inputs['updated_by'] = $request->user()->id;
