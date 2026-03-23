@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Extra;
 use App\Models\Hsn;
 use App\Models\ManufacturerSupplier;
 use App\Models\Product;
@@ -9,6 +10,7 @@ use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
+use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller implements HasMiddleware
 {
@@ -22,12 +24,16 @@ class ProductController extends Controller implements HasMiddleware
         ];
     }
 
-    protected $products, $hsns, $manufacturers;
+    protected $products, $hsns, $manufacturers, $ftypes, $fmaterial, $avatars, $brands;
     public function __construct()
     {
         $this->products = Product::withTrashed()->orderBy('name')->get();
         $this->hsns = Hsn::orderBy('name')->pluck('name', 'id');
         $this->manufacturers = ManufacturerSupplier::where('category', 'Manufacturer')->orderBy('name')->pluck('name', 'id');
+        $this->ftypes = Extra::where("category", "frame_type")->pluck("name", "id");
+        $this->fmaterial = Extra::where("category", "frame_material")->pluck("name", "id");
+        $this->brands = Extra::where("category", "brand")->pluck("name", "id");
+        $this->avatars = array("gents" => "Gents", "ladies" => "Ladies", "kids" => "Kids", "all" => "All");
     }
     /**
      * Display a listing of the resource.
@@ -45,7 +51,11 @@ class ProductController extends Controller implements HasMiddleware
     {
         $hsns = $this->hsns;
         $manufacturers = $this->manufacturers;
-        return view('admin.product.create', compact('hsns', 'manufacturers'));
+        $ftypes = $this->ftypes;
+        $fmaterial = $this->fmaterial;
+        $avatars = $this->avatars;
+        $brands = $this->brands;
+        return view('admin.product.create', compact('hsns', 'manufacturers', 'ftypes', 'fmaterial', 'avatars', 'brands'));
     }
 
     /**
@@ -67,6 +77,13 @@ class ProductController extends Controller implements HasMiddleware
             $inputs['created_by'] = $request->user()->id;
             $inputs['updated_by'] = $request->user()->id;
             $inputs['code'] = $hsn->short_name . '' . Product::where('hsn_id', $hsn->id)->max('id') + 1 ?? 1;
+            if ($request->file('product_image')):
+                $attachment = $request->file('file_attachment');
+                $fname = time() . '_' . $attachment->getClientOriginalName();
+                $storeFile = $attachment->storeAs('/product', $fname, 'gcs');
+                $url = Storage::disk('gcs')->url($storeFile);
+                $inputs['img'] = $url;
+            endif;
             Product::create($inputs);
         } catch (Exception $e) {
             return redirect()->back()->with("error", $e->getMessage())->withInput($inputs);
@@ -90,7 +107,11 @@ class ProductController extends Controller implements HasMiddleware
         $product = Product::findOrFail(decrypt($id));
         $hsns = $this->hsns;
         $manufacturers = $this->manufacturers;
-        return view('admin.product.edit', compact('hsns', 'manufacturers', 'product'));
+        $ftypes = $this->ftypes;
+        $fmaterial = $this->fmaterial;
+        $avatars = $this->avatars;
+        $brands = $this->brands;
+        return view('admin.product.edit', compact('hsns', 'manufacturers', 'product', 'ftypes', 'fmaterial', 'avatars', 'brands'));
     }
 
     /**
@@ -108,6 +129,13 @@ class ProductController extends Controller implements HasMiddleware
         ]);
         try {
             $inputs['updated_by'] = $request->user()->id;
+            if ($request->file('product_image')):
+                $attachment = $request->file('file_attachment');
+                $fname = time() . '_' . $attachment->getClientOriginalName();
+                $storeFile = $attachment->storeAs('/product', $fname, 'gcs');
+                $url = Storage::disk('gcs')->url($storeFile);
+                $inputs['img'] = $url;
+            endif;
             Product::findOrFail(decrypt($id))->update($inputs);
         } catch (Exception $e) {
             return redirect()->back()->with("error", $e->getMessage())->withInput($inputs);

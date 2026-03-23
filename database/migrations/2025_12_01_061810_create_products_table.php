@@ -21,6 +21,16 @@ return new class extends Migration
             $table->foreignId('manufacturer_id')->constrained('manufacturer_suppliers', 'id')->onDelete('cascade');
             $table->integer('default_delivery_days')->default(0);
             $table->boolean('eligible_for_adviser')->default(false);
+            $table->unsignedBigInteger("frame_type")->nullable();
+            $table->unsignedBigInteger("material")->nullable();
+            $table->string("avatar", 15)->nullable();
+            $table->string("dia", 10)->nullable();
+            $table->string("temple_size", 10)->nullable();
+            $table->string("bridge_size", 10)->nullable();
+            $table->string("weight", 25)->nullable();
+            $table->string("model_name", 50)->nullable();
+            $table->unsignedBigInteger("brand")->nullable();
+            $table->string("img")->nullable();
             $table->foreignId('created_by')->constrained('users', 'id');
             $table->foreignId('updated_by')->constrained('users', 'id');
             $table->timestamps();

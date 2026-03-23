@@ -7,7 +7,7 @@
         <p class="fs-12">Update Product</p>
         <div class="row g-lg-12 g-3">
             <div class="col-lg-12">
-                {{ html()->form('POST')->route('product.update', encrypt($product->id))->class('')->open() }}
+                {{ html()->form('POST')->route('product.update', encrypt($product->id))->class('')->acceptsFiles()->open() }}
                 <div class="row g-3">
                     <div class="control-group col-md-4">
                         <label class="form-label req">Product Name </label>
@@ -56,6 +56,79 @@
                         {{ html()->text('description', $product->description)->class('form-control')->placeholder('Product Description') }}
                         @error('description')
                         <small class="text-danger">{{ $errors->first('description') }}</small>
+                        @enderror
+                    </div>
+                </div>
+                <div class="row g-3 mt-3">
+                    <h5>Details for Speckson</h5>
+                    <div class="control-group col-md-2">
+                        <label class="form-label">Frame Type</label>
+                        {{ html()->select($name = 'frame_type', $ftypes, $product->frmae_type)->class('form-select')->placeholder('Select') }}
+                        @error('frame_type')
+                        <small class="text-danger">{{ $errors->first('frame_type') }}</small>
+                        @enderror
+                    </div>
+                    <div class="control-group col-md-2">
+                        <label class="form-label">Frame Material</label>
+                        {{ html()->select($name = 'material', $fmaterial, $product->material)->class('form-select')->placeholder('Select') }}
+                        @error('material')
+                        <small class="text-danger">{{ $errors->first('material') }}</small>
+                        @enderror
+                    </div>
+                    <div class="control-group col-md-2">
+                        <label class="form-label">Avatar</label>
+                        {{ html()->select($name = 'avatar', $avatars, $product->avatar)->class('form-select')->placeholder('Select') }}
+                        @error('avatar')
+                        <small class="text-danger">{{ $errors->first('avatar') }}</small>
+                        @enderror
+                    </div>
+                    <div class="control-group col-md-2">
+                        <label class="form-label">DIA</label>
+                        {{ html()->text('dia', $product->dia)->class('form-control')->placeholder('DIA') }}
+                        @error('dia')
+                        <small class="text-danger">{{ $errors->first('dia') }}</small>
+                        @enderror
+                    </div>
+                    <div class="control-group col-md-2">
+                        <label class="form-label">Temple Size</label>
+                        {{ html()->text('temple_size', $product->temple_size)->class('form-control')->placeholder('Temple Size') }}
+                        @error('temple_size')
+                        <small class="text-danger">{{ $errors->first('temple_size') }}</small>
+                        @enderror
+                    </div>
+                    <div class="control-group col-md-2">
+                        <label class="form-label">Bridge Size</label>
+                        {{ html()->text('bridge_size', $product->bridge_size)->class('form-control')->placeholder('Bridge Size') }}
+                        @error('bridge_size')
+                        <small class="text-danger">{{ $errors->first('bridge_size') }}</small>
+                        @enderror
+                    </div>
+                    <div class="control-group col-md-2">
+                        <label class="form-label">Product Weight</label>
+                        {{ html()->text('weight', $product->weight)->class('form-control')->placeholder('Weight') }}
+                        @error('weight')
+                        <small class="text-danger">{{ $errors->first('weight') }}</small>
+                        @enderror
+                    </div>
+                    <div class="control-group col-md-2">
+                        <label class="form-label">Model Name</label>
+                        {{ html()->text('model_name', $product->model_name)->class('form-control')->placeholder('Model Name') }}
+                        @error('model_name')
+                        <small class="text-danger">{{ $errors->first('model_name') }}</small>
+                        @enderror
+                    </div>
+                    <div class="control-group col-md-2">
+                        <label class="form-label">Brand</label>
+                        {{ html()->select($name = 'brand', $brands, $product->brand)->class('form-select')->placeholder('Select') }}
+                        @error('brand')
+                        <small class="text-danger">{{ $errors->first('brand') }}</small>
+                        @enderror
+                    </div>
+                    <div class="control-group col-md-4">
+                        <label class="form-label">Product Image <small class="text-danger">Recommended size: W: 1620px, H: 775px</small></label>
+                        {{ html()->file('product_image')->class('form-control') }}
+                        @error('brand')
+                        <small class="text-danger">{{ $errors->first('brand') }}</small>
                         @enderror
                     </div>
                 </div>
