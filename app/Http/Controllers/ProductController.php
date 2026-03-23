@@ -78,7 +78,7 @@ class ProductController extends Controller implements HasMiddleware
             $inputs['updated_by'] = $request->user()->id;
             $inputs['code'] = $hsn->short_name . '' . Product::where('hsn_id', $hsn->id)->max('id') + 1 ?? 1;
             if ($request->file('product_image')):
-                $attachment = $request->file('file_attachment');
+                $attachment = $request->file('product_image');
                 $fname = time() . '_' . $attachment->getClientOriginalName();
                 $storeFile = $attachment->storeAs('/product', $fname, 'gcs');
                 $url = Storage::disk('gcs')->url($storeFile);
@@ -130,7 +130,7 @@ class ProductController extends Controller implements HasMiddleware
         try {
             $inputs['updated_by'] = $request->user()->id;
             if ($request->file('product_image')):
-                $attachment = $request->file('file_attachment');
+                $attachment = $request->file('product_image');
                 $fname = time() . '_' . $attachment->getClientOriginalName();
                 $storeFile = $attachment->storeAs('/product', $fname, 'gcs');
                 $url = Storage::disk('gcs')->url($storeFile);
