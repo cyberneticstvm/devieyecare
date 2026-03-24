@@ -80,7 +80,6 @@ class ProductController extends Controller implements HasMiddleware
             'weight' => 'nullable',
             'model_name' => 'nullable',
             'brand' => 'nullable',
-            'product_image' => 'nullable',
         ]);
         try {
             $hsn = Hsn::findOrFail($inputs['hsn_id']);
@@ -145,7 +144,6 @@ class ProductController extends Controller implements HasMiddleware
             'weight' => 'nullable',
             'model_name' => 'nullable',
             'brand' => 'nullable',
-            'product_image' => 'nullable',
         ]);
         try {
             $inputs['updated_by'] = $request->user()->id;
