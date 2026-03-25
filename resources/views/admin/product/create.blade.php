@@ -124,11 +124,18 @@
                         <small class="text-danger">{{ $errors->first('brand') }}</small>
                         @enderror
                     </div>
-                    <div class="control-group col-md-4">
+                    <div class="control-group col-md-3">
                         <label class="form-label">Product Image <small class="text-danger">Recommended size: W: 1620px, H: 775px</small></label>
                         {{ html()->file('product_image')->class('form-control') }}
-                        @error('brand')
-                        <small class="text-danger">{{ $errors->first('brand') }}</small>
+                        @error('product_image')
+                        <small class="text-danger">{{ $errors->first('product_image') }}</small>
+                        @enderror
+                    </div>
+                    <div class="control-group col-md-3">
+                        <label class="form-label">Avatar Image <small class="text-danger"></small></label>
+                        {{ html()->file('avatar_image')->class('form-control') }}
+                        @error('avatar_image')
+                        <small class="text-danger">{{ $errors->first('avatar_image') }}</small>
                         @enderror
                     </div>
                 </div>

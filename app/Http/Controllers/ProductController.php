@@ -93,6 +93,13 @@ class ProductController extends Controller implements HasMiddleware
                 $url = Storage::disk('gcs')->url($storeFile);
                 $inputs['img'] = $url;
             endif;
+            if ($request->file('avatar_image')):
+                $attachment = $request->file('avatar_image');
+                $fname = time() . '_' . $attachment->getClientOriginalName();
+                $storeFile = $attachment->storeAs('/product/avatar', $fname, 'gcs');
+                $url = Storage::disk('gcs')->url($storeFile);
+                $inputs['img_avatar'] = $url;
+            endif;
             Product::create($inputs);
         } catch (Exception $e) {
             return redirect()->back()->with("error", $e->getMessage())->withInput($inputs);
@@ -153,6 +160,13 @@ class ProductController extends Controller implements HasMiddleware
                 $storeFile = $attachment->storeAs('/product', $fname, 'gcs');
                 $url = Storage::disk('gcs')->url($storeFile);
                 $inputs['img'] = $url;
+            endif;
+            if ($request->file('avatar_image')):
+                $attachment = $request->file('avatar_image');
+                $fname = time() . '_' . $attachment->getClientOriginalName();
+                $storeFile = $attachment->storeAs('/product/avatar', $fname, 'gcs');
+                $url = Storage::disk('gcs')->url($storeFile);
+                $inputs['img_avatar'] = $url;
             endif;
             Product::findOrFail(decrypt($id))->update($inputs);
         } catch (Exception $e) {

@@ -31,6 +31,7 @@ return new class extends Migration
             $table->string("model_name", 50)->nullable();
             $table->unsignedBigInteger("brand")->nullable();
             $table->string("img")->nullable();
+            $table->string("img_avatar")->nullable();
             $table->foreignId('created_by')->constrained('users', 'id');
             $table->foreignId('updated_by')->constrained('users', 'id');
             $table->timestamps();
