@@ -138,7 +138,7 @@
             </small>
 
             <div style="margin-top: 15px; text-align: right; font-size: 11px;">
-                <strong>{{ $made_in }}</strong>
+                <strong>Taiwan</strong>
             </div>
         </div>
     </div>
