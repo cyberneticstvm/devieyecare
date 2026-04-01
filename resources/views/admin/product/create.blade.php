@@ -132,7 +132,7 @@
                         @enderror
                     </div>
                     <div class="control-group col-md-3">
-                        <label class="form-label">Avatar Image <small class="text-danger"></small></label>
+                        <label class="form-label">Avatar Image <small class="text-danger">Recommended size: W: 1200px, H: 1800px</small></label>
                         {{ html()->file('avatar_image')->class('form-control') }}
                         @error('avatar_image')
                         <small class="text-danger">{{ $errors->first('avatar_image') }}</small>
