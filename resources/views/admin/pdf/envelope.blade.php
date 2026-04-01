@@ -113,7 +113,7 @@
             <div class="qr-code">
                 <img src="data:image/png;base64, {!! $qrcode !!}"
                     alt="QR Code" style="height: 110px; width: 110px;">
-                <div style="font-size: 10px; margin-top: 5px;">{{ $qrcode }}</div>
+                <div style="font-size: 10px; margin-top: 5px;">{{ $stock->material->code }}</div>
             </div>
         </div>
 
@@ -123,22 +123,8 @@
             <span style="float: right; font-size: 10px;">Specially packed for exclusive use as raw material for spectacles<br>
                 by opticians and not meant for retail sale in packaged condition.</span>
 
-            <div class="symbols" style="margin-top: 10px;">
-                ♻️ 🗑️
-            </div>
-
-            <small style="font-size: 8px;">
-                Speziell verpackt zur ausschließlichen Verwendung als Rohmaterial für Brillen<br>
-                durch Optiker und nicht für den Einzelhandelsverkauf im verpackten Zustand bestimmt.
-            </small><br><br>
-
-            <small style="font-size: 8px;">
-                眼鏡の原料として専用に包装されています。<br>
-                眼鏡技師によるもので、梱包された状態で小売販売されるものではありません。
-            </small>
-
             <div style="margin-top: 15px; text-align: right; font-size: 11px;">
-                <strong>Taiwan</strong>
+                <strong>Made in Taiwan</strong>
             </div>
         </div>
     </div>
