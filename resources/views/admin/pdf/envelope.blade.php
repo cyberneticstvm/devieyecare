@@ -6,7 +6,7 @@
     <title>Lens Envelop</title>
     <style>
         @page {
-            margin-top: 3cm;
+            margin-top: 5cm;
             /* ← 3cm Top Margin as requested */
             margin-bottom: 1cm;
             margin-left: 1cm;
@@ -91,7 +91,7 @@
     <div class="container">
 
         <!-- Order Number -->
-        <div class="order-no">MRN: </div>
+        <div class="order-no"></div>
 
         <!-- Prescription -->
         <div class="prescription">
