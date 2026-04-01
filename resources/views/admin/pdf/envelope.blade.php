@@ -93,13 +93,13 @@
         <!-- Prescription -->
         <div class="prescription">
             <strong>s. {{ $stock->sph }} c. {{ $stock->cyl }} x. {{ $stock->axis }} {{ $stock->add }}</strong><br>
-            <strong>s. {{ $stock->sph }} c. {{ $stock->cyl }}</strong>
+            <strong>s. {{ $stock->sph }} c. {{ $stock->cyl }} x. {{ $stock->axis }} {{ $stock->add }}</strong>
         </div>
 
         <!-- Lens Details -->
         <div class="lens-info">
-            {{ $lens_type }}<br>
-            {{ $coating }}
+            Lens Type: <br>
+            Coating:
         </div>
 
         <div class="barcode-section">
