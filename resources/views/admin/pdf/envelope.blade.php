@@ -1,58 +1,147 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
-    <title>Devi Eye Hospitals and Opticians</title>
+    <meta charset="UTF-8">
+    <title>Lens Envelop</title>
     <style>
-        .font-big {
-            font-size: 25px;
+        @page {
+            margin: 0;
         }
 
-        .fw-bold {
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px 25px;
+            background: white;
+            color: #000;
+            line-height: 1.2;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 550px;
+            margin: 0 auto;
+            border: 1px solid #ddd;
+            padding: 15px;
+            position: relative;
+        }
+
+        .order-no {
+            font-size: 28px;
             font-weight: bold;
+            text-align: right;
+            margin-bottom: 15px;
+            color: #000;
         }
 
-        .text-end {
+        .prescription {
+            font-size: 22px;
+            margin: 15px 0;
+            line-height: 1.4;
+        }
+
+        .lens-info {
+            font-size: 26px;
+            font-weight: bold;
+            margin: 20px 0 10px;
+        }
+
+        .barcode-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-top: 30px;
+        }
+
+        .barcode {
+            font-family: monospace;
+            font-size: 18px;
+            letter-spacing: 2px;
+        }
+
+        .qr-code {
             text-align: right;
         }
 
-        .vertical-barcode {
-            transform: rotate(90deg);
-            margin-right: -70px;
+        .footer-text {
+            font-size: 9px;
+            line-height: 1.1;
+            margin-top: 15px;
+            border-top: 1px solid #000;
+            padding-top: 8px;
         }
 
-        .qrcode {
-            margin-right: 50px;
-            margin-top: -15px;
+        .ce {
+            font-size: 18px;
+            font-weight: bold;
+            margin-top: 10px;
         }
 
-        .ml-30 {
-            margin-left: 30%;
+        .symbols {
+            margin: 10px 0;
         }
     </style>
 </head>
 
 <body>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <div class="font-big fw-bold ml-30">{{ $stock->eye }}&nbsp;&nbsp;&nbsp;{{ $stock->sph }}&nbsp;&nbsp;&nbsp;{{ $stock->cyl }}&nbsp;&nbsp;&nbsp;X {{ $stock->axis }}&nbsp;&nbsp;&nbsp;{{ $stock->add }} A</div>
-    <div class="font-big fw-bold ml-30">{{ $stock->material?->name }}</div>
-    <div class="text-end"><img src="data:image/png;base64,{!! DNS1D::getBarcodePNG($stock->material->code, 'C39+', 1, 40, array(0,0,0), false) !!}" alt="{{ $stock->material->code }}" class="vertical-barcode" /></div>
-    <div class="text-end qrcode"><img src="data:image/png;base64, {!! $qrcode !!}"></div>
+    <div class="container">
+
+        <!-- Order Number -->
+        <div class="order-no">MRN: </div>
+
+        <!-- Prescription -->
+        <div class="prescription">
+            <strong>s. {{ $stock->sph }} c. {{ $stock->cyl }} x. {{ $stock->axis }} {{ $stock->add }}</strong><br>
+            <strong>s. {{ $stock->sph }} c. {{ $stock->cyl }}</strong>
+        </div>
+
+        <!-- Lens Details -->
+        <div class="lens-info">
+            {{ $lens_type }}<br>
+            {{ $coating }}
+        </div>
+
+        <div class="barcode-section">
+            <!-- Barcode -->
+            <div>
+                <img src="data:image/png;base64,{!! DNS1D::getBarcodePNG($stock->material->code, 'C39+', 1, 40, array(0,0,0), false) !!}" alt="{{ $stock->material->code }}" style="height: 60px;">
+                <div class="barcode">{{ $stock->material->code }}</div>
+            </div>
+
+            <!-- QR Code -->
+            <div class="qr-code">
+                <img src="data:image/png;base64, {!! $qrcode !!}"
+                    alt="QR Code" style="height: 110px; width: 110px;">
+                <div style="font-size: 10px; margin-top: 5px;">{{ $qrcode }}</div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer-text">
+            <strong>CE</strong>
+            <span style="float: right; font-size: 10px;">Specially packed for exclusive use as raw material for spectacles<br>
+                by opticians and not meant for retail sale in packaged condition.</span>
+
+            <div class="symbols" style="margin-top: 10px;">
+                ♻️ 🗑️
+            </div>
+
+            <small style="font-size: 8px;">
+                Speziell verpackt zur ausschließlichen Verwendung als Rohmaterial für Brillen<br>
+                durch Optiker und nicht für den Einzelhandelsverkauf im verpackten Zustand bestimmt.
+            </small><br><br>
+
+            <small style="font-size: 8px;">
+                眼鏡の原料として専用に包装されています。<br>
+                眼鏡技師によるもので、梱包された状態で小売販売されるものではありません。
+            </small>
+
+            <div style="margin-top: 15px; text-align: right; font-size: 11px;">
+                <strong>{{ $made_in }}</strong>
+            </div>
+        </div>
+    </div>
 </body>
 
 </html>
