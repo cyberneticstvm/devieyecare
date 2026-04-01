@@ -22,7 +22,6 @@
             width: 100%;
             max-width: 550px;
             margin: 0 auto;
-            border: 1px solid #ddd;
             padding: 15px;
             position: relative;
         }
@@ -98,8 +97,7 @@
 
         <!-- Lens Details -->
         <div class="lens-info">
-            Lens Type: <br>
-            Coating:
+            {{ $stock->material?->name }}
         </div>
 
         <div class="barcode-section">
