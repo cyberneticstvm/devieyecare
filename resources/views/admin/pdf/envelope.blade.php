@@ -106,7 +106,7 @@
 
         <div class="barcode-section">
             <!-- Barcode -->
-            <div>
+            <div style="margin-left: 25%;">
                 <img src="data:image/png;base64,{!! DNS1D::getBarcodePNG($stock->material->code, 'C39+', 1, 40, array(0,0,0), false) !!}" alt="{{ $stock->material->code }}" style="height: 60px;">
                 <div class="barcode">{{ $stock->material->code }}</div>
             </div>
