@@ -94,19 +94,19 @@
         <div class="order-no"></div>
 
         <!-- Prescription -->
-        <div class="prescription" style="margin-left: 25%;">
+        <div class="prescription" style="margin-left: 20%;">
             <strong>s. {{ $stock->sph }} c. {{ $stock->cyl }} x. {{ $stock->axis }} {{ $stock->add }}</strong><br>
             <strong>s. {{ $stock->sph }} c. {{ $stock->cyl }} x. {{ $stock->axis }} {{ $stock->add }}</strong>
         </div>
 
         <!-- Lens Details -->
-        <div class="lens-info" style="margin-left: 25%;">
+        <div class="lens-info" style="margin-left: 20%;">
             {{ $stock->material?->name }}
         </div>
 
         <div class="barcode-section">
             <!-- Barcode -->
-            <div style="margin-left: 25%;">
+            <div style="margin-left: 20%;">
                 <img src="data:image/png;base64,{!! DNS1D::getBarcodePNG($stock->material->code, 'C39+', 1, 40, array(0,0,0), false) !!}" alt="{{ $stock->material->code }}" style="height: 60px;">
                 <div class="barcode">{{ $stock->material->code }}</div>
             </div>
@@ -120,7 +120,7 @@
         </div>
 
         <!-- Footer -->
-        <div class="footer-text" style="margin-left: 25%;">
+        <div class="footer-text" style="margin-left: 20%;">
             <strong>CE</strong>
             <span style="float: right; font-size: 10px;">Specially packed for exclusive use as raw material for spectacles<br>
                 by opticians and not meant for retail sale in packaged condition.</span>
