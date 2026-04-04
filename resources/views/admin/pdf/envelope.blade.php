@@ -7,7 +7,7 @@
     <style>
         @page {
             margin-top: 5cm;
-            margin-right: 3cm;
+            margin-right: 5cm;
             /* ← 3cm Top Margin as requested */
         }
 
