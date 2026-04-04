@@ -114,7 +114,7 @@
             <!-- QR Code -->
             <div class="qr-code">
                 <img src="data:image/png;base64, {!! $qrcode !!}"
-                    alt="QR Code" style="height: 110px; width: 110px;">
+                    alt="QR Code" style="height: 50px; width: 50px;">
                 <div style="font-size: 10px; margin-top: 5px;">{{ $stock->material->code }}</div>
             </div>
         </div>
