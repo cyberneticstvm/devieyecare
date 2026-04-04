@@ -8,9 +8,6 @@
         @page {
             margin-top: 5cm;
             /* ← 3cm Top Margin as requested */
-            margin-bottom: 1cm;
-            margin-left: 1cm;
-            margin-right: 1cm;
         }
 
         body {
