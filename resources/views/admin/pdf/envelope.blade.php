@@ -125,7 +125,7 @@
             <div style="margin-top: 15px; text-align: right; font-size: 11px;">
                 <strong>Made in Taiwan</strong>
             </div>-->
-            <img src="./assets/images/envelope.jpeg" width="50%" />
+            <img src="./assets/images/envelope.jpeg" width="100%" />
         </div>
     </div>
 </body>
