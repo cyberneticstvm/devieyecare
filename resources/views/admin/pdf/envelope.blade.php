@@ -91,13 +91,13 @@
         <div class="order-no"></div>
 
         <!-- Prescription -->
-        <div class="prescription" style="margin-left: 30%; margin-top: -20px">
+        <div class="prescription" style="margin-left: 30%; ">
             <strong>s. {{ $stock->sph }} c. {{ $stock->cyl }} x {{ $stock->axis }} Ad.{{ $stock->addition }}</strong><br>
             <strong>s. {{ $stock->sph }} c. {{ $stock->cyl }} x {{ $stock->axis }} Ad.{{ $stock->addition }}</strong>
         </div>
 
         <!-- Lens Details -->
-        <div class="prescription" style="margin-left: 30%; margin-top: -20px">
+        <div class="prescription" style="margin-left: 30%;">
             <strong>{{ $stock->material?->name }}</strong>
         </div>
 
@@ -105,7 +105,7 @@
             <!-- Barcode -->
             <div style="margin-left: 30%; margin-top:10px">
                 <img src="data:image/png;base64,{!! DNS1D::getBarcodePNG($stock->material->code, 'C39+', 1, 40, array(0,0,0), false) !!}" alt="{{ $stock->material->code }}" style="height: 30px;">
-                <div class="barcode">{{ $stock->material->code }}</div>
+                <div class="barcode" style="margin-right: 10px;">{{ $stock->material->code }}</div>
             </div>
 
             <!-- QR Code -->
