@@ -105,7 +105,7 @@
             <!-- Barcode -->
             <div style="margin-left: 30%; margin-top:10px">
                 <img src="data:image/png;base64,{!! DNS1D::getBarcodePNG($stock->material->code, 'C39+', 1, 40, array(0,0,0), false) !!}" alt="{{ $stock->material->code }}" style="height: 30px;">
-                <div class="barcode" style="margin-right: 10px;">{{ $stock->material->code }}</div>
+                <div class="barcode" style="margin-right: 30px; margin-top: 5px;">{{ $stock->material->code }}</div>
             </div>
 
             <!-- QR Code -->
