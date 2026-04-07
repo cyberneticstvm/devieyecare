@@ -92,8 +92,8 @@
 
         <!-- Prescription -->
         <div class="prescription" style="margin-left: 30%;">
-            <strong>s. {{ $stock->sph }} c. {{ $stock->cyl }} x {{ $stock->axis }} Ad.{{ $stock->add }}3.00 180</strong><br>
-            <strong>s. {{ $stock->sph }} c. {{ $stock->cyl }} x {{ $stock->axis }} Ad.{{ $stock->add }}3.00 180</strong>
+            <strong>s. {{ $stock->sph }} c. {{ $stock->cyl }} x 180 Ad.{{ $stock->add }}3.00</strong><br>
+            <strong>s. {{ $stock->sph }} c. {{ $stock->cyl }} x 180 Ad.{{ $stock->add }}3.00</strong>
         </div>
 
         <!-- Lens Details -->
@@ -117,7 +117,7 @@
         </div>
 
         <!-- Footer -->
-        <div class="footer-text" style="margin-left: 20%; margin-right:30px">
+        <div class="footer-text" style="margin-left: 10%; margin-right:30px">
             <!--<strong>CE</strong>
             <span style="float: right; font-size: 10px;">Specially packed for exclusive use as raw material for spectacles<br>
                 by opticians and not meant for retail sale in packaged condition.</span>
