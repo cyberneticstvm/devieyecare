@@ -112,7 +112,7 @@
             <div class="qr-code">
                 <img src="data:image/png;base64, {!! $qrcode !!}"
                     alt="QR Code" style="height: 50px; width: 50px; margin-right: 35px; margin-top:-40px">
-                <div style="font-size: 10px; margin-top: -10px; margin-right: 30px;">{{ $stock->material->code }}</div>
+                <div style="font-size: 10px; margin-top: -10px; margin-right: 40px;">{{ $stock->material->code }}</div>
             </div>
         </div>
 
