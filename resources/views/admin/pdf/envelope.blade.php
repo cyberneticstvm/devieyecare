@@ -92,12 +92,12 @@
 
         <!-- Prescription -->
         <div class="prescription" style="margin-left: 30%;">
-            <strong>s. {{ $stock->sph }} c. {{ $stock->cyl }} x. {{ $stock->axis }} {{ $stock->add }}</strong><br>
-            <strong>s. {{ $stock->sph }} c. {{ $stock->cyl }} x. {{ $stock->axis }} {{ $stock->add }}</strong>
+            <strong>s. {{ $stock->sph }} c. {{ $stock->cyl }} x {{ $stock->axis }} Ad.{{ $stock->add }}</strong><br>
+            <strong>s. {{ $stock->sph }} c. {{ $stock->cyl }} x {{ $stock->axis }} Ad.{{ $stock->add }}</strong>
         </div>
 
         <!-- Lens Details -->
-        <div class="lens-info" style="margin-left: 30%;">
+        <div class="prescription" style="margin-left: 30%;">
             {{ $stock->material?->name }}
         </div>
 
