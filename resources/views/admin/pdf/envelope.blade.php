@@ -92,8 +92,8 @@
 
         <!-- Prescription -->
         <div class="prescription" style="margin-left: 30%;">
-            <strong>s. {{ $stock->sph }} c. {{ $stock->cyl }} x 180 Ad.{{ $stock->add }}3.00</strong><br>
-            <strong>s. {{ $stock->sph }} c. {{ $stock->cyl }} x 180 Ad.{{ $stock->add }}3.00</strong>
+            <strong>s. {{ $stock->sph }} c. {{ $stock->cyl }} x {{ $stock->axis }} Ad.{{ $stock->add }}</strong><br>
+            <strong>s. {{ $stock->sph }} c. {{ $stock->cyl }} x {{ $stock->axis }} Ad.{{ $stock->add }}</strong>
         </div>
 
         <!-- Lens Details -->
