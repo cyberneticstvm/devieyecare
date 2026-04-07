@@ -117,7 +117,7 @@
         </div>
 
         <!-- Footer -->
-        <div class="footer-text" style="margin-left: 30%; margin-right:40px">
+        <div class="footer-text" style="margin-left: 30%; margin-right:30px">
             <!--<strong>CE</strong>
             <span style="float: right; font-size: 10px;">Specially packed for exclusive use as raw material for spectacles<br>
                 by opticians and not meant for retail sale in packaged condition.</span>
@@ -125,7 +125,7 @@
             <div style="margin-top: 15px; text-align: right; font-size: 11px;">
                 <strong>Made in Taiwan</strong>
             </div>-->
-            <img src="./assets/images/envelope.jpeg" width="125%" />
+            <img src="./assets/images/envelope.jpeg" width="125%" style="margin-right: 10px;" />
         </div>
     </div>
 </body>
