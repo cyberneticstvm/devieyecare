@@ -6,7 +6,7 @@
     <title>Lens Envelop</title>
     <style>
         @page {
-            margin-top: 5cm;
+            margin-top: 4cm;
             margin-right: 5cm;
             /* ← 3cm Top Margin as requested */
         }
@@ -111,13 +111,13 @@
             <!-- QR Code -->
             <div class="qr-code">
                 <img src="data:image/png;base64, {!! $qrcode !!}"
-                    alt="QR Code" style="height: 50px; width: 50px; margin-right: 25px">
+                    alt="QR Code" style="height: 50px; width: 50px; margin-right: 30px margin-top:50px">
                 <div style="font-size: 10px; margin-top: 5px;">{{ $stock->material->code }}</div>
             </div>
         </div>
 
         <!-- Footer -->
-        <div class="footer-text" style="margin-left: 30%;">
+        <div class="footer-text" style="margin-left: 30%; margin-right:30px">
             <strong>CE</strong>
             <span style="float: right; font-size: 10px;">Specially packed for exclusive use as raw material for spectacles<br>
                 by opticians and not meant for retail sale in packaged condition.</span>
