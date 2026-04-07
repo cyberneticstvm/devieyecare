@@ -103,7 +103,7 @@
 
         <div class="barcode-section">
             <!-- Barcode -->
-            <div style="margin-left: 30%; margin-top:100px">
+            <div style="margin-left: 30%;">
                 <img src="data:image/png;base64,{!! DNS1D::getBarcodePNG($stock->material->code, 'C39+', 1, 40, array(0,0,0), false) !!}" alt="{{ $stock->material->code }}" style="height: 30px;">
                 <div class="barcode">{{ $stock->material->code }}</div>
             </div>
@@ -111,8 +111,8 @@
             <!-- QR Code -->
             <div class="qr-code">
                 <img src="data:image/png;base64, {!! $qrcode !!}"
-                    alt="QR Code" style="height: 50px; width: 50px; margin-right: 30px;">
-                <div style="font-size: 10px; margin-top: 5px; margin-right: 30px;">{{ $stock->material->code }}</div>
+                    alt="QR Code" style="height: 50px; width: 50px; margin-right: 30px; margin-top:-50px">
+                <div style="font-size: 10px; margin-top: -50px; margin-right: 30px;">{{ $stock->material->code }}</div>
             </div>
         </div>
 
