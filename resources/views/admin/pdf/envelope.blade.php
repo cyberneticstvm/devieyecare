@@ -91,13 +91,13 @@
         <div class="order-no"></div>
 
         <!-- Prescription -->
-        <div class="prescription" style="margin-left: 30%;">
-            <strong>s. {{ $stock->sph }} c. {{ $stock->cyl }} x {{ $stock->axis }} Ad.{{ $stock->add }}</strong><br>
-            <strong>s. {{ $stock->sph }} c. {{ $stock->cyl }} x {{ $stock->axis }} Ad.{{ $stock->add }}</strong>
+        <div class="prescription" style="margin-left: 30%; margin-top: -10px">
+            <strong>s. {{ $stock->sph }} c. {{ $stock->cyl }} x {{ $stock->axis }} Ad.{{ $stock->addition }}</strong><br>
+            <strong>s. {{ $stock->sph }} c. {{ $stock->cyl }} x {{ $stock->axis }} Ad.{{ $stock->addition }}</strong>
         </div>
 
         <!-- Lens Details -->
-        <div class="prescription" style="margin-left: 30%;">
+        <div class="prescription" style="margin-left: 30%; margin-top: -10px">
             <strong>{{ $stock->material?->name }}</strong>
         </div>
 
@@ -111,7 +111,7 @@
             <!-- QR Code -->
             <div class="qr-code">
                 <img src="data:image/png;base64, {!! $qrcode !!}"
-                    alt="QR Code" style="height: 50px; width: 50px; margin-right: 35px; margin-top:-50px">
+                    alt="QR Code" style="height: 50px; width: 50px; margin-right: 25px; margin-top:-50px">
                 <div style="font-size: 10px; margin-top: -50px; margin-right: 30px;">{{ $stock->material->code }}</div>
             </div>
         </div>
