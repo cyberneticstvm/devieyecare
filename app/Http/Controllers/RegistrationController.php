@@ -15,6 +15,25 @@ use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Http;
+
+class ApiService
+{
+    public function get_registration($typeid)
+    {
+        $url = "https://login.devieyecare.com/includes/api.php";
+        try {
+            $response = Http::get($url, ['type' => 'old', 'reg_id' => $typeid])->json();
+            if ($response['status']) {
+                return $response['data'];
+            } else {
+                return response()->json(['error' => 'Failed to fetch data'], $response['message']);
+            }
+        } catch (Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+    }
+}
 
 class RegistrationController extends Controller implements HasMiddleware
 {
@@ -28,13 +47,14 @@ class RegistrationController extends Controller implements HasMiddleware
         ];
     }
 
-    protected $ctypes, $gender, $doctors, $pmodes, $mrn, $next_mrn;
-    public function __construct()
+    protected $ctypes, $gender, $doctors, $pmodes, $mrn, $next_mrn, $apiService;
+    public function __construct(ApiService $apiService)
     {
         $this->ctypes = Extra::where('category', 'ctype')->pluck('name', 'id');
         $this->gender = Extra::where('category', 'gender')->pluck('name', 'name');
         $this->doctors = Doctor::pluck('name', 'id');
         $this->pmodes = Extra::where('category', 'pmode')->pluck('name', 'id');
+        $this->apiService = $apiService;
         $this->next_mrn = 1;
     }
     /**
@@ -51,7 +71,7 @@ class RegistrationController extends Controller implements HasMiddleware
     /**
      * Show the form for creating a new resource.
      */
-    public function create(string $rtype, string $typeid)
+    public function create(string $rtype, string $typeid, string $search_type)
     {
         $doctors = $this->doctors;
         $ctypes = $this->ctypes;
@@ -66,11 +86,16 @@ class RegistrationController extends Controller implements HasMiddleware
             $rtype = encrypt(getRtypeId('Camp'));
         endif;
         if ($typeid > 0 && decrypt($rtype) == 'Review'):
-            $patient = Registration::findOrFail(decrypt($typeid));
+            if ($search_type == 'new'):
+                $patient = Registration::findOrFail(decrypt($typeid));
+            else:
+                $patient = $this->apiService->get_registration(decrypt($typeid));
+            endif;
             $rtype = encrypt(getRtypeId('Review'));
         endif;
+
         $pmodes = $this->pmodes;
-        return view('admin.registration.create', compact('doctors', 'ctypes', 'gender', 'rtype', 'typeid', 'patient', 'pmodes'));
+        return view('admin.registration.create', compact('doctors', 'ctypes', 'gender', 'rtype', 'typeid', 'patient', 'pmodes', 'search_type'));
     }
 
     /**

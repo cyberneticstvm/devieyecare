@@ -128,8 +128,8 @@ Route::middleware(['web'])->group(function () {
 
         Route::prefix('registration')->controller(RegistrationController::class)->group(function () {
             Route::get('', 'index')->name('registration.list');
-            Route::get('create/{rtype}/{typeid}', 'create')->name('registration.create');
-            Route::post('create/{rtype}/{typeid}', 'store')->name('registration.save');
+            Route::get('create/{rtype}/{typeid}/{search_type}', 'create')->name('registration.create');
+            Route::post('create/{rtype}/{typeid}/{search_type}', 'store')->name('registration.save');
             Route::get('edit/{id}', 'edit')->name('registration.edit');
             Route::post('edit/{id}', 'update')->name('registration.update');
             Route::get('delete/{id}', 'destroy')->name('registration.delete');

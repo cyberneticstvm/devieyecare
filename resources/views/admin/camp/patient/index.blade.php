@@ -26,7 +26,7 @@
                         <tr>
                             <td>{{ $key + 1 }}</td>
                             <td>{{ $patient->registration_date->format('d.M.Y') }}</td>
-                            <td><a href="{{ route('registration.create', ['rtype' => encrypt('Camp'), 'typeid' => encrypt($patient->id)]) }}" data-toggle="tooltip" data-placement="top" title="Click here to register the patient">{{ $patient->name }}</a></td>
+                            <td><a href="{{ route('registration.create', ['rtype' => encrypt('Camp'), 'typeid' => encrypt($patient->id), 'search_type' => 'new']) }}" data-toggle="tooltip" data-placement="top" title="Click here to register the patient">{{ $patient->name }}</a></td>
                             <td>{{ $patient->gender }}</td>
                             <td>{{ $patient->age }}</td>
                             <td>{{ $patient->mobile }}</td>

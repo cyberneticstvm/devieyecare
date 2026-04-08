@@ -9,7 +9,7 @@ $route = route('user.create');
 elseif(in_array(Route::currentRouteName(), ['doctor.list'])):
 $route = route('doctor.create');
 elseif(in_array(Route::currentRouteName(), ['registration.list'])):
-$route = route('registration.create', ['rtype' => encrypt(getRtypeId('New')), 'typeid' => encrypt(0)]);
+$route = route('registration.create', ['rtype' => encrypt(getRtypeId('New')), 'typeid' => encrypt(0), 'search_type' => 'new']);
 elseif(in_array(Route::currentRouteName(), ['product.list'])):
 $route = route('product.create');
 elseif(in_array(Route::currentRouteName(), ['purchase.list'])):

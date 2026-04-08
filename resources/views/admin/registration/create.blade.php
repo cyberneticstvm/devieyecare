@@ -7,39 +7,39 @@
         <p class="fs-12">Create New Registration</p>
         <div class="row g-lg-12 g-3">
             <div class="col-lg-12">
-                {{ html()->form('POST')->route('registration.save', ['rtype' => $rtype, 'typeid' => $typeid])->class('')->open() }}
+                {{ html()->form('POST')->route('registration.save', ['rtype' => $rtype, 'typeid' => $typeid, 'search_type' => $search_type])->class('')->open() }}
                 <div class="row g-3">
                     <div class="control-group col-md-4">
                         <label class="form-label req">Patient Name </label>
-                        {{ html()->text('name', $patient?->name ?? old('name'))->class('form-control')->placeholder('Patient Name') }}
+                        {{ html()->text('name', ($search_type == 'old') ? $patient['name'] : $patient?->name ?? old('name'))->class('form-control')->placeholder('Patient Name') }}
                         @error('name')
                         <small class="text-danger">{{ $errors->first('name') }}</small>
                         @enderror
                     </div>
                     <div class="control-group col-md-2">
                         <label class="form-label req">Age </label>
-                        {{ html()->number('age', $patient?->age ?? old('age'), '', '', '')->class('form-control')->placeholder('0') }}
+                        {{ html()->number('age', ($search_type == 'old') ? $patient['age'] : $patient?->age ?? old('age'), '', '', '')->class('form-control')->placeholder('0') }}
                         @error('age')
                         <small class="text-danger">{{ $errors->first('age') }}</small>
                         @enderror
                     </div>
                     <div class="control-group col-md-2">
                         <label class="form-label req">Gender</label>
-                        {{ html()->select($name = 'gender', $value = $gender, $patient?->gender ?? old('gender'))->class('form-select')->placeholder('Select') }}
+                        {{ html()->select($name = 'gender', $value = $gender, ($search_type == 'old') ? $patient['gender'] : $patient?->gender ?? old('gender'))->class('form-select')->placeholder('Select') }}
                         @error('gender')
                         <small class="text-danger">{{ $errors->first('gender') }}</small>
                         @enderror
                     </div>
                     <div class="control-group col-md-4">
                         <label class="form-label req">Address </label>
-                        {{ html()->text('address', $patient?->address ?? old('address'))->class('form-control')->placeholder('Address') }}
+                        {{ html()->text('address', ($search_type == 'old') ? $patient['address'] : $patient?->address ?? old('address'))->class('form-control')->placeholder('Address') }}
                         @error('address')
                         <small class="text-danger">{{ $errors->first('address') }}</small>
                         @enderror
                     </div>
                     <div class="control-group col-md-2">
                         <label class="form-label req">Mobile </label>
-                        {{ html()->text('mobile', $patient?->mobile ?? old('mobile'))->class('form-control')->maxlength(10)->placeholder('Mobile') }}
+                        {{ html()->text('mobile', ($search_type == 'old') ? $patient['mobile'] : $patient?->mobile ?? old('mobile'))->class('form-control')->maxlength(10)->placeholder('Mobile') }}
                         @error('mobile')
                         <small class="text-danger">{{ $errors->first('mobile') }}</small>
                         @enderror

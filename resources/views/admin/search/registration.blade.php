@@ -47,7 +47,7 @@
                         @forelse($registrations as $key => $reg)
                         <tr>
                             <td>{{ $key + 1 }}</td>
-                            <td><a href="{{ route('registration.create', ['rtype' => encrypt('Review'), 'typeid' => encrypt($reg->id)]) }}" data-toggle="tooltip" data-placement="top" title="Click here to review the patient">Review</a></td>
+                            <td><a href="{{ route('registration.create', ['rtype' => encrypt('Review'), 'typeid' => encrypt($reg->id), 'search_type' => 'new']) }}" data-toggle="tooltip" data-placement="top" title="Click here to review the patient">Review</a></td>
                             <td><a href="{{ route('store.order.edit', ['rid' => encrypt($reg->id), 'source' => 'registration']) }}" data-toggle="tooltip" data-placement="top" title="Click here to make an Order">{{ $reg->getMrn() }}</a></td>
                             <td>{{ $reg->name }}</td>
                             <td>{{ $reg->address }}</td>
@@ -82,7 +82,7 @@
                     <tbody>
                         <tr>
                             <td>1</td>
-                            <td></td>
+                            <td><a href="{{ route('registration.create', ['rtype' => encrypt('Review'), 'typeid' => encrypt($registrations['reg_id']), 'search_type' => 'old']) }}" data-toggle="tooltip" data-placement="top" title="Click here to review the patient">Review</a></td>
                             <td><a class="oldOrderDrawer" data-bs-toggle="offcanvas" href="#oldOrderDetails" role="button" aria-controls="oldOrderDetails">{{ $registrations['mrn'] }}</a></td>
                             <td>{{ $registrations['name'] }}</td>
                             <td>{{ $registrations['address'] }}</td>
