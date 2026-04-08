@@ -142,6 +142,7 @@ class UserController extends Controller implements HasMiddleware
                 $input = Arr::except($input, array('password'));
             }
             DB::transaction(function () use ($request, $input, $id) {
+                setPermissionsTeamId(teamId());
                 $user = User::findOrFail($id);
                 $user->update($input);
                 $branches = [];
@@ -158,10 +159,13 @@ class UserController extends Controller implements HasMiddleware
                         'device_id' => $device,
                     ];
                 endforeach;
-                DB::table('model_has_roles')->where('model_id', $id)->where('team_id', teamId())->delete();
+
                 DB::table('user_branches')->where('user_id', $id)->delete();
                 DB::table('user_devices')->where('user_id', $id)->delete();
-                $user->assignRole($request->input('roles'), teamId());
+
+                // ✅ Proper role handling
+                $user->syncRoles($request->input('roles'));
+
                 UserBranch::insert($branches);
                 UserDevice::insert($devices);
             });
