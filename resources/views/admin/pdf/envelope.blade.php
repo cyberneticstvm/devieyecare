@@ -93,7 +93,7 @@
         <!-- Prescription -->
         <div class="prescription" style="margin-left: 35%; ">
             <strong>s. {{ $stock->sph }} c. {{ $stock->cyl }} x {{ $stock->axis }} Ad.{{ $stock->addition }}</strong><br>
-            <strong>s. {{ $stock->sph }} c. {{ $stock->cyl }} x {{ $stock->axis }} Ad.{{ $stock->addition }}</strong>
+            <strong>s. {{ transposePrescription($stock->sph, $stock->cyl, $stock->axis)['sph'] }} c. {{ transposePrescription($stock->sph, $stock->cyl, $stock->axis)['cyl'] }} x {{ transposePrescription($stock->sph, $stock->cyl, $stock->axis)['axis'] }} Ad.{{ $stock->addition }}</strong>
         </div>
 
         <!-- Lens Details -->

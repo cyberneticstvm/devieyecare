@@ -292,6 +292,35 @@ function getVehicleFee($vehicle)
     return number_format(floor($amount), 2);
 }
 
+function transposePrescription(float $sph, float $cyl, int $axis): array
+{
+    // Step 1: New Sphere
+    $newSph = $sph + $cyl;
+
+    // Step 2: New Cylinder (flip sign)
+    $newCyl = -$cyl;
+
+    // Step 3: Adjust Axis
+    if ($axis <= 90) {
+        $newAxis = $axis + 90;
+    } else {
+        $newAxis = $axis - 90;
+    }
+
+    // Normalize axis to 0–180
+    if ($newAxis > 180) {
+        $newAxis -= 180;
+    } elseif ($newAxis <= 0) {
+        $newAxis += 180;
+    }
+
+    return [
+        'sph' => round($newSph, 2),
+        'cyl' => round($newCyl, 2),
+        'axis' => $newAxis
+    ];
+}
+
 function recordTransaction($data, $parent, $type, $action)
 {
     // $data = Data to be inserted, $parent = Parent Data, $type = order/pharmacy/transfer, $action = store/update
