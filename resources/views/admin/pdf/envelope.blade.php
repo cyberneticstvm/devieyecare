@@ -91,19 +91,19 @@
         <div class="order-no"></div>
 
         <!-- Prescription -->
-        <div class="prescription" style="margin-left: 30%; ">
+        <div class="prescription" style="margin-left: 35%; ">
             <strong>s. {{ $stock->sph }} c. {{ $stock->cyl }} x {{ $stock->axis }} Ad.{{ $stock->addition }}</strong><br>
             <strong>s. {{ $stock->sph }} c. {{ $stock->cyl }} x {{ $stock->axis }} Ad.{{ $stock->addition }}</strong>
         </div>
 
         <!-- Lens Details -->
-        <div class="prescription" style="margin-left: 30%;">
+        <div class="prescription" style="margin-left: 35%;">
             <strong>{{ $stock->material?->name }}</strong>
         </div>
 
         <div class="barcode-section">
             <!-- Barcode -->
-            <div style="margin-left: 30%; margin-top:10px">
+            <div style="margin-left: 35%; margin-top:10px">
                 <img src="data:image/png;base64,{!! DNS1D::getBarcodePNG($stock->material->code, 'C39+', 1, 40, array(0,0,0), false) !!}" alt="{{ $stock->material->code }}" style="height: 30px;">
                 <div class="barcode" style="margin-right: 30px; margin-top: 5px;">{{ $stock->material->code }}</div>
             </div>
@@ -111,13 +111,13 @@
             <!-- QR Code -->
             <div class="qr-code">
                 <img src="data:image/png;base64, {!! $qrcode !!}"
-                    alt="QR Code" style="height: 50px; width: 50px; margin-right: 35px; margin-top:-40px">
-                <div style="font-size: 10px; margin-right: 40px;">{{ $stock->material->code }}</div>
+                    alt="QR Code" style="height: 50px; width: 50px; margin-right: 40px; margin-top:-40px">
+                <div style="font-size: 10px; margin-right: 45px;">{{ $stock->material->code }}</div>
             </div>
         </div>
 
         <!-- Footer -->
-        <div class="footer-text" style="margin-left: 30%; margin-right:30px">
+        <div class="footer-text" style="margin-left: 35%; margin-right:30px">
             <!--<strong>CE</strong>
             <span style="float: right; font-size: 10px;">Specially packed for exclusive use as raw material for spectacles<br>
                 by opticians and not meant for retail sale in packaged condition.</span>
