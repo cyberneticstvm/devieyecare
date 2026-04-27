@@ -26,7 +26,7 @@
 
 </head>
 
-<body data-thunderal="theme-indigo" class="">
+<body data-thunderal="{{ (web_app_name() == 'devi') ? 'theme-indigo' : 'theme-red' }}" class="">
     <!-- Start:: Header -->
     <header class="header sticky-top" id="header">
         <div class="container-fluid px-2 px-md-4">
