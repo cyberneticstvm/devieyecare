@@ -70,7 +70,7 @@ class DrishtiController extends Controller implements HasMiddleware
         return view('admin.drishti.customer.edit', compact('customer'));
     }
 
-    function update_customer()
+    function update_customer(Request $request)
     {
         $inputs = request()->validate([
             'name' => 'required',
