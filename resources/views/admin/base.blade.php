@@ -165,7 +165,7 @@
                             <div class="dropdown">
                                 <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     <span class="profile-dropdown d-flex align-items-center">
-                                        <img class="rounded-circle border border-white shadow" src="{{ asset('/assets/images/favicon.png') }}" width="30" height="30" alt="Profile">
+                                        <img class="rounded-circle border border-white shadow" src="{{ (web_app_name() == 'devi') ? asset('/assets/images/favicon.png') : asset('/assets/images/drishti-favicon.png') }}" width="30" height="30" alt="Profile">
                                         <span class="h6 mb-0 ms-1 fw-normal nav-link p-0 d-none d-lg-block">{{ Auth::user()->name }}</span>
                                     </span>
                                 </button>
