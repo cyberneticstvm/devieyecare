@@ -49,7 +49,11 @@ class AuthController extends Controller implements HasMiddleware
                         createLoginLog($agent, $location);
                         /*$branch = Branch::find(Auth::user()->branches->first()->id);
                         Session::put('branch', $branch);*/
-                        return redirect()->route('index')->with("success", "User logged in successfully");
+                        if (web_app_name() == 'devi'):
+                            return redirect()->route('index')->with("success", "User logged in successfully");
+                        else:
+                            return redirect()->route('drishti.dashboard')->with("success", "User logged in successfully");
+                        endif;
                     else:
                         Auth::logoutCurrentDevice();
                         return redirect()->back()->with("error", "User not allowed to logged in at this time");

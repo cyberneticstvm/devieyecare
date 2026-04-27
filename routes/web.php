@@ -7,6 +7,7 @@ use App\Http\Controllers\BranchController;
 use App\Http\Controllers\CampController;
 use App\Http\Controllers\CampDetailController;
 use App\Http\Controllers\DoctorController;
+use App\Http\Controllers\DrishtiController;
 use App\Http\Controllers\ExportController;
 use App\Http\Controllers\FixedAssetController;
 use App\Http\Controllers\HeadController;
@@ -46,6 +47,10 @@ Route::middleware(['web'])->group(function () {
     });
 
     Route::middleware(['web', 'auth', 'auth.session', 'team', 'branch'])->group(function () {
+        Route::prefix('drishti')->controller(DrishtiController::class)->group(function () {
+            Route::get('dashboard', 'dashboard')->name('drishti.dashboard');
+        });
+
         Route::prefix('')->controller(AuthController::class)->group(function () {
             Route::get('force/logout', 'forceLogout')->name('force.logout');
             Route::post('force/logout', 'forceLogoutAll')->name('force.logout.all');
