@@ -35,7 +35,7 @@
                 <div class="logo">
                     <a href="{{ route('index') }}" aria-label="Devi">
                         <!--<img src="{{ asset('/assets/images/favicon.png') }}" alt="Devi" class="img-fluid">-->
-                        <small class="d-block text-uppercase text-secondary text-truncate">DEVI EYE HOSPITALS</small>
+                        <small class="d-block text-uppercase text-secondary text-truncate">{{ (web_app_name() == 'devi') ? 'DEVI EYE HOSPITALS' : 'DRISHTI BIO TECH' }}</small>
                     </a>
                 </div>
                 <!-- End:: Left Header -->
@@ -208,7 +208,7 @@
                                     <script>
                                         document.getElementById("currentYear").textContent = new Date().getFullYear();
                                     </script>
-                                </span> <span class="fw-bold"><a href="https://devieyecare.com/" aria-label="Devi Eye Care" target="_blank">Devi Eye Care</a></span> All rights reserved.</span>
+                                </span> <span class="fw-bold"><a href="{{ (web_app_name() == 'devi') ? 'https://devieyecare.com' : 'https://drishtibiotech.com' }}" aria-label="{{ (web_app_name() == 'devi') ? 'Devi Eye Hospitals' : 'Drishti Bio Tech' }}" target="_blank">{{ (web_app_name() == 'devi') ? 'Devi Eye Hospitals' : 'Drishti Bio Tech' }}</a></span> All rights reserved.</span>
                         </div>
                         <!--<div class="col-md-6">
                                 <div class="align-items-center d-flex justify-content-md-end">

@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Sign In - {{ (web_app_name() == 'devi') ? 'Devi Eye Care' : 'Drishti Bio Tech' }} {{ web_app_name() }}</title>
+    <title>Sign In - {{ (web_app_name() == 'devi') ? 'Devi Eye Hospitals' : 'Drishti Bio Tech' }}</title>
     <meta name="description" content="App">
     <meta name="keywords" content="App">
     <meta name="author" content="ThemeMakker - Expert Admin Dashboard & UI Kit Developers">
@@ -26,7 +26,7 @@
             <!-- Left Side: Form -->
             <div class="col-lg-6 d-flex align-items-center justify-content-center">
                 <div class="w-100 px-lg-5 px-4 py-4" style="max-width: 420px;">
-                    <h3 class="mb-3 fw-bold">Devi Eye Hospitals</h3>
+                    <h3 class="mb-3 fw-bold">{{ (web_app_name() == 'devi') ? 'Devi Eye Hospitals' : 'Drishti Bio Tech' }}</h3>
                     <p class="text-muted mb-4">Login to your account to continue</p>
                     <!-- Login Form -->
                     {{ html()->form('POST')->route('user.login')->class('')->open() }}
