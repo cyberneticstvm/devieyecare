@@ -99,6 +99,6 @@ class DrishtiController extends Controller implements HasMiddleware
 
     function customer_order()
     {
-        return view('admin.drishti.customer.order.index');
+        return view('admin.drishti.order.index');
     }
 }
