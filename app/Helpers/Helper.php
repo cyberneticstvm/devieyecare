@@ -26,13 +26,20 @@ use App\Models\User;
 use App\Models\UserBranch;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
 
+
 function settings()
 {
     return Setting::find(1);
+}
+
+function web_app_name()
+{
+    return Config::get("myconfig.web_app_name");
 }
 
 function unique_id($model, $col)
