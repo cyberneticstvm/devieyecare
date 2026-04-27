@@ -9,7 +9,7 @@
     <meta name="keywords" content="Devi Eye Hospitals">
     <meta name="author" content="Cybernetics">
     <meta name="csrf-token" content="{{ csrf_token() }}" />
-    <link rel="icon" href="{{ asset('/assets/images/favicon.png') }}" type="image/x-icon">
+    <link rel="icon" href="{{ (web_app_name() == 'devi') ? asset('/assets/images/favicon.png') : asset('/assets/images/drishti-favicon.png') }}" type="image/x-icon">
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css">

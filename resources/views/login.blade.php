@@ -52,7 +52,7 @@
             <!-- Right Side: Image Slider -->
             <div class="col-lg-6 d-none d-lg-block p-0 overflow-hidden">
                 <div class="d-flex justify-content-start">
-                    <img style="object-fit: cover; height: 100vh;" src="{{ asset('/assets/images/login-page-bg.png') }}" alt="">
+                    <img style="object-fit: cover; height: 100vh;" src="{{  (web_app_name() == 'devi') ? asset('/assets/images/login-page-bg.png') : asset('/assets/images/login-page-bg-drishti.png') }}" alt="Login Page">
                 </div>
             </div>
         </div>
