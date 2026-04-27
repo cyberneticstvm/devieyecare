@@ -25,7 +25,7 @@
                         @forelse($customers as $key => $customer)
                         <tr>
                             <td>{{ $key + 1 }}</td>
-                            <td>>{{ $customer->name }}</td>
+                            <td>{{ $customer->name }}</td>
                             <td>{{ $customer->mobile }}</td>
                             <td>{{ $customer->address }}</td>
                             <td>{{ $customer->gst }}</td>
