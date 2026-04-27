@@ -14,7 +14,7 @@
     aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
-            {{ html()->form('POST')->route('user.branch.update')->class('')->open() }}
+            {{ html()->form('POST')->route('drishti.user.branch.update')->class('')->open() }}
             <div class="modal-body p-0">
                 <div class="container row">
                     <div class="col">
