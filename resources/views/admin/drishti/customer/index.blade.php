@@ -3,8 +3,8 @@
 <!-- Upcoming Appointments -->
 <div class="col-12">
     <div class="mb-4 pt-3">
-        <h5 class="fw-medium text-uppercase mb-0">Vehicle Register</h5>
-        <p class="fs-12">Showing vehicles</p>
+        <h5 class="fw-medium text-uppercase mb-0">Customer Register</h5>
+        <p class="fs-12">Showing customers</p>
         <div class="row g-lg-4 g-3">
             <div class="col-lg-8">
                 <table class="Data_Table table table-round align-middle mb-0 table-hover w-100 mt-2 border-top" id="apptTable">
@@ -45,7 +45,7 @@
                     <div class="col-lg-12 col-md-3 col-sm-6">
                         <div class="card rounded-4">
                             <div class="card-body p-lg-4">
-                                <h5>New Vehicle</h5>
+                                <h5>New Customer</h5>
                                 <div class="row g-lg-12 g-3">
                                     <div class="col-lg-12">
                                         {{ html()->form('POST')->route('drishti.customer.save')->class('')->open() }}
