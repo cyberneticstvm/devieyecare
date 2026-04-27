@@ -19,7 +19,7 @@
 
 </head>
 
-<body data-thunderal="{{ (web_app_name() == 'devi') ? 'theme-indigo' : 'theme-rose' }}" class="">
+<body data-thunderal="{{ (web_app_name() == 'devi') ? 'theme-indigo' : 'theme-orange' }}" class="">
 
     <div class="container-fluid login-container" style="min-height: 100vh;">
         <div class="row">
