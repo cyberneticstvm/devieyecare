@@ -44,11 +44,14 @@ Route::middleware(['web'])->group(function () {
             Route::get('/', 'index')->name('index');
             Route::post('update/branch', 'updateBranch')->name('user.branch.update');
         });
+        Route::prefix('drishti')->controller(DrishtiController::class)->group(function () {
+            Route::get('dashboard', 'dashbord')->name('drishti.dashboard');
+        });
     });
 
     Route::middleware(['web', 'auth', 'auth.session', 'team', 'branch'])->group(function () {
         Route::prefix('drishti')->controller(DrishtiController::class)->group(function () {
-            Route::get('dashboard', 'dashboard')->name('drishti.dashboard');
+            //
         });
 
         Route::prefix('')->controller(AuthController::class)->group(function () {
