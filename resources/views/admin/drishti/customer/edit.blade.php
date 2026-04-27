@@ -5,85 +5,64 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title">Edit Customer</h3>
+                    <h3 class="card-title">Update Customer</h3>
                 </div>
                 <div class="card-body">
-                    <form action="{{ route('drishti.customer.update', $customer->id) }}" method="POST" enctype="multipart/form-data">
-                        @csrf
-                        @method('PUT')
-
-                        <div class="form-group">
-                            <label for="name">Name</label>
-                            <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name" value="{{ old('name', $customer->name) }}" required>
-                            @error('name')
-                            <span class="invalid-feedback">{{ $message }}</span>
-                            @enderror
+                    <div class="row g-lg-12 g-3">
+                        <div class="col-lg-12">
+                            {{ html()->form('POST')->route('drishti.customer.update', encrypt($customer->id))->class('')->open() }}
+                            <div class="row g-3">
+                                <div class="control-group col-md-6">
+                                    <label class="form-label req">Customer Name </label>
+                                    {{ html()->text('name', old('name') ?? $customer->name)->class('form-control')->placeholder('Customer Name') }}
+                                    @error('name')
+                                    <small class="text-danger">{{ $errors->first('name') }}</small>
+                                    @enderror
+                                </div>
+                                <div class="control-group col-md-6">
+                                    <label class="form-label req">Contact Number </label>
+                                    {{ html()->text('mobile', old('mobile') ?? $customer->mobile)->class('form-control')->maxlength(10)->placeholder('Contact Number') }}
+                                    @error('mobile')
+                                    <small class="text-danger">{{ $errors->first('mobile') }}</small>
+                                    @enderror
+                                </div>
+                                <div class="control-group col-md-12">
+                                    <label class="form-label">Address </label>
+                                    {{ html()->text('address', old('address') ?? $customer->address)->class('form-control')->placeholder('Address') }}
+                                    @error('address')
+                                    <small class="text-danger">{{ $errors->first('address') }}</small>
+                                    @enderror
+                                </div>
+                                <div class="control-group col-md-4">
+                                    <label class="form-label">GST Number </label>
+                                    {{ html()->text('gst', old('gst') ?? $customer->gst)->class('form-control')->placeholder('GST Number') }}
+                                    @error('gst')
+                                    <small class="text-danger">{{ $errors->first('gst') }}</small>
+                                    @enderror
+                                </div>
+                                <div class="control-group col-md-4">
+                                    <label class="form-label">Opening Balance </label>
+                                    {{ html()->text('opening_balance', old('opening_balance') ?? $customer->opening_balance)->class('form-control')->placeholder('Opening Balance') }}
+                                    @error('opening_balance')
+                                    <small class="text-danger">{{ $errors->first('opening_balance') }}</small>
+                                    @enderror
+                                </div>
+                                <div class="control-group col-md-4">
+                                    <label class="form-label">Credit Limit </label>
+                                    {{ html()->text('credit_limit', old('credit_limit') ?? $customer->credit_limit)->class('form-control')->placeholder('Credit Limit') }}
+                                    @error('credit_limit')
+                                    <small class="text-danger">{{ $errors->first('credit_limit') }}</small>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="raw mt-3">
+                                <div class="col text-end">
+                                    {{ html()->submit('Update')->class('btn btn-submit btn-primary') }}
+                                </div>
+                            </div>
+                            {{ html()->form()->close() }}
                         </div>
-
-                        <div class="form-group">
-                            <label for="email">Email</label>
-                            <input type="email" class="form-control @error('email') is-invalid @enderror" id="email" name="email" value="{{ old('email', $customer->email) }}" required>
-                            @error('email')
-                            <span class="invalid-feedback">{{ $message }}</span>
-                            @enderror
-                        </div>
-
-                        <div class="form-group">
-                            <label for="phone">Phone</label>
-                            <input type="tel" class="form-control @error('phone') is-invalid @enderror" id="phone" name="phone" value="{{ old('phone', $customer->phone) }}">
-                            @error('phone')
-                            <span class="invalid-feedback">{{ $message }}</span>
-                            @enderror
-                        </div>
-
-                        <div class="form-group">
-                            <label for="address">Address</label>
-                            <textarea class="form-control @error('address') is-invalid @enderror" id="address" name="address" rows="3">{{ old('address', $customer->address) }}</textarea>
-                            @error('address')
-                            <span class="invalid-feedback">{{ $message }}</span>
-                            @enderror
-                        </div>
-
-                        <div class="form-group">
-                            <label for="city">City</label>
-                            <input type="text" class="form-control @error('city') is-invalid @enderror" id="city" name="city" value="{{ old('city', $customer->city) }}">
-                            @error('city')
-                            <span class="invalid-feedback">{{ $message }}</span>
-                            @enderror
-                        </div>
-
-                        <div class="form-group">
-                            <label for="state">State</label>
-                            <input type="text" class="form-control @error('state') is-invalid @enderror" id="state" name="state" value="{{ old('state', $customer->state) }}">
-                            @error('state')
-                            <span class="invalid-feedback">{{ $message }}</span>
-                            @enderror
-                        </div>
-
-                        <div class="form-group">
-                            <label for="postal_code">Postal Code</label>
-                            <input type="text" class="form-control @error('postal_code') is-invalid @enderror" id="postal_code" name="postal_code" value="{{ old('postal_code', $customer->postal_code) }}">
-                            @error('postal_code')
-                            <span class="invalid-feedback">{{ $message }}</span>
-                            @enderror
-                        </div>
-
-                        <div class="form-group">
-                            <label for="status">Status</label>
-                            <select class="form-control @error('status') is-invalid @enderror" id="status" name="status">
-                                <option value="active" {{ old('status', $customer->status) === 'active' ? 'selected' : '' }}>Active</option>
-                                <option value="inactive" {{ old('status', $customer->status) === 'inactive' ? 'selected' : '' }}>Inactive</option>
-                            </select>
-                            @error('status')
-                            <span class="invalid-feedback">{{ $message }}</span>
-                            @enderror
-                        </div>
-
-                        <div class="form-group">
-                            <button type="submit" class="btn btn-primary">Update</button>
-                            <a href="{{ route('drishti.customer') }}" class="btn btn-secondary">Cancel</a>
-                        </div>
-                    </form>
+                    </div>
                 </div>
             </div>
         </div>
