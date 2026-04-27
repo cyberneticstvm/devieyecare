@@ -8,6 +8,7 @@ class DrishtiController extends Controller
 {
     function dashboard()
     {
-        return view('admin.drishti.dashboard');
+        $branches = userBranches();
+        return view('admin.drishti.dashboard', compact('branches'));
     }
 }
