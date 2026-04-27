@@ -18,7 +18,8 @@
                             <th class="py-2 fw-medium small text-uppercase">Opening Bal.</th>
                             <th class="py-2 fw-medium small text-uppercase">Credit Limit</th>
                             <th class="py-2 fw-medium small text-uppercase">Status</th>
-                            <th class="py-2 fw-medium small text-uppercase">Action</th>
+                            <th class="py-2 fw-medium small text-uppercase">Edit</th>
+                            <th class="py-2 fw-medium small text-uppercase">Delete</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -33,7 +34,16 @@
                             <td>{{ $customer->credit_limit }}</td>
                             <td>{!! $customer->cancelled() !!}</td>
                             <td class="text-center">
-                                <a href="{{ route('drishti.customer.edit', encrypt($customer->id)) }}" class="text-secondary">Edit</a> | <a href="{{ route('drishti.customer.delete', encrypt($customer->id)) }}" class="text-danger dlt">Delete</a>
+                                <a href="{{ route('drishti.customer.edit', encrypt($customer->id)) }}" class="text-secondary">Edit</a> </a>
+                            </td>
+                            <td class="text-center">
+                                <form action="{{ route('drishti.customer.delete', encrypt($customer->id)) }}" method="POST" style="display:inline;">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="text-danger dlt">
+                                        Delete
+                                    </button>
+                                </form>
                             </td>
                         </tr>
                         @empty
