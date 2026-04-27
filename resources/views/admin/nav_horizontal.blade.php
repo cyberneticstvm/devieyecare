@@ -1,3 +1,4 @@
+@if(web_app_name() == 'devi')
 <div class="offcanvas-body">
     <ul class="navbar-nav justify-content-start grow">
         <!--<li class="me-lg-3 nav-item"><a class="nav-link py-1 active" aria-current="page" href="#">Home</a></li>-->
@@ -162,3 +163,20 @@
         </li>
     </ul>
 </div>
+@else
+<div class="offcanvas-body">
+    <ul class="navbar-nav justify-content-start grow">
+        <li class="me-lg-3 nav-item dropdown">
+            <a class="nav-link py-1 dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Customer</a>
+            <ul class="dropdown-menu p-2 p-xl-3 language shadow-lg rounded-4 li_animate">
+                @if(Auth::user()->can('head-list'))
+                <li class=""><a class="dropdown-item rounded-pill {{ (in_array(Route::currentRouteName(), ['head.list', 'head.create', 'head.edit'])) ? 'active' : '' }}" href="{{ route('head.list') }}">Heads</a></li>
+                @endif
+                @if(Auth::user()->can('ie-list'))
+                <li class=""><a class="dropdown-item rounded-pill {{ (in_array(Route::currentRouteName(), ['ie.list', 'ie.create', 'ie.edit'])) ? 'active' : '' }}" href="{{ route('ie.list', 'Expense') }}">Expense Management</a></li>
+                @endif
+            </ul>
+        </li>
+    </ul>
+</div>
+@endif
