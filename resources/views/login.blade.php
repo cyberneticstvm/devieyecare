@@ -8,7 +8,7 @@
     <meta name="description" content="App">
     <meta name="keywords" content="App">
     <meta name="author" content="ThemeMakker - Expert Admin Dashboard & UI Kit Developers">
-    <link rel="icon" href="{{ asset('/assets/images/favicon.png') }}" type="image/x-icon">
+    <link rel="icon" href="{{ (web_app_name() == 'devi') ? asset('/assets/images/favicon.png') : asset('/assets/images/drishti-favicon.png') }}" type="image/x-icon">
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css">
