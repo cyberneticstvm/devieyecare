@@ -64,7 +64,34 @@
                                                 <small class="text-danger">{{ $errors->first('mobile') }}</small>
                                                 @enderror
                                             </div>
-
+                                            <div class="control-group col-md-12">
+                                                <label class="form-label">Address </label>
+                                                {{ html()->text('address', old('address') ?? '')->class('form-control')->placeholder('Address') }}
+                                                @error('address')
+                                                <small class="text-danger">{{ $errors->first('address') }}</small>
+                                                @enderror
+                                            </div>
+                                            <div class="control-group col-md-12">
+                                                <label class="form-label">GST Number </label>
+                                                {{ html()->text('gst', old('gst') ?? '')->class('form-control')->placeholder('GST Number') }}
+                                                @error('gst')
+                                                <small class="text-danger">{{ $errors->first('gst') }}</small>
+                                                @enderror
+                                            </div>
+                                            <div class="control-group col-md-6">
+                                                <label class="form-label">Opening Balance </label>
+                                                {{ html()->text('opening_balance', old('opening_balance') ?? '')->class('form-control')->placeholder('Opening Balance') }}
+                                                @error('opening_balance')
+                                                <small class="text-danger">{{ $errors->first('opening_balance') }}</small>
+                                                @enderror
+                                            </div>
+                                            <div class="control-group col-md-6">
+                                                <label class="form-label">Credit Limit </label>
+                                                {{ html()->text('credit_limit', old('credit_limit') ?? '')->class('form-control')->placeholder('Credit Limit') }}
+                                                @error('credit_limit')
+                                                <small class="text-danger">{{ $errors->first('credit_limit') }}</small>
+                                                @enderror
+                                            </div>
                                         </div>
                                         <div class="raw mt-3">
                                             <div class="col text-end">
