@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Sign In - {{ (web_app_name() == 'devi') ? 'Devi Eye Care' : 'Drishti Bio Tech' }}</title>
+    <title>Sign In - {{ (web_app_name() == 'devi') ? 'Devi Eye Care' : 'Drishti Bio Tech' }} {{ web_app_name() }}</title>
     <meta name="description" content="App">
     <meta name="keywords" content="App">
     <meta name="author" content="ThemeMakker - Expert Admin Dashboard & UI Kit Developers">
