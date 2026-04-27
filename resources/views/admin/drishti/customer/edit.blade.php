@@ -57,6 +57,7 @@
                             </div>
                             <div class="raw mt-3">
                                 <div class="col text-end">
+                                    {{ html()->button('Cancel')->class('btn btn-secondary')->attribute('onclick', 'window.history.back()')->attribute('type', 'button') }}
                                     {{ html()->submit('Update')->class('btn btn-submit btn-primary') }}
                                 </div>
                             </div>
