@@ -31,6 +31,7 @@
                             <td>{{ $customer->gst }}</td>
                             <td>{{ $customer->opening_balance }}</td>
                             <td>{{ $customer->credit_limit }}</td>
+                            <td>{!! $customer->cancelled() !!}</td>
                             <td class="text-center">
                                 <a href="{{ route('drishti.customer.edit', encrypt($customer->id)) }}" class="text-secondary">Edit</a> | <a href="{{ route('drishti.customer.delete', encrypt($customer->id)) }}" class="text-danger dlt">Delete</a>
                             </td>
