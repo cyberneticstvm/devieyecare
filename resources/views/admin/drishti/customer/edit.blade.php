@@ -81,7 +81,7 @@
 
                         <div class="form-group">
                             <button type="submit" class="btn btn-primary">Update</button>
-                            <a href="{{ route('customer.index') }}" class="btn btn-secondary">Cancel</a>
+                            <a href="{{ route('drishti.customer.index') }}" class="btn btn-secondary">Cancel</a>
                         </div>
                     </form>
                 </div>
