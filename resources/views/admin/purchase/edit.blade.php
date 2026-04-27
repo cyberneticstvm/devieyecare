@@ -25,7 +25,7 @@
                         @forelse($purchase->details as $key => $item)
                         <tr>
                             <td>
-                                <input type="hidden" name="product_id[]" value="{{ $item->product->id }}" class="slctdPct"><input type="text" name="product[]" value="{{ $item->product->name }}" class="border-0 w-100" readonly>
+                                <input type="hidden" name="product_id[]" value="{{ $item->product?->id }}" class="slctdPct"><input type="text" name="product[]" value="{{ $item->product?->name }}" class="border-0 w-100" readonly>
                             </td>
                             <td>
                                 <input type="text" name="batch[]" value="{{ $item->batch }}" class="border-0 w-100" readonly>
