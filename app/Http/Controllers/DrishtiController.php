@@ -24,10 +24,10 @@ class DrishtiController extends Controller
             'branch_id' => Session::get('branch')->id,
         ]);
         if (Session::has('branch')) :
-            return redirect()->route('index')
+            return redirect()->route('drishti.dashboard')
                 ->withSuccess('User branch updated successfully!');
         else :
-            return redirect()->route('index')
+            return redirect()->route('drishti.dashboard')
                 ->withError('Please update branch!');
         endif;
     }
