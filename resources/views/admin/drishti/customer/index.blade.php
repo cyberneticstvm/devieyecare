@@ -40,7 +40,7 @@
                                 <form action="{{ route('drishti.customer.delete', encrypt($customer->id)) }}" method="POST" style="display:inline;">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="text-danger dlt">
+                                    <button type="submit" class="btn btn-link dlt">
                                         Delete
                                     </button>
                                 </form>
