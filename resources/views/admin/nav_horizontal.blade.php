@@ -172,6 +172,9 @@
                 @if(Auth::user()->can('dashboard'))
                 <li class=""><a class="dropdown-item rounded-pill {{ (in_array(Route::currentRouteName(), ['drishti.dashboard'])) ? 'active' : '' }}" href="{{ route('drishti.dashboard') }}">Dashboard</a></li>
                 @endif
+
+                <li class=""><a class="dropdown-item rounded-pill {{ (in_array(Route::currentRouteName(), ['drishti.customer'])) ? 'active' : '' }}" href="{{ route('drishti.customer') }}">Customer</a></li>
+
             </ul>
         </li>
     </ul>

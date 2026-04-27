@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Devi Eye Hospitals - Clinic</title>
+    <title>{{ (web_app_name() == 'devi') ? 'Clinic | Devi Eye Hospitals' : 'Portal | Drishti Bio Tech' }}</title>
     <meta name="description" content="Devi Eye Hospitals">
     <meta name="keywords" content="Devi Eye Hospitals">
     <meta name="author" content="Cybernetics">

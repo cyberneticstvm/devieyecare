@@ -52,7 +52,11 @@ Route::middleware(['web'])->group(function () {
 
     Route::middleware(['web', 'auth', 'auth.session', 'team', 'branch'])->group(function () {
         Route::prefix('drishti')->controller(DrishtiController::class)->group(function () {
-            //
+            Route::get('customer', 'customer')->name('drishti.customer');
+            Route::post('customer', 'save_customer')->name('drishti.customer.save');
+            Route::get('customer/edit/{id}', 'edit_customer')->name('drishti.customer.edit');
+            Route::put('customer/update/{id}', 'update_customer')->name('drishti.customer.update');
+            Route::delete('customer/delete/{id}', 'delete_customer')->name('drishti.customer.delete');
         });
 
         Route::prefix('')->controller(AuthController::class)->group(function () {
