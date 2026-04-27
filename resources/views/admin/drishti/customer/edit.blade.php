@@ -2,8 +2,8 @@
 @section('content')
 <div class="col-12">
     <div class="mb-4 pt-3">
-        <h5 class="fw-medium text-uppercase mb-0">Update Head</h5>
-        <p class="fs-12">Update Head</p>
+        <h5 class="fw-medium text-uppercase mb-0">Update Customer</h5>
+        <p class="fs-12">Update Customer Information</p>
         <div class="row g-lg-12 g-3">
             <div class="col-lg-12">
                 {{ html()->form('PUT')->route('drishti.customer.update', encrypt($customer->id))->class('')->open() }}
