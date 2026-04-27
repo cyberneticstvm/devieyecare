@@ -34,7 +34,7 @@
                             <td>{{ $customer->credit_limit }}</td>
                             <td>{!! $customer->cancelled() !!}</td>
                             <td class="text-center">
-                                <a href="{{ route('drishti.customer.edit', encrypt($customer->id)) }}" class="text-secondary">Edit</a> </a>
+                                <a href="{{ route('drishti.customer.edit', encrypt($customer->id)) }}" class="btn btn-link text-secondary">Edit</a> </a>
                             </td>
                             <td class="text-center">
                                 <form action="{{ route('drishti.customer.delete', encrypt($customer->id)) }}" method="POST" style="display:inline;">
