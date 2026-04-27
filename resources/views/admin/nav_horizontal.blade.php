@@ -172,9 +172,19 @@
                 @if(Auth::user()->can('dashboard'))
                 <li class=""><a class="dropdown-item rounded-pill {{ (in_array(Route::currentRouteName(), ['drishti.dashboard'])) ? 'active' : '' }}" href="{{ route('drishti.dashboard') }}">Dashboard</a></li>
                 @endif
-
-                <li class=""><a class="dropdown-item rounded-pill {{ (in_array(Route::currentRouteName(), ['drishti.customer'])) ? 'active' : '' }}" href="{{ route('drishti.customer') }}">Customer</a></li>
-
+            </ul>
+        </li>
+        <li class="me-lg-3 nav-item dropdown">
+            <a class="nav-link py-1 dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Customer</a>
+            <ul class="dropdown-menu p-2 p-xl-3 language shadow-lg rounded-4 li_animate">
+                <li class=""><a class="dropdown-item rounded-pill {{ (in_array(Route::currentRouteName(), ['drishti.customer'])) ? 'active' : '' }}" href="{{ route('drishti.customer') }}">Customer Management</a></li>
+                <li class=""><a class="dropdown-item rounded-pill {{ (in_array(Route::currentRouteName(), ['drishti.customer.account'])) ? 'active' : '' }}" href="{{ route('drishti.customer.account') }}">Customer Account</a></li>
+            </ul>
+        </li>
+        <li class="me-lg-3 nav-item dropdown">
+            <a class="nav-link py-1 dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Order</a>
+            <ul class="dropdown-menu p-2 p-xl-3 language shadow-lg rounded-4 li_animate">
+                <li class=""><a class="dropdown-item rounded-pill {{ (in_array(Route::currentRouteName(), ['drishti.customer.order'])) ? 'active' : '' }}" href="{{ route('drishti.customer.order') }}">Order Management</a></li>
             </ul>
         </li>
     </ul>

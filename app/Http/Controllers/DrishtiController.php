@@ -91,4 +91,14 @@ class DrishtiController extends Controller implements HasMiddleware
         Customer::findOrFail(decrypt(request()->id))->delete();
         return redirect()->route('drishti.customer')->withSuccess("Customer deleted successfully!");
     }
+
+    function customer_account()
+    {
+        return view('admin.drishti.customer.account');
+    }
+
+    function customer_order()
+    {
+        return view('admin.drishti.customer.order.index');
+    }
 }
