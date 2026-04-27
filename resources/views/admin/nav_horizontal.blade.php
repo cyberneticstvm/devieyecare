@@ -187,6 +187,14 @@
                 <li class=""><a class="dropdown-item rounded-pill {{ (in_array(Route::currentRouteName(), ['drishti.customer.order'])) ? 'active' : '' }}" href="{{ route('drishti.customer.order') }}">Order Management</a></li>
             </ul>
         </li>
+        <li class="me-lg-3 nav-item dropdown">
+            <a class="nav-link py-1 dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Product</a>
+            <ul class="dropdown-menu p-2 p-xl-3 language shadow-lg rounded-4 li_animate">
+                <li class=""><a class="dropdown-item rounded-pill {{ (in_array(Route::currentRouteName(), ['purchase.list', 'purchase.create', 'purchase.edit'])) ? 'active' : '' }}" href="{{ route('purchase.list') }}">Purchase</a></li>
+                <li class=""><a class="dropdown-item rounded-pill {{ (in_array(Route::currentRouteName(), ['transfer.list', 'transfer.create', 'transfer.edit'])) ? 'active' : '' }}" href="{{ route('transfer.list') }}">Transfer</a></li>
+                <li class=""><a class="dropdown-item rounded-pill {{ (in_array(Route::currentRouteName(), ['inventory', 'get.inventory'])) ? 'active' : '' }}" href="{{ route('inventory') }}">Inventory Status</a></li>
+            </ul>
+        </li>
     </ul>
 </div>
 @endif
