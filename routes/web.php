@@ -45,7 +45,7 @@ Route::middleware(['web'])->group(function () {
             Route::post('update/branch', 'updateBranch')->name('user.branch.update');
         });
         Route::prefix('drishti')->controller(DrishtiController::class)->group(function () {
-            Route::get('dashboard', 'dashbord')->name('drishti.dashboard');
+            Route::get('dashboard', 'dashboard')->name('drishti.dashboard');
         });
     });
 
