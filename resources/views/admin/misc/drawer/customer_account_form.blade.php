@@ -7,7 +7,7 @@
         <div class="px-lg-2 mb-4">
             <div class="customerAccountForm">
                 <div class="col-lg-12">
-                    {{ html()->form('POST')->route('drishti.customer.save')->class('')->open() }}
+                    {{ html()->form('POST')->route('drishti.customer.account.save')->class('')->open() }}
                     <input type="hidden" name="customer_id" id="customer_id" value="">
                     <input type="hidden" name="payment_type" id="payment_type" value="credit">
                     <div class="row g-3">
