@@ -65,6 +65,9 @@ Route::middleware(['web'])->group(function () {
             Route::get('customer/order', 'customer_order')->name('drishti.customer.order');
             Route::get('customer/order/create', 'customer_order_create')->name('drishti.customer.order.create');
             Route::post('customer/order/create', 'customer_order_store')->name('drishti.customer.order.save');
+            Route::get('customer/order/edit/{id}', 'customer_order_edit')->name('drishti.customer.order.edit');
+            Route::post('customer/order/edit/{id}', 'customer_order_update')->name('drishti.customer.order.update');
+            Route::delete('customer/order/delete/{id}', 'customer_order_delete')->name('drishti.customer.order.delete');
         });
 
         Route::prefix('')->controller(AuthController::class)->group(function () {

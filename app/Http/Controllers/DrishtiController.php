@@ -141,7 +141,7 @@ class DrishtiController extends Controller implements HasMiddleware
 
     function customer_order()
     {
-        $orders = collect();
+        $orders = CustomerOrder::withTrashed()->with('customer')->latest()->get();
         return view('admin.drishti.order.index', compact('orders'));
     }
 
