@@ -5,15 +5,20 @@ namespace App\Http\Controllers;
 use App\Models\Branch;
 use App\Models\Customer;
 use App\Models\CustomerAccount;
+use App\Models\CustomerOrder;
+use App\Models\CustomerOrderDetail;
 use App\Models\Extra;
 use App\Models\LoginLog;
 use App\Models\ManufacturerSupplier;
 use App\Models\Product;
+use Carbon\Carbon;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
+use Illuminate\Support\Facades\DB;
 
 class DrishtiController extends Controller implements HasMiddleware
 {
@@ -149,7 +154,43 @@ class DrishtiController extends Controller implements HasMiddleware
 
     function customer_order_store(Request $request)
     {
-        //dd($request->all());
+        $inputs = $request->validate([
+            'customer_id' => 'required|exists:customers,id',
+            'order_date' => 'required|date',
+            'notes' => 'nullable',
+            'show_price' => 'nullable|boolean',
+            'product_id.*' => 'required|exists:products,id',
+            'batch.*' => 'nullable',
+            'expiry.*' => 'nullable|date',
+            'qty.*' => 'required|integer',
+            'price.*' => 'required|numeric',
+        ]);
+        try {
+            DB::transaction(function () use ($request, $inputs) {
+                $order_inputs = $request->only('customer_id', 'order_date', 'notes', 'show_price');
+                $order_inputs['created_by'] = $request->user()->id;
+                $order_inputs['updated_by'] = $request->user()->id;
+                $order_inputs['branch_id'] = Session::get('branch')->id;
+                $order = CustomerOrder::create($order_inputs);
+                $data = [];
+                foreach ($request->product_id as $key => $item):
+                    $data[] = [
+                        'customer_order_id' => $order->id,
+                        'product_id' => $item,
+                        'qty' => $request->qty[$key],
+                        'batch' => $request->batch[$key] ?? 'NA',
+                        'expiry' => $request->expiry[$key],
+                        'price' => $request->price[$key] ?? 0,
+                        'total' => $request->price[$key] * $request->qty[$key],
+                        'created_at' => $order->created_at,
+                        'updated_at' => $order->updated_at,
+                    ];
+                endforeach;
+                CustomerOrderDetail::insert($data);
+            });
+        } catch (Exception $e) {
+            return redirect()->back()->with("error", $e->getMessage())->withInput($inputs);
+        }
         return redirect()->route('drishti.customer.order')->withSuccess("Customer order created successfully!");
     }
 }

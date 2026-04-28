@@ -1,0 +1,37 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        Schema::create('customer_orders', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('customer_id')->constrained()->cascadeOnDelete();
+            $table->date('order_date');
+            $table->text('notes')->nullable();
+            $table->boolean('show_price')->default(0);
+            $table->foreignId('created_by')->constrained('users')->cascadeOnDelete();
+            $table->foreignId('updated_by')->constrained('users')->cascadeOnDelete();
+            $table->foreignId('branch_id')->constrained()->cascadeOnDelete();
+            $table->string('invoice_number')->nullable()->unique();
+            $table->timestamp('invoice_date')->nullable();
+            $table->timestamps();
+            $table->softDeletes();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists('customer_orders');
+    }
+};
