@@ -24,7 +24,8 @@
                     </tbody>
                 </table>
                 <div class="text-end mt-5">
-                    {{ html()->button('Save')->attribute('onclick', 'return validateCustomerOrderForm()')->class('btn btn-submit btn-primary') }}
+                    {{ html()->button('Cancel')->class('btn btn-secondary')->attribute('onclick', 'window.history.back()')->attribute('type', 'button') }}
+                    {{ html()->button('Save Order')->attribute('onclick', 'return validateCustomerOrderForm()')->class('btn btn-submit btn-primary') }}
                 </div>
                 {{ html()->form()->close() }}
             </div>
