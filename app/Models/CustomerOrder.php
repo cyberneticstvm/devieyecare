@@ -12,7 +12,7 @@ class CustomerOrder extends Model
     protected $guarded = [];
 
     protected $casts = [
-        'payment_date' => 'date',
+        'order_date' => 'date',
     ];
 
     public function customer()
