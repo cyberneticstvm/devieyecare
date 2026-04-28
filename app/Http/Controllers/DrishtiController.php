@@ -234,51 +234,51 @@ class DrishtiController extends Controller implements HasMiddleware
             'qty.*' => 'required|integer',
             'price.*' => 'required|numeric',
         ]);
-        try {
-            DB::transaction(function () use ($request, $inputs) {
-                if (checkCustomerCreditLimit($request->customer_id, 0)) {
-                    return redirect()->back()->with("error", "Customer credit limit exceeded!");
-                }
-                $order = CustomerOrder::findOrFail(decrypt(request()->id));
-                $order_inputs = $request->only('customer_id', 'order_date', 'notes', 'show_price');
-                $order_inputs['updated_by'] = $request->user()->id;
-                $order_inputs['updated_by'] = $request->user()->id;
-                $order->update($order_inputs);
-                CustomerOrderDetail::where('customer_order_id', $order->id)->delete();
-                $data = [];
-                foreach ($request->product_id as $key => $item):
-                    $data[] = [
-                        'customer_order_id' => $order->id,
-                        'product_id' => $item,
-                        'qty' => $request->qty[$key],
-                        'batch' => $request->batch[$key] ?? 'NA',
-                        'expiry' => $request->expiry[$key],
-                        'price' => $request->price[$key] ?? 0,
-                        'total' => $request->price[$key] * $request->qty[$key],
-                        'created_at' => $order->created_at,
-                        'updated_at' => $order->updated_at,
-                    ];
-                endforeach;
-                CustomerOrderDetail::insert($data);
-                CustomerAccount::where('order_id', $order->id)->where('payment_type', 'debit')->forceDelete();
-                CustomerAccount::create([
-                    'customer_id' => $request->customer_id,
-                    'order_id' => $order->id,
-                    'payment_type' => 'debit',
-                    'payment_date' => Carbon::now(),
-                    'amount' => $order->details->sum('total'),
-                    'payment_mode' => 0, // NA
-                    'description' => "Order #$order->id",
-                    'created_by' => $request->user()->id,
-                    'updated_by' => $request->user()->id,
-                    'created_at' => Carbon::now(),
-                    'updated_at' => Carbon::now(),
-                ]);
-            });
-        } catch (Exception $e) {
-            return redirect()->back()->with("error", $e->getMessage())->withInput($inputs);
-        }
-        return redirect()->route('drishti.customer.order')->withSuccess("Customer order updated successfully!");
+        //try {
+        DB::transaction(function () use ($request, $inputs) {
+            if (checkCustomerCreditLimit($request->customer_id, 0)) {
+                return redirect()->back()->with("error", "Customer credit limit exceeded!");
+            }
+            $order = CustomerOrder::findOrFail(decrypt(request()->id));
+            $order_inputs = $request->only('customer_id', 'order_date', 'notes', 'show_price');
+            $order_inputs['updated_by'] = $request->user()->id;
+            $order_inputs['updated_by'] = $request->user()->id;
+            $order->update($order_inputs);
+            CustomerOrderDetail::where('customer_order_id', $order->id)->delete();
+            $data = [];
+            foreach ($request->product_id as $key => $item):
+                $data[] = [
+                    'customer_order_id' => $order->id,
+                    'product_id' => $item,
+                    'qty' => $request->qty[$key],
+                    'batch' => $request->batch[$key] ?? 'NA',
+                    'expiry' => $request->expiry[$key],
+                    'price' => $request->price[$key] ?? 0,
+                    'total' => $request->price[$key] * $request->qty[$key],
+                    'created_at' => $order->created_at,
+                    'updated_at' => $order->updated_at,
+                ];
+            endforeach;
+            CustomerOrderDetail::insert($data);
+            CustomerAccount::where('order_id', $order->id)->where('payment_type', 'debit')->forceDelete();
+            CustomerAccount::create([
+                'customer_id' => $request->customer_id,
+                'order_id' => $order->id,
+                'payment_type' => 'debit',
+                'payment_date' => Carbon::now(),
+                'amount' => $order->details->sum('total'),
+                'payment_mode' => 0, // NA
+                'description' => "Order #$order->id",
+                'created_by' => $request->user()->id,
+                'updated_by' => $request->user()->id,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ]);
+        });
+        //} catch (Exception $e) {
+        // return redirect()->back()->with("error", $e->getMessage())->withInput($inputs);
+        //}
+        //return redirect()->route('drishti.customer.order')->withSuccess("Customer order updated successfully!");
     }
 
     function customer_order_delete()
