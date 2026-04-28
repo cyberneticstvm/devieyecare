@@ -12,6 +12,13 @@
                     <input type="hidden" name="payment_type" id="payment_type" value="credit">
                     <div class="row g-3">
                         <div class="control-group col-md-6">
+                            <label class="form-label req">Payment Date</label>
+                            {{ html()->date('payment_date', date('y-m-d'))->class('form-control') }}
+                            @error('payment_date')
+                            <small class="text-danger">{{ $errors->first('payment_date') }}</small>
+                            @enderror
+                        </div>
+                        <div class="control-group col-md-6">
                             <label class="form-label req">Amount</label>
                             {{ html()->number('amount', old('amount') ?? '')->class('form-control')->placeholder('Amount') }}
                             @error('amount')
@@ -27,7 +34,7 @@
                         </div>
                         <div class="control-group col-md-12">
                             <label class="form-label">Description </label>
-                            {{ html()->text('description', old('description') ?? '')->class('form-control')->placeholder('Description') }}
+                            {{ html()->textarea('description', old('description') ?? '')->class('form-control')->placeholder('Description') }}
                             @error('description')
                             <small class="text-danger">{{ $errors->first('description') }}</small>
                             @enderror
