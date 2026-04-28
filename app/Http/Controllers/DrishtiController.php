@@ -141,7 +141,7 @@ class DrishtiController extends Controller implements HasMiddleware
 
     function customer_order()
     {
-        $orders = CustomerOrder::withTrashed()->with('customer')->where('branch_id', Session::get('branch')->id)->latest()->get();
+        $orders = CustomerOrder::withTrashed()->with('customer')->latest()->get();
         return view('admin.drishti.order.index', compact('orders'));
     }
 
@@ -215,6 +215,8 @@ class DrishtiController extends Controller implements HasMiddleware
             'qty.*' => 'required|integer',
             'price.*' => 'required|numeric',
         ]);
+        dd($inputs);
+        die;
         try {
             DB::transaction(function () use ($request, $inputs) {
                 $order = CustomerOrder::findOrFail(decrypt(request()->id));
