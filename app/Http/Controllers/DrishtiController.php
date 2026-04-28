@@ -267,7 +267,7 @@ class DrishtiController extends Controller implements HasMiddleware
                 'payment_type' => 'debit',
                 'payment_date' => Carbon::now(),
                 'amount' => $order->details->sum('total'),
-                'payment_mode' => 0, // NA
+                'payment_mode' => Extra::where('type', 'pmode')->first()?->id ?? null, // NA
                 'description' => "Order #$order->id",
                 'created_by' => $request->user()->id,
                 'updated_by' => $request->user()->id,
