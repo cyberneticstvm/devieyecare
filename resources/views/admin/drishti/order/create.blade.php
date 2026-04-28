@@ -50,7 +50,7 @@
                                                 <label class="form-label req">Order Date</label>
                                                 {{ html()->date('order_date', old('order_date') ?? date('Y-m-d'))->class('form-control') }}
                                             </div>
-                                            <div class="col-md-6">
+                                            <div class="col-md-6 text-center">
                                                 <label class="form-label">Show Price in DO </label><br>
                                                 {{ html()->checkbox('show_price', false, 1)->class('form-check-input') }}
                                             </div>
