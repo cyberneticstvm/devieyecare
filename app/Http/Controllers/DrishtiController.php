@@ -104,7 +104,8 @@ class DrishtiController extends Controller implements HasMiddleware
 
     function customer_account()
     {
-        return view('admin.drishti.customer.account');
+        $accounts = CustomerAccount::with('customer')->latest()->get();
+        return view('admin.drishti.customer.account', compact('accounts'));
     }
 
     function customer_account_save(Request $request)
@@ -121,6 +122,12 @@ class DrishtiController extends Controller implements HasMiddleware
         $inputs['updated_by'] = request()->user()->id;
         CustomerAccount::create($inputs);
         return redirect()->route('drishti.customer.account')->withSuccess("Customer account entry created successfully!");
+    }
+
+    function customer_account_delete()
+    {
+        CustomerAccount::findOrFail(decrypt(request()->id))->delete();
+        return redirect()->route('drishti.customer.account')->withSuccess("Customer account entry deleted successfully!");
     }
 
     function customer_order()

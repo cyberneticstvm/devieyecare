@@ -61,6 +61,7 @@ Route::middleware(['web'])->group(function () {
 
             Route::get('customer/account', 'customer_account')->name('drishti.customer.account');
             Route::post('customer/account', 'customer_account_save')->name('drishti.customer.account.save');
+            Route::delete('customer/account/delete/{id}', 'customer_account_delete')->name('drishti.customer.account.delete');
             Route::get('customer/order', 'customer_order')->name('drishti.customer.order');
         });
 

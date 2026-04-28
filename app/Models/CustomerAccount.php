@@ -15,6 +15,11 @@ class CustomerAccount extends Model
         'payment_date' => 'date',
     ];
 
+    public function customer()
+    {
+        return $this->belongsTo(Customer::class);
+    }
+
     public function cancelled()
     {
         return $this->deleted_at ? "<span class='badge bg-danger'>Cancelled</span>" : "<span class='badge bg-success'>Active</span>";
