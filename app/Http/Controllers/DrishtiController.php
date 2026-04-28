@@ -132,6 +132,7 @@ class DrishtiController extends Controller implements HasMiddleware
 
     function customer_order()
     {
-        return view('admin.drishti.order.index');
+        $orders = collect();
+        return view('admin.drishti.order.index', compact('orders'));
     }
 }
