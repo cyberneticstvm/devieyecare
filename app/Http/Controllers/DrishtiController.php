@@ -237,7 +237,7 @@ class DrishtiController extends Controller implements HasMiddleware
         try {
             DB::transaction(function () use ($request, $inputs) {
                 if (checkCustomerCreditLimit($request->customer_id, 0)) {
-                    return redirect()->back()->with("error", "Customer credit limit exceeded!")->withInput($inputs);
+                    return redirect()->back()->with("error", "Customer credit limit exceeded!");
                 }
                 $order = CustomerOrder::findOrFail(decrypt(request()->id));
                 $order_inputs = $request->only('customer_id', 'order_date', 'notes', 'show_price');
