@@ -146,4 +146,10 @@ class DrishtiController extends Controller implements HasMiddleware
         $customers = $this->customers;
         return view('admin.drishti.order.create', compact('products', 'customers'));
     }
+
+    function customer_order_store(Request $request)
+    {
+        //dd($request->all());
+        return redirect()->route('drishti.customer.order')->withSuccess("Customer order created successfully!");
+    }
 }
