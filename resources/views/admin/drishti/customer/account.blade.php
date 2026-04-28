@@ -13,6 +13,7 @@
                             <th class="py-2 fw-medium small text-uppercase">SL No</th>
                             <th class="py-2 fw-medium small text-uppercase">Customer</th>
                             <th class="py-2 fw-medium small text-uppercase">Amount</th>
+                            <th class="py-2 fw-medium small text-uppercase">Payment Mode</th>
                             <th class="py-2 fw-medium small text-uppercase">Type</th>
                             <th class="py-2 fw-medium small text-uppercase">Description</th>
                             <th class="py-2 fw-medium small text-uppercase">Payment Date</th>
@@ -26,7 +27,8 @@
                             <td>{{ $key + 1 }}</td>
                             <td>{{ $account->customer->name }}</td>
                             <td>{{ $account->amount }}</td>
-                            <td>{{ $account->payment_mode }}</td>
+                            <td>{{ $account->pmode->name }}</td>
+                            <td>{{ $account->payment_type }}</td>
                             <td>{{ $account->description }}</td>
                             <td>{{ $account->payment_date->format('d.M.Y') }}</td>
                             <td>{!! $account->cancelled() !!}</td>
