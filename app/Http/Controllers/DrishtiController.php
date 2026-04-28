@@ -7,6 +7,8 @@ use App\Models\Customer;
 use App\Models\CustomerAccount;
 use App\Models\Extra;
 use App\Models\LoginLog;
+use App\Models\ManufacturerSupplier;
+use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
@@ -22,11 +24,13 @@ class DrishtiController extends Controller implements HasMiddleware
         ];
     }
 
-    private $payment_modes;
+    private $payment_modes, $products, $customers;
 
     function __construct()
     {
         $this->payment_modes = Extra::where('category', 'pmode')->pluck('name', 'id');
+        $this->products = Product::orderBy('name')->pluck('name', 'id');
+        $this->customers = Customer::orderBy('name')->pluck('name', 'id');
     }
 
     function dashboard()
@@ -138,6 +142,8 @@ class DrishtiController extends Controller implements HasMiddleware
 
     function customer_order_create()
     {
-        return view('admin.drishti.order.create');
+        $products = $this->products;
+        $customers = $this->customers;
+        return view('admin.drishti.order.create', compact('products', 'customers'));
     }
 }
