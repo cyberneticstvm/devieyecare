@@ -15,8 +15,8 @@
                             <th class="py-2 fw-medium small text-uppercase">Batch</th>
                             <th class="py-2 fw-medium small text-uppercase">Expiry</th>
                             <th class="py-2 fw-medium small text-uppercase">Qty</th>
-                            <th class="py-2 fw-medium small text-uppercase">P.Price</th>
-                            <th class="py-2 fw-medium small text-uppercase">S.Price</th>
+                            <th class="py-2 fw-medium small text-uppercase">Price</th>
+                            <th class="py-2 fw-medium small text-uppercase"></th>
                             <th class="py-2 fw-medium small text-uppercase">Total</th>
                             <th class="py-2 fw-medium small text-uppercase">Remove</th>
                         </tr>
