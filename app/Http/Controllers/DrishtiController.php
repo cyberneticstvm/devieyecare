@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Branch;
 use App\Models\Customer;
+use App\Models\CustomerAccount;
 use App\Models\Extra;
 use App\Models\LoginLog;
 use Illuminate\Http\Request;
@@ -104,6 +105,22 @@ class DrishtiController extends Controller implements HasMiddleware
     function customer_account()
     {
         return view('admin.drishti.customer.account');
+    }
+
+    function customer_account_save(Request $request)
+    {
+        $inputs = request()->validate([
+            'customer_id' => 'required|exists:customers,id',
+            'payment_type' => 'required|in:credit,debit',
+            'payment_date' => 'required|date',
+            'amount' => 'required|numeric',
+            'payment_mode' => 'required|exists:extras,id',
+            'description' => 'nullable',
+        ]);
+        $inputs['created_by'] = request()->user()->id;
+        $inputs['updated_by'] = request()->user()->id;
+        CustomerAccount::create($inputs);
+        return redirect()->route('drishti.customer.account')->withSuccess("Customer account entry created successfully!");
     }
 
     function customer_order()
