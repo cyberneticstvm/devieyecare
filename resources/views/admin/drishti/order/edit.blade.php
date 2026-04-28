@@ -77,7 +77,7 @@
                                             </div>
                                             <div class="col-md-6 text-center">
                                                 <label class="form-label">Show Price in DO </label><br>
-                                                {{ html()->checkbox('show_price', 1, ($order->show_price == 1))->class('form-check-input') }}
+                                                {{ html()->checkbox('show_price', ($order->show_price == 1), 1)->class('form-check-input') }}
                                             </div>
                                         </div>
                                         {{ html()->form()->close() }}
