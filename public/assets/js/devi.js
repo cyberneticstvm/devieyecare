@@ -252,6 +252,14 @@ function validateOrderForm(){
     return true;
 }
 
+$(".chkShowPrice").click(function(){
+    if($(this).is(":checked")){
+        $(this).val(1); 
+    } else {
+        $(this).val(0); 
+    }
+});
+
 // Drishti Customer Order Form Validation
 function validateCustomerOrderForm(){
     let frm = document.forms["customerOrderForm"];
@@ -295,7 +303,6 @@ function validateCustomerOrderForm(){
         name: 'notes',
         value: frm['notes'].value
     }).appendTo(frm1);
-    console.log(frm['show_price'].value);
     $('<input>', {
         type: 'hidden',
         name: 'show_price',
