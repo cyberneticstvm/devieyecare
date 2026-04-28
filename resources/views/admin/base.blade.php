@@ -382,7 +382,7 @@
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
     <script src="{{ asset('/assets/js/chart.js') }}"></script>
     @endif
-    <script src="{{ asset('/assets/js/devi.js?v=9') }}"></script>
+    <script src="{{ asset('/assets/js/devi.js?v=10') }}"></script>
 </body>
 
 </html>

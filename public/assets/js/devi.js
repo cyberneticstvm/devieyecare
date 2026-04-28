@@ -295,6 +295,7 @@ function validateCustomerOrderForm(){
         name: 'notes',
         value: frm['notes'].value
     }).appendTo(frm1);
+    console.log(frm['show_price'].value);
     $('<input>', {
         type: 'hidden',
         name: 'show_price',
