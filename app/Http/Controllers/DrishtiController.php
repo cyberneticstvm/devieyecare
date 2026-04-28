@@ -193,4 +193,60 @@ class DrishtiController extends Controller implements HasMiddleware
         }
         return redirect()->route('drishti.customer.order')->withSuccess("Customer order created successfully!");
     }
+
+    function customer_order_edit()
+    {
+        $order = CustomerOrder::with('details')->findOrFail(decrypt(request()->id));
+        $products = $this->products;
+        $customers = $this->customers;
+        return view('admin.drishti.order.edit', compact('order', 'products', 'customers'));
+    }
+
+    function customer_order_update(Request $request)
+    {
+        $inputs = $request->validate([
+            'customer_id' => 'required|exists:customers,id',
+            'order_date' => 'required|date',
+            'notes' => 'nullable',
+            'show_price' => 'nullable|boolean',
+            'product_id.*' => 'required|exists:products,id',
+            'batch.*' => 'nullable',
+            'expiry.*' => 'nullable|date',
+            'qty.*' => 'required|integer',
+            'price.*' => 'required|numeric',
+        ]);
+        try {
+            DB::transaction(function () use ($request, $inputs) {
+                $order = CustomerOrder::findOrFail(decrypt(request()->id));
+                $order_inputs = $request->only('customer_id', 'order_date', 'notes', 'show_price');
+                $order_inputs['updated_by'] = $request->user()->id;
+                $order->update($order_inputs);
+                CustomerOrderDetail::where('customer_order_id', $order->id)->delete();
+                $data = [];
+                foreach ($request->product_id as $key => $item):
+                    $data[] = [
+                        'customer_order_id' => $order->id,
+                        'product_id' => $item,
+                        'qty' => $request->qty[$key],
+                        'batch' => $request->batch[$key] ?? 'NA',
+                        'expiry' => $request->expiry[$key],
+                        'price' => $request->price[$key] ?? 0,
+                        'total' => $request->price[$key] * $request->qty[$key],
+                        'created_at' => Carbon::now(),
+                        'updated_at' => Carbon::now(),
+                    ];
+                endforeach;
+                CustomerOrderDetail::insert($data);
+            });
+        } catch (Exception $e) {
+            return redirect()->back()->with("error", $e->getMessage())->withInput($inputs);
+        }
+        return redirect()->route('drishti.customer.order')->withSuccess("Customer order updated successfully!");
+    }
+
+    function customer_order_delete()
+    {
+        CustomerOrder::findOrFail(decrypt(request()->id))->delete();
+        return redirect()->route('drishti.customer.order')->withSuccess("Customer order deleted successfully!");
+    }
 }
