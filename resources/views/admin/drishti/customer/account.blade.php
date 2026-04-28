@@ -29,7 +29,7 @@
                             <td>{{ $account->payment_mode }}</td>
                             <td>{{ $account->description }}</td>
                             <td>{{ $account->payment_date->format('d.M.Y') }}</td>
-                            <td>{!! $account->status() !!}</td>
+                            <td>{!! $account->cancelled() !!}</td>
                             <td class="text-center">
                                 <form action="{{ route('drishti.customer.account.delete', encrypt($account->id)) }}" method="POST" style="display:inline;">
                                     @csrf
