@@ -20,7 +20,7 @@
                             <th class="py-2 fw-medium small text-uppercase">Remove</th>
                         </tr>
                     </thead>
-                    <tbody class="purchaseItem">
+                    <tbody class="customerOrderItem">
                     </tbody>
                 </table>
                 <div class="text-end mt-5">
