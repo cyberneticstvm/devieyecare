@@ -57,6 +57,7 @@ $(function(){
     });
 
     $(document).on("click", ".customerAccountDrawer", function(){
+        console.log($(this).data('cid'));
         $(".customerAccountForm #customer_id").val($(this).data('cid'));
     });
 
