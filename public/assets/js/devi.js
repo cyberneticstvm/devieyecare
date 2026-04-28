@@ -252,6 +252,57 @@ function validateOrderForm(){
     return true;
 }
 
+// Drishti Customer Order Form Validation
+function validateCustomerOrderForm(){
+    let frm = document.forms["customerOrderForm"];
+    let frm1 = document.forms["customerOrderItemsForm"];
+    let pdctLen = 0;
+    if(!frm['customer_id'].value){
+        failed({
+            'error': 'Please select customer'
+        });
+        return false;
+    }
+    if(!frm['order_date'].value){
+        failed({
+            'error': 'Please select order date'
+        });
+        return false;
+    }  
+    $("#customerOrderItemsForm .slctdPct").each(function(){
+        if($(this).val() > 0){
+            pdctLen += 1;
+        }
+    });
+    if(pdctLen === 0){
+        failed({
+            'error': 'Please add at least one item to the table!'
+        });
+        return false;
+    }
+    $('<input>', {
+        type: 'hidden',
+        name: 'customer_id',
+        value: frm['customer_id'].value
+    }).appendTo(frm1);
+    $('<input>', {
+        type: 'hidden',
+        name: 'order_date',
+        value: frm['order_date'].value
+    }).appendTo(frm1);
+    $('<input>', {
+        type: 'hidden',
+        name: 'notes',
+        value: frm['notes'].value
+    }).appendTo(frm1);
+    $('<input>', {
+        type: 'hidden',
+        name: 'show_price',
+        value: frm['show_price'].value
+    }).appendTo(frm1);
+    return true;
+}
+
 function validatePurchaseForm(){
     let frm = document.forms["purchaseForm"];
     let frm1 = document.forms["purchaseItemsForm"];
@@ -486,5 +537,31 @@ function addItem(type){
         frm.reset();
         $(".selPdct").select2();
         $('.selBatch').select2();
+    }
+    if(type == 'customer_order'){
+        let frm = document.forms["customerOrderItemForm"];
+        if(!frm['product_id'].value){
+            failed({
+                'error': 'Please select a product'
+            });
+            return false;
+        }
+        if(!frm['qty'].value){
+            failed({
+                'error': 'Please enter Qty'
+            });
+            return false;
+        }
+        if(!frm['price'].value){
+            failed({
+                'error': 'Please enter Price'
+            });
+            return false;
+        }
+        let pdct = $(".selPdct option:selected").text();
+        let tot = (parseFloat(frm['price'].value) && parseInt(frm['qty'].value)) ? parseFloat(frm['price'].value) * parseInt(frm['qty'].value) : 0;
+        $(".customerOrderItem").append(`<tr><td><input type="hidden" name="product_id[]" value="${frm['product_id'].value}" class="slctdPct"><input type="text" name="product[]" value="${pdct}" class="border-0 w-100" readonly></td><td><input type="text" name="batch[]" value="${frm['batch'].value}" class="border-0 w-100" readonly></td><td><input type="text" name="expiry[]" value="${frm['expiry'].value}" class="border-0 w-100" readonly></td><td><input type="text" name="qty[]" value="${frm['qty'].value}" class="border-0 w-100" readonly></td><td><input type="text" name="price[]" value="${frm['price'].value}" class="border-0 w-100" readonly></td><td><input type="text" name="total[]" value="${tot}" class="border-0 w-100" readonly></td><td><a href="javascript:void(0)" onclick="$(this).parent().parent().remove()">Remove</a></td></tr>`);
+        frm.reset();
+        $(".selPdct").select2();            
     }   
 }

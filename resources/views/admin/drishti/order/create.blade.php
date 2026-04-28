@@ -7,7 +7,7 @@
         <p class="fs-12">New Customer Order</p>
         <div class="row g-lg-4 g-3">
             <div class="col-lg-8">
-                {{ html()->form('POST')->route('drishti.customer.order.save')->attribute('id', 'customerOrderForm')->class('')->open() }}
+                {{ html()->form('POST')->route('drishti.customer.order.save')->attribute('id', 'customerOrderItemsForm')->class('')->open() }}
                 <table id="apptTable" class="table table-round align-middle mb-0 table-hover w-100 mt-2 border-top">
                     <thead>
                         <tr>
@@ -16,7 +16,6 @@
                             <th class="py-2 fw-medium small text-uppercase">Expiry</th>
                             <th class="py-2 fw-medium small text-uppercase">Qty</th>
                             <th class="py-2 fw-medium small text-uppercase">Price</th>
-                            <th class="py-2 fw-medium small text-uppercase"></th>
                             <th class="py-2 fw-medium small text-uppercase">Total</th>
                             <th class="py-2 fw-medium small text-uppercase">Remove</th>
                         </tr>
@@ -25,7 +24,7 @@
                     </tbody>
                 </table>
                 <div class="text-end mt-5">
-                    {{ html()->button('Save')->attribute('onclick', 'return validatePurchaseForm()')->class('btn btn-submit btn-primary') }}
+                    {{ html()->button('Save')->attribute('onclick', 'return validateCustomerOrderForm()')->class('btn btn-submit btn-primary') }}
                 </div>
                 {{ html()->form()->close() }}
             </div>
@@ -36,7 +35,7 @@
                             <div class="card-body p-lg-4">
                                 <div class="row g-lg-12 g-3">
                                     <div class="col-lg-12">
-                                        {{ html()->form('POST')->attribute('id', 'purchaseForm')->class('')->open() }}
+                                        {{ html()->form('POST')->attribute('id', 'customerOrderForm')->class('')->open() }}
                                         <div class="row g-3">
                                             <div class="control-group col-md-12">
                                                 <label class="form-label req">Customer </label>
@@ -65,7 +64,7 @@
                                 <h5>Add New Item</h5>
                                 <div class="row g-lg-12 g-3">
                                     <div class="col-lg-12">
-                                        {{ html()->form('POST')->attribute('id', 'purchaseItemForm')->class('')->open() }}
+                                        {{ html()->form('POST')->attribute('id', 'customerOrderItemForm')->class('')->open() }}
                                         <div class="row g-3">
                                             <div class="control-group col-md-12">
                                                 <label class="form-label req">Product </label>
@@ -85,16 +84,12 @@
                                             </div>
                                             <div class="control-group col-md-4">
                                                 <label class="form-label req">Price</label>
-                                                {{ html()->number('purchase_price', '', '1', '', 'any')->class('form-control')->placeholder('0.00') }}
-                                            </div>
-                                            <div class="control-group col-md-4">
-                                                <!--<label class="form-label req">Sell.Price</label>-->
-                                                {{ html()->hidden('selling_price', 0, '', '', 'any')->class('form-control')->placeholder('0.00') }}
+                                                {{ html()->number('price', '', '1', '', 'any')->class('form-control')->placeholder('0.00') }}
                                             </div>
                                         </div>
                                         <div class="raw text-end mt-3">
                                             <div class="col-md-12">
-                                                {{ html()->button('Add')->attribute('type', 'button')->attribute('onClick', "return addItem('purchase')")->class('btn btn-primary') }}
+                                                {{ html()->button('Add')->attribute('type', 'button')->attribute('onClick', "return addItem('customer_order')")->class('btn btn-primary') }}
                                             </div>
                                         </div>
                                         {{ html()->form()->close() }}
