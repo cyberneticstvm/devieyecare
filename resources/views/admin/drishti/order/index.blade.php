@@ -42,9 +42,12 @@
                                 </div>
                             </td>
                             <td class="text-center">
+                                @if(!$order->invoice_no)
                                 <a href="{{ route('drishti.customer.order.edit', encrypt($order->id)) }}" class="btn btn-link text-secondary">Edit</a> </a>
+                                @endif
                             </td>
                             <td class="text-center">
+                                @if(!$order->invoice_no)
                                 <form action="{{ route('drishti.customer.order.delete', encrypt($order->id)) }}" method="POST" style="display:inline;">
                                     @csrf
                                     @method('DELETE')
@@ -52,6 +55,7 @@
                                         Delete
                                     </button>
                                 </form>
+                                @endif
                             </td>
                         </tr>
                         @empty
