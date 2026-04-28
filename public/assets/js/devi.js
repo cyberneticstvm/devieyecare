@@ -56,6 +56,10 @@ $(function(){
         });
     });
 
+    $(document).on("click", ".customerAccountDrawer", function(){
+        $(".customerAccountForm #customer_id").val($(this).data('cid'));
+    });
+
     $(document).on("keyup", ".qty, .discount, .advance", function(){
         calculateTotal();
     })

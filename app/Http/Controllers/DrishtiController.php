@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Branch;
 use App\Models\Customer;
+use App\Models\Extra;
 use App\Models\LoginLog;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -18,6 +19,13 @@ class DrishtiController extends Controller implements HasMiddleware
         return [
             //new middleware(\Spatie\Permission\Middleware\PermissionMiddleware::using('drishti-customer'), only: ['customer', 'save_customer']),
         ];
+    }
+
+    private $payment_modes;
+
+    function __construct()
+    {
+        $this->payment_modes = Extra::where('category', 'pmode')->pluck('name', 'id');
     }
 
     function dashboard()
@@ -45,7 +53,8 @@ class DrishtiController extends Controller implements HasMiddleware
     function customer()
     {
         $customers = Customer::withTrashed()->latest()->get();
-        return view('admin.drishti.customer.index', compact('customers'));
+        $pmodes = $this->payment_modes;
+        return view('admin.drishti.customer.index', compact('customers', 'pmodes'));
     }
 
     function save_customer(Request $request)
