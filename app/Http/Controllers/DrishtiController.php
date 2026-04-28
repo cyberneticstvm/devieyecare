@@ -166,6 +166,12 @@ class DrishtiController extends Controller implements HasMiddleware
             'price.*' => 'required|numeric',
         ]);
         try {
+            $total_amount = array_sum(array_map(function ($price, $qty) {
+                return $price * $qty;
+            }, $request->price, $request->qty));
+            if (checkCustomerCreditLimit($request->customer_id, $total_amount)) {
+                return redirect()->back()->with("error", "Customer credit limit exceeded!")->withInput($inputs);
+            }
             DB::transaction(function () use ($request, $inputs) {
                 $order_inputs = $request->only('customer_id', 'order_date', 'notes', 'show_price');
                 $order_inputs['created_by'] = $request->user()->id;
@@ -187,6 +193,19 @@ class DrishtiController extends Controller implements HasMiddleware
                     ];
                 endforeach;
                 CustomerOrderDetail::insert($data);
+                CustomerAccount::create([
+                    'customer_id' => $request->customer_id,
+                    'order_id' => $order->id,
+                    'payment_type' => 'debit',
+                    'payment_date' => Carbon::now(),
+                    'amount' => $order->details->sum('total'),
+                    'payment_mode' => 0, // NA
+                    'description' => "Order #$order->id",
+                    'created_by' => $request->user()->id,
+                    'updated_by' => $request->user()->id,
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now(),
+                ]);
             });
         } catch (Exception $e) {
             return redirect()->back()->with("error", $e->getMessage())->withInput($inputs);
@@ -217,6 +236,9 @@ class DrishtiController extends Controller implements HasMiddleware
         ]);
         try {
             DB::transaction(function () use ($request, $inputs) {
+                if (checkCustomerCreditLimit($request->customer_id, 0)) {
+                    return redirect()->back()->with("error", "Customer credit limit exceeded!")->withInput($inputs);
+                }
                 $order = CustomerOrder::findOrFail(decrypt(request()->id));
                 $order_inputs = $request->only('customer_id', 'order_date', 'notes', 'show_price');
                 $order_inputs['updated_by'] = $request->user()->id;
@@ -238,6 +260,20 @@ class DrishtiController extends Controller implements HasMiddleware
                     ];
                 endforeach;
                 CustomerOrderDetail::insert($data);
+                CustomerAccount::where('order_id', $order->id)->where('payment_type', 'debit')->forceDelete();
+                CustomerAccount::create([
+                    'customer_id' => $request->customer_id,
+                    'order_id' => $order->id,
+                    'payment_type' => 'debit',
+                    'payment_date' => Carbon::now(),
+                    'amount' => $order->details->sum('total'),
+                    'payment_mode' => 0, // NA
+                    'description' => "Order #$order->id",
+                    'created_by' => $request->user()->id,
+                    'updated_by' => $request->user()->id,
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now(),
+                ]);
             });
         } catch (Exception $e) {
             return redirect()->back()->with("error", $e->getMessage())->withInput($inputs);

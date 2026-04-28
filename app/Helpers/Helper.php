@@ -11,6 +11,8 @@
 
 use App\Models\Appointment;
 use App\Models\Branch;
+use App\Models\Customer;
+use App\Models\CustomerAccount;
 use App\Models\Doctor;
 use App\Models\Extra;
 use App\Models\Hsn;
@@ -49,6 +51,16 @@ function unique_id($model, $col)
     } while ($model::where($col, $code)->first());
 
     return $code;
+}
+
+function checkCustomerCreditLimit($customer_id, $total_amount)
+{
+    $limit = Customer::find($customer_id)->credit_limit;
+    $opening_balance = Customer::find($customer_id)->opening_balance;
+    $credit = CustomerAccount::where('customer_id', $customer_id)->where('payment_type', 'credit')->sum('amount');
+    $debit = CustomerAccount::where('customer_id', $customer_id)->where('payment_type', 'debit')->sum('amount');
+    $total_due = $opening_balance + $credit - $debit;
+    return ($total_due + $total_amount >= $limit) ? true : false;
 }
 
 function getInventory($branch = 0, $product = 0)
