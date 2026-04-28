@@ -30,15 +30,17 @@
                             <td>{{ $order?->customer?->name}}</td>
                             <td>{{ $order->order_date->format('d.M.Y') }}</td>
                             <td>{!! $order->cancelled() !!}</td>
-                            <div class="dropdown">
-                                <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    Download
-                                </button>
-                                <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="#" target="_blank">Delivery Order</a></li>
-                                    <li><a class="dropdown-item" href="#" target="_blank">Invoice</a></li>
-                                </ul>
-                            </div>
+                            <td>
+                                <div class="dropdown">
+                                    <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        Download
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" href="#" target="_blank">Delivery Order</a></li>
+                                        <li><a class="dropdown-item" href="#" target="_blank">Invoice</a></li>
+                                    </ul>
+                                </div>
+                            </td>
                             <td class="text-center">
                                 <a href="{{ route('drishti.customer.order.edit', encrypt($order->id)) }}" class="btn btn-link text-secondary">Edit</a> </a>
                             </td>
