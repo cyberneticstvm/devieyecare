@@ -26,7 +26,7 @@
                         @forelse($customers as $key => $customer)
                         <tr>
                             <td>{{ $key + 1 }}</td>
-                            <td><a class="customerAccountDrawer" data-bs-toggle="offcanvas" href="#customerAccountForm" role="button" aria-controls="customerAccountForm" data-cid="{{ encrypt($customer->id) }}">{{ $customer->name }}</a></td>
+                            <td><a class="customerAccountDrawer" data-bs-toggle="offcanvas" href="#customerAccountForm" role="button" aria-controls="customerAccountForm" data-cid="{{ $customer->id }}">{{ $customer->name }}</a></td>
                             <td>{{ $customer->mobile }}</td>
                             <td>{{ $customer->address }}</td>
                             <td>{{ $customer->gst }}</td>
