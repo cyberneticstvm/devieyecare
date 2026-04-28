@@ -38,10 +38,6 @@
                                     <div class="col-lg-12">
                                         {{ html()->form('POST')->attribute('id', 'purchaseForm')->class('')->open() }}
                                         <div class="row g-3">
-                                            <div class="control-group col-md-6">
-                                                <label class="form-label req">Order Date</label>
-                                                {{ html()->date('order_date', old('order_date') ?? date('Y-m-d'))->class('form-control') }}
-                                            </div>
                                             <div class="control-group col-md-12">
                                                 <label class="form-label req">Customer </label>
                                                 {{ html()->select('customer_id', $customers, old('customer_id') ?? '')->class('select2')->placeholder('Select') }}
@@ -49,6 +45,14 @@
                                             <div class="control-group col-md-12">
                                                 <label class="form-label">Order Notes</label>
                                                 {{ html()->text('notes', old('notes') ?? '')->class('form-control')->placeholder('Notes') }}
+                                            </div>
+                                            <div class="control-group col-md-6">
+                                                <label class="form-label req">Order Date</label>
+                                                {{ html()->date('order_date', old('order_date') ?? date('Y-m-d'))->class('form-control') }}
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label class="form-label">Show Price in DO </label><br>
+                                                {{ html()->checkbox('show_price', false, 1)->class('form-check-input') }}
                                             </div>
                                         </div>
                                         {{ html()->form()->close() }}
