@@ -35,8 +35,7 @@
                                     Download
                                 </button>
                                 <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="#" target="_blank">OPT</a></li>
-                                    <li><a class="dropdown-item" href="{{ route('store.order.receipt', ['registration_id' => encrypt($reg->id)]) }}" target="_blank">Delivery Order</a></li>
+                                    <li><a class="dropdown-item" href="#" target="_blank">Delivery Order</a></li>
                                     <li><a class="dropdown-item" href="#" target="_blank">Invoice</a></li>
                                 </ul>
                             </div>
