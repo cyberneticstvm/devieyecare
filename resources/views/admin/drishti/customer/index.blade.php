@@ -26,7 +26,7 @@
                         @forelse($customers as $key => $customer)
                         <tr>
                             <td>{{ $key + 1 }}</td>
-                            <td>{{ $customer->name }}</td>
+                            <td><a class="customerAccountDrawer" data-bs-toggle="offcanvas" href="#customerAccountForm" role="button" aria-controls="customerAccountForm">{{ $customer->name }}</a></td>
                             <td>{{ $customer->mobile }}</td>
                             <td>{{ $customer->address }}</td>
                             <td>{{ $customer->gst }}</td>
@@ -120,4 +120,5 @@
         </div>
     </div>
 </div>
+@include("admin.misc.drawer.customer_account_form")
 @endsection
