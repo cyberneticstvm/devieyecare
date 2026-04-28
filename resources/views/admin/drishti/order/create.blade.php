@@ -84,13 +84,13 @@
                                                 {{ html()->number('qty', '', '1', '', '1')->class('form-control')->placeholder('0') }}
                                             </div>
                                             <div class="control-group col-md-4">
+                                                <label class="form-label req">Price</label>
+                                                {{ html()->number('purchase_price', '', '1', '', 'any')->class('form-control')->placeholder('0.00') }}
+                                            </div>
+                                            <!--<div class="control-group col-md-4">
                                                 <label class="form-label req">Sell.Price</label>
                                                 {{ html()->number('selling_price', '', '1', '', 'any')->class('form-control')->placeholder('0.00') }}
-                                            </div>
-                                            <div class="control-group col-md-4">
-                                                <!--<label class="form-label req">Pur.Price</label>-->
-                                                {{ html()->hidden('purchase_price', 0, 0, 0, 'any')->class('form-control')->placeholder('0.00') }}
-                                            </div>
+                                            </div>-->
                                         </div>
                                         <div class="raw text-end mt-3">
                                             <div class="col-md-12">
