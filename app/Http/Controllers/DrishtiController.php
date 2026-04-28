@@ -215,8 +215,6 @@ class DrishtiController extends Controller implements HasMiddleware
             'qty.*' => 'required|integer',
             'price.*' => 'required|numeric',
         ]);
-        dd($inputs);
-        die;
         try {
             DB::transaction(function () use ($request, $inputs) {
                 $order = CustomerOrder::findOrFail(decrypt(request()->id));
