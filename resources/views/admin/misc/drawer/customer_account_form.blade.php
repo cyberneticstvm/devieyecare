@@ -25,7 +25,7 @@
                             <small class="text-danger">{{ $errors->first('amount') }}</small>
                             @enderror
                         </div>
-                        <div class="control-group col-md-6">
+                        <div class="control-group col-md-12">
                             <label class="form-label req">Payment Mode</label>
                             {{ html()->select('payment_mode', $pmodes, null)->class('form-control')->attribute('id', 'payment_mode')->placeholder('Payment Mode') }}
                             @error('payment_mode')
