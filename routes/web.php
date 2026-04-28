@@ -63,6 +63,7 @@ Route::middleware(['web'])->group(function () {
             Route::post('customer/account', 'customer_account_save')->name('drishti.customer.account.save');
             Route::delete('customer/account/delete/{id}', 'customer_account_delete')->name('drishti.customer.account.delete');
             Route::get('customer/order', 'customer_order')->name('drishti.customer.order');
+            Route::get('customer/order/create', 'customer_order_create')->name('drishti.customer.order.create');
         });
 
         Route::prefix('')->controller(AuthController::class)->group(function () {
